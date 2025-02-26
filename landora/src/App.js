@@ -1,22 +1,9 @@
-import logo from './logo.png';
 import './App.css';
+import PropertyDashboard from './Components/Property Dashboard/PropertyDashboard';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        
-        <a
-          className="App-link"
-          href="https://github.com/Vnuja/LANDORA.git"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          All Right Reserved by LANDORA 2025
-        </a>
-      </header>
-    </div>
+    <PropertyDashboard />
   );
 }
 
