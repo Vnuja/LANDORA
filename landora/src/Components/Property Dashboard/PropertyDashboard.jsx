@@ -7,8 +7,8 @@ import PropertyDetails from "./PropertyDetails";
 import AddEditProperty from "./AddEditProperty";
 import Categories from "./Categories";
 import Analytics from "./Analytics";
-import Sidebar from "../Sidebar";
-import TopBar from "../TopBar";
+import Sidebar from "./Sidebar";
+import TopBar from "./TopBar";
 import theme from "./theme";
 
 function PropertyDashboard() {
@@ -16,10 +16,10 @@ function PropertyDashboard() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
-        <div style={{ display: "flex" }}>
-          <Sidebar />
-          <div style={{ flexGrow: 1 }}>
-            <TopBar />
+        <Sidebar />
+        <div style={{ marginLeft: 160, flexGrow: 1, display: "flex", flexDirection: "column" }}>
+          <TopBar />
+          <div style={{ padding: "16px" }}>
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/properties" element={<Properties />} />
