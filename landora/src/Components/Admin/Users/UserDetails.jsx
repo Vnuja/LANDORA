@@ -74,10 +74,6 @@ function UserDetails() {
   const handleEdit = (userId) => {
     navigate(`/admindashboard/update-user/${userId}`);
   };
-  
-  const handlefeedback = () =>{
-    navigate(`/admindashboard/feedback-management`);
-  };
 
   const deleteUser = async (userId) => {
     try {
@@ -330,9 +326,6 @@ function UserDetails() {
             </Button>
             <Button variant="contained" color="warning" onClick={handlePDFStats} sx={{ marginLeft: 2 }}>
               Export User Stats
-            </Button>
-            <Button variant="contained" color="secondary" onClick={handlefeedback} sx={{ marginLeft: 2}}>
-              Feedbacks
             </Button>
             <Button
               variant="contained"

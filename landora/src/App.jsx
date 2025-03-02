@@ -22,6 +22,15 @@ import UpdateUser from './Components/Admin/Users/UpdateUser';
 import { AuthProvider } from './Components/Auth/AuthContext';  // Import AuthProvider
 import MakePayment from './Components/pages/MakePayment';
 
+//Property Components
+import PropertyList from './Components/Admin/PropertyManagement/PropertyList';
+
+//Sales Components
+import SalesList from './Components/Admin/SalesManagement/SalesList';
+
+//Maintenance Components
+import MaintenanceList from './Components/Admin/MaintananceManagement/MaintananceList';
+
 function App() {
   return (
     <AuthProvider>  {/* Wrap the entire app with AuthProvider */}
@@ -48,6 +57,9 @@ function App() {
           <Route path="/makepayment/:id" element={<MakePayment />} />
           <Route path="/privacypolicy" element={<PrivacyPolicy />} />
           <Route path="/termsofuse" element={<TermsOfUse />} />
+          <Route path="/property-management" element={<PropertyList />} />
+          <Route path="/sales-management" element={<SalesList />} />
+          <Route path="/maintanance-management" element={<MaintenanceList />} />
 
           {/* Admin Dashboard Routes */}
           <Route path="/admindashboard" element={<AdminDashboard />}>

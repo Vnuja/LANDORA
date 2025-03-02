@@ -121,11 +121,43 @@ function Register() {
                                         error={!!errors[field]}
                                         helperText={errors[field]}
                                     />
-                                ))}<FormControlLabel
-                                control={<Checkbox checked={termsAccepted} onChange={(e) => setTermsAccepted(e.target.checked)} />}
-                                label="Accept Terms and Conditions"
-                                sx={{ marginBottom: 2, color: 'white' }}
-                            />
+                                ))}
+                                <FormControl fullWidth sx={{ mb: 2 }}>
+                                    <InputLabel sx={{ color: 'white' }}>Gender</InputLabel>
+                                    <Select
+                                        name="gender"
+                                        value={user.gender}
+                                        onChange={handleInputChange}
+                                        sx={{ color: 'white', '.MuiOutlinedInput-notchedOutline': { borderColor: 'white' } }}
+                                        error={!!errors.gender}
+                                    >
+                                        <MenuItem value=""><em>None</em></MenuItem>
+                                        <MenuItem value="male">Male</MenuItem>
+                                        <MenuItem value="female">Female</MenuItem>
+                                        <MenuItem value="other">Other</MenuItem>
+                                    </Select>
+                                    {errors.gender && <FormHelperText error>{errors.gender}</FormHelperText>}
+                                </FormControl>
+                                <TextField
+                                    fullWidth
+                                    placeholder="Birthday"
+                                    variant="outlined"
+                                    name="birthday"
+                                    type="date"
+                                    value={user.birthday}
+                                    onChange={handleInputChange}
+                                    sx={{ mb: 2, backgroundColor: 'black', borderRadius: 2, input: { color: 'white' }, fieldset: { borderColor: 'white' } }}
+                                    error={!!errors.birthday}
+                                    helperText={errors.birthday}
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                />
+                                <FormControlLabel
+                                    control={<Checkbox checked={termsAccepted} onChange={(e) => setTermsAccepted(e.target.checked)} />}
+                                    label="Accept Terms and Conditions"
+                                    sx={{ marginBottom: 2, color: 'white' }}
+                                />
                                 <Button type="submit" fullWidth variant="contained" sx={{ backgroundColor: '#ff932f', py: 1.5, borderRadius: 3, fontWeight: 'bold', boxShadow: 3, textTransform: 'none' }}>
                                     Create Account
                                 </Button>

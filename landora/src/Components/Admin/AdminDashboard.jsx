@@ -5,7 +5,7 @@ import { Drawer, List, ListItem, ListItemIcon, ListItemText, CssBaseline, Box, T
 import { useNavigate, Outlet, useLocation } from 'react-router-dom';
 import { AuthContext } from '../Auth/AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTachometerAlt, faUsers, faGem, faBoxOpen, faClipboardList, faComments, faShoppingCart, faSignOutAlt, faHeadset, faRing, faTruck } from '@fortawesome/free-solid-svg-icons';
+import { faTachometerAlt, faUsers, faSackDollar, faHammer, faSignOutAlt, faBuilding } from '@fortawesome/free-solid-svg-icons';
 
 const drawerWidth = 240;
 
@@ -14,16 +14,10 @@ const sidebarBackground = 'https://wallpapers.com/images/hd/blank-white-vertical
 
 const menuItems = [
   { text: 'Dashboard', icon: <FontAwesomeIcon icon={faTachometerAlt} />, path: '/admindashboard/dashboard' },
-  { text: 'Customer Management', icon: <FontAwesomeIcon icon={faUsers} />, path: '/admindashboard/user-management' },
-  { text: 'Jewellery Management', icon: <FontAwesomeIcon icon={faRing} />, path: '/admindashboard/jewellery-management' },
-  { text: 'Gem Management', icon: <FontAwesomeIcon icon={faGem} />, path: '/admindashboard/gem-management' },
-  { text: 'Inventory Management', icon: <FontAwesomeIcon icon={faBoxOpen} />, path: '/admindashboard/inventory-management' },
-  { text: 'Employee Management', icon: <FontAwesomeIcon icon={faUsers} />, path: '/admindashboard/employee-management' },
-  { text: 'Supplier Management', icon: <FontAwesomeIcon icon={faTruck} />, path: '/admindashboard/quantity-description' },
-  { text: 'Appointment Management', icon: <FontAwesomeIcon icon={faClipboardList} />, path: '/admindashboard/appointment-management' },
-  { text: 'Order Management', icon: <FontAwesomeIcon icon={faShoppingCart} />, path: '/admindashboard/order-management' },
-  { text: 'Feedback Management', icon: <FontAwesomeIcon icon={faComments} />, path: '/admindashboard/feedback-management' },
-  
+  { text: 'User Management', icon: <FontAwesomeIcon icon={faUsers} />, path: '/admindashboard/user-management' },
+  { text: 'Property Management', icon: <FontAwesomeIcon icon={faBuilding} />, path: '/property-management' },
+  { text: 'Sales Management', icon: <FontAwesomeIcon icon={faSackDollar} />, path: '/sales-management' },
+  { text: 'Maintanance Management', icon: <FontAwesomeIcon icon={faHammer} />, path: '/maintanance-management' },
 ];
 
 function AdminDashboard() {
@@ -34,15 +28,11 @@ function AdminDashboard() {
   const [currentTab, setCurrentTab] = useState('');
 
 
-  const [showSupplierListButton, setShowSupplierListButton] = useState(false);
-
-
   useEffect(() => {
     const currentPath = location.pathname;
     const currentItem = menuItems.find(item => item.path === currentPath);
     if (currentItem) {
       setCurrentTab(currentItem.text);
-      setShowSupplierListButton(currentItem.text === 'Supplier Management');
     }
   }, [location.pathname]);
 
@@ -53,10 +43,6 @@ function AdminDashboard() {
   const handleLogout = () => {
     logout();
     navigate('/login');
-  };
-
-  const handleSupplierListButtonClick = () => {
-    navigate('/admindashboard/supplier-list-details'); // Navigate to the Supplier List page
   };
 
   return (
@@ -102,11 +88,6 @@ function AdminDashboard() {
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#1976d2', padding: '10px 20px', color: 'white', height: '60px' }}>
           <Typography variant="h5">{currentTab}</Typography>
           <div>
-            {showSupplierListButton && (
-              <Button variant="contained" color="secondary" sx={{ marginLeft: 2 }} onClick={handleSupplierListButtonClick}>
-                View Supplier List
-              </Button>
-            )}
             <Button variant="outlined" onClick={handleLogout} sx={{ marginLeft: 2, color: 'white', borderColor: 'white' }}>
               <FontAwesomeIcon icon={faSignOutAlt} /> Logout
             </Button>

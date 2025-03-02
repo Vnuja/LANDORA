@@ -179,7 +179,7 @@ function UserProfile() {
     return (
         <Box
             sx={{
-                backgroundImage: 'url("https://images.pexels.com/photos/1103970/pexels-photo-1103970.jpeg?cs=srgb&dl=pexels-jplenio-1103970.jpg&fm=jpg")',
+                background: 'linear-gradient(to left, #131313, #ff932f)',
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 minHeight: '100vh',
@@ -199,22 +199,22 @@ function UserProfile() {
                         width: '100%',
                         display: 'flex',
                         height: '100%',
-                        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                        backgroundColor: 'rgba(0, 0, 0, 0.9)',
                         boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15)',
                     }}
                 >
                     <Grid container sx={{ height: '100%' }}>
-                        <Grid item xs={12} sm={4} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#FFD1D1', height: '100%', padding: 3 }}>
+                        <Grid item xs={12} sm={4} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#131313', height: '100%', padding: 3 }}>
                             <Avatar
                                 src={user.image}
                                 alt={user.name}
-                                sx={{ width: 120, height: 120, marginBottom: 2, border: '4px solid #FF6F61', boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)' }}
+                                sx={{ width: 120, height: 120, marginBottom: 2, border: '4px solidrgb(58, 58, 58)', boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)' }}
                             />
                             <Button
                                 variant="contained"
                                 startIcon={<Edit />}
                                 fullWidth
-                                sx={{ marginBottom: 2, backgroundColor: '#FF6F61', color: '#ffffff', textTransform: 'none', '&:hover': { backgroundColor: '#FF4F45' } }}
+                                sx={{ marginBottom: 2, backgroundColor: '#ff932f', color: '#ffffff', textTransform: 'none', '&:hover': { backgroundColor: '#FF4F45' } }}
                                 onClick={() => setEditing(true)}
                             >
                                 Edit Details
@@ -223,7 +223,7 @@ function UserProfile() {
                                 variant="contained"
                                 startIcon={<Lock />}
                                 fullWidth
-                                sx={{ marginBottom: 2, backgroundColor: '#FF6F61', color: '#ffffff', textTransform: 'none', '&:hover': { backgroundColor: '#FF4F45' } }}
+                                sx={{ marginBottom: 2, backgroundColor: '#ff932f', color: '#ffffff', textTransform: 'none', '&:hover': { backgroundColor: '#FF4F45' } }}
                             >
                                 Change Password
                             </Button>
@@ -231,7 +231,7 @@ function UserProfile() {
                                 variant="contained"
                                 startIcon={<Delete />}
                                 fullWidth
-                                sx={{ marginBottom: 2, backgroundColor: '#FF6F61', color: '#ffffff', textTransform: 'none', '&:hover': { backgroundColor: '#FF4F45' } }}
+                                sx={{ marginBottom: 2, backgroundColor: '#ff932f', color: '#ffffff', textTransform: 'none', '&:hover': { backgroundColor: '#FF4F45' } }}
                                 onClick={handleDelete}
                             >
                                 Delete Account
@@ -240,7 +240,7 @@ function UserProfile() {
                                 variant="contained"
                                 startIcon={<Logout />}
                                 fullWidth
-                                sx={{ marginBottom: 2, backgroundColor: '#FF6F61', color: '#ffffff', textTransform: 'none', '&:hover': { backgroundColor: '#FF4F45' } }}
+                                sx={{ marginBottom: 2, backgroundColor: '#ff932f', color: '#ffffff', textTransform: 'none', '&:hover': { backgroundColor: '#FF4F45' } }}
                                 onClick={handleLogout}
                             >
                                 Logout
@@ -249,12 +249,12 @@ function UserProfile() {
 
                         {/* Main content */}
                         <Grid item xs={12} sm={8} sx={{ padding: 3 }}>
-                            <Typography variant="h5" fontWeight="bold" sx={{ marginBottom: 2 }}>
+                            <Typography variant="h5" fontWeight="bold" sx={{ marginBottom: 2,color:'#fff' }}>
                                 {editing ? 'Edit Profile' : 'User Profile'}
                             </Typography>
 
                             {editing ? (
-                                <Box>
+                                <Box  >
                                     <TextField
                                         label="Name"
                                         name="name"
@@ -263,6 +263,7 @@ function UserProfile() {
                                         fullWidth
                                         margin="normal"
                                         required
+                                        sx={{textcolor:'#fff' }}
                                     />
                                     <TextField
                                         label="Username"
@@ -294,7 +295,7 @@ function UserProfile() {
                                     <Button
                                         variant="contained"
                                         onClick={handleUpdate}
-                                        sx={{ backgroundColor: '#FF6F61', color: '#ffffff', '&:hover': { backgroundColor: '#FF4F45' } }}
+                                        sx={{ backgroundColor: '#ff932f', color: '#ffffff', '&:hover': { backgroundColor: '#FF4F45' } }}
                                     >
                                         Update
                                     </Button>
@@ -303,7 +304,7 @@ function UserProfile() {
                             ) : (
                                 <Box sx={{ marginBottom: 3 }}>
                                 <>
-                                    <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold', color: '#FF6F61' }}>
+                                    <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold', color: '#ff932f' }}>
                                         MY ACCOUNT
                                     </Typography>
 
@@ -318,7 +319,7 @@ function UserProfile() {
                                             sx={{ marginBottom: 2 }}
                                         />
                                     ) : (
-                                        <Typography variant="body1" sx={{ marginBottom: 2 }}>
+                                        <Typography variant="body1" sx={{ marginBottom: 2,color:'#fff' }}>
                                             <strong>Name:</strong> {user.name}
                                         </Typography>
                                     )}
@@ -334,7 +335,7 @@ function UserProfile() {
                                             sx={{ marginBottom: 2 }}
                                         />
                                     ) : (
-                                        <Typography variant="body1" sx={{ marginBottom: 2 }}>
+                                        <Typography variant="body1" sx={{ marginBottom: 2,color:'#fff' }}>
                                             <strong>Email:</strong> {user.email}
                                         </Typography>
                                     )}
@@ -350,7 +351,7 @@ function UserProfile() {
                                             sx={{ marginBottom: 2 }}
                                         />
                                     ) : (
-                                        <Typography variant="body1" sx={{ marginBottom: 2 }}>
+                                        <Typography variant="body1" sx={{ marginBottom: 2,color:'#fff' }}>
                                             <strong>Phone:</strong> {user.phone}
                                         </Typography>
                                     )}
@@ -361,14 +362,14 @@ function UserProfile() {
                                         variant="contained"
                                         onClick={handleUpdate}
                                         fullWidth
-                                        sx={{ marginTop: 2, backgroundColor: '#FF6F61', color: '#ffffff', textTransform: 'none', '&:hover': { backgroundColor: '#FF4F45' } }}
+                                        sx={{ marginTop: 2, backgroundColor: '#ff932f', color: '#ffffff', textTransform: 'none', '&:hover': { backgroundColor: '#FF4F45' } }}
                                     >
                                         Save Changes
                                     </Button>
                                 )}
                             </Box>)}
                                 <>
-                                <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold', color: '#FF6F61' }}>
+                                <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold', color: '#ff932f' }}>
                                         MY PROPERTY LIST
                                     </Typography>
                                     
@@ -396,14 +397,14 @@ function UserProfile() {
                                             <Button
                                                 variant="contained"
                                                 onClick={handlepropertyUpdate}
-                                                sx={{ backgroundColor: '#FF6F61', color: '#ffffff', '&:hover': { backgroundColor: '#FF4F45' }, marginRight: 2 }}
+                                                sx={{ backgroundColor: '#ff932f', color: '#ffffff', '&:hover': { backgroundColor: '#FF4F45' }, marginRight: 2 }}
                                             >
                                                 Save Changes
                                             </Button>
                                             <Button
                                                 variant="contained"
                                                 onClick={() => setSelectedproperty(null)}
-                                                sx={{ backgroundColor: '#FF6F61', color: '#ffffff', '&:hover': { backgroundColor: '#FF4F45' } }}
+                                                sx={{ backgroundColor: '#ff932f', color: '#ffffff', '&:hover': { backgroundColor: '#FF4F45' } }}
                                             >
                                                 Cancel
                                             </Button>
@@ -450,7 +451,7 @@ function UserProfile() {
                                     <Button
                                         variant="contained"
                                         startIcon={<Print />}
-                                        sx={{ marginTop: 2, backgroundColor: '#FF6F61', color: '#ffffff', '&:hover': { backgroundColor: '#FF4F45' } }}
+                                        sx={{ marginTop: 2, backgroundColor: '#ff932f', color: '#ffffff', '&:hover': { backgroundColor: '#FF4F45' } }}
                                         onClick={handlePDF}
                                     >
                                         Download Report
