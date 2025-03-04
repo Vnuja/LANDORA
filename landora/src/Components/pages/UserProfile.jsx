@@ -8,6 +8,7 @@ import { AuthContext } from '../Auth/AuthContext';
 import axios from 'axios';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import colors from '../colors';
 
 const URL = 'http://localhost:4000/property';
 
@@ -179,7 +180,7 @@ function UserProfile() {
     return (
         <Box
             sx={{
-                background: 'linear-gradient(to left, #131313, #ff932f)',
+                background: colors.userprofilebg,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 minHeight: '100vh',
@@ -199,12 +200,12 @@ function UserProfile() {
                         width: '100%',
                         display: 'flex',
                         height: '100%',
-                        backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                        backgroundColor: colors.userprofilecard,
                         boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15)',
                     }}
                 >
                     <Grid container sx={{ height: '100%' }}>
-                        <Grid item xs={12} sm={4} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#131313', height: '100%', padding: 3 }}>
+                        <Grid item xs={12} sm={4} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: colors.userprofilecard2 , height: '100%', padding: 3 }}>
                             <Avatar
                                 src={user.image}
                                 alt={user.name}
@@ -214,7 +215,7 @@ function UserProfile() {
                                 variant="contained"
                                 startIcon={<Edit />}
                                 fullWidth
-                                sx={{ marginBottom: 2, backgroundColor: '#ff932f', color: '#ffffff', textTransform: 'none', '&:hover': { backgroundColor: '#FF4F45' } }}
+                                sx={{ marginBottom: 2, backgroundColor:colors.userprofilebutton , color: colors.userprofiletext1 , textTransform: 'none', '&:hover': { backgroundColor: '#FF4F45' } }}
                                 onClick={() => setEditing(true)}
                             >
                                 Edit Details
@@ -223,7 +224,7 @@ function UserProfile() {
                                 variant="contained"
                                 startIcon={<Lock />}
                                 fullWidth
-                                sx={{ marginBottom: 2, backgroundColor: '#ff932f', color: '#ffffff', textTransform: 'none', '&:hover': { backgroundColor: '#FF4F45' } }}
+                                sx={{ marginBottom: 2, backgroundColor:colors.userprofilebutton , color: colors.userprofiletext1 , textTransform: 'none', '&:hover': { backgroundColor: '#FF4F45' } }}
                             >
                                 Change Password
                             </Button>
@@ -231,7 +232,7 @@ function UserProfile() {
                                 variant="contained"
                                 startIcon={<Delete />}
                                 fullWidth
-                                sx={{ marginBottom: 2, backgroundColor: '#ff932f', color: '#ffffff', textTransform: 'none', '&:hover': { backgroundColor: '#FF4F45' } }}
+                                sx={{ marginBottom: 2, backgroundColor:colors.userprofilebutton , color: colors.userprofiletext1 , textTransform: 'none', '&:hover': { backgroundColor: '#FF4F45' } }}
                                 onClick={handleDelete}
                             >
                                 Delete Account
@@ -240,7 +241,7 @@ function UserProfile() {
                                 variant="contained"
                                 startIcon={<Logout />}
                                 fullWidth
-                                sx={{ marginBottom: 2, backgroundColor: '#ff932f', color: '#ffffff', textTransform: 'none', '&:hover': { backgroundColor: '#FF4F45' } }}
+                                sx={{ marginBottom: 2, backgroundColor:colors.userprofilebutton , color: colors.userprofiletext1 , textTransform: 'none', '&:hover': { backgroundColor: '#FF4F45' } }}
                                 onClick={handleLogout}
                             >
                                 Logout
@@ -249,7 +250,7 @@ function UserProfile() {
 
                         {/* Main content */}
                         <Grid item xs={12} sm={8} sx={{ padding: 3 }}>
-                            <Typography variant="h5" fontWeight="bold" sx={{ marginBottom: 2,color:'#fff' }}>
+                            <Typography variant="h5" fontWeight="bold" sx={{ marginBottom: 2,color:colors.userprofiletext }}>
                                 {editing ? 'Edit Profile' : 'User Profile'}
                             </Typography>
 
@@ -295,8 +296,8 @@ function UserProfile() {
                                     <Button
                                         variant="contained"
                                         onClick={handleUpdate}
-                                        sx={{ backgroundColor: '#ff932f', color: '#ffffff', '&:hover': { backgroundColor: '#FF4F45' } }}
-                                    >
+                                        sx={{ marginBottom: 2, backgroundColor:colors.userprofilebutton , color: colors.userprofiletext1 , textTransform: 'none', '&:hover': { backgroundColor: '#FF4F45' } }}
+                                        >
                                         Update
                                     </Button>
                                 </Box>
@@ -451,7 +452,7 @@ function UserProfile() {
                                     <Button
                                         variant="contained"
                                         startIcon={<Print />}
-                                        sx={{ marginTop: 2, backgroundColor: '#ff932f', color: '#ffffff', '&:hover': { backgroundColor: '#FF4F45' } }}
+                                        sx={{ marginTop: 2, backgroundColor:colors.userprofilebutton, color: colors.userprofiletext, '&:hover': { backgroundColor: colors.userprofilebutton1 } }}
                                         onClick={handlePDF}
                                     >
                                         Download Report

@@ -25,6 +25,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
 import Logo from '../Images/landora.png';
+import colors from '../colors';
 
 function Register() {
     const navigate = useNavigate();
@@ -83,7 +84,7 @@ function Register() {
     return (
         <Box sx={{
             minHeight: '100vh',
-            background: 'linear-gradient(to left, #131313, #ff932f)',
+            background: colors.signupbg,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'left'
@@ -94,7 +95,7 @@ function Register() {
                     padding: 5,
                     borderRadius: 3,
                     maxWidth: 900,
-                    background: 'rgba(0, 0, 0, 0.9)',
+                    background: colors.signupcard,
                     backdropFilter: 'blur(10px)',
                     boxShadow: 5
                 }}>
@@ -103,7 +104,7 @@ function Register() {
                             <img src={Logo} alt="Crystal Elegance" style={{ maxWidth: '100%', height: 'auto' }} />
                         </Grid>
                         <Grid item xs={12} sm={7}>
-                            <Typography variant="h4" fontWeight="bold" color="#ff932f" gutterBottom>
+                            <Typography variant="h4" fontWeight="bold" color={colors.signuptext1 }  gutterBottom>
                                 Create Account
                             </Typography>
                             <Box component="form" onSubmit={handleSubmit} sx={{ mt: 2 }}>
@@ -117,18 +118,18 @@ function Register() {
                                         type={field.includes('password') ? 'password' : 'text'}
                                         value={user[field]}
                                         onChange={handleInputChange}
-                                        sx={{ mb: 2, backgroundColor: 'black', borderRadius: 2, input: { color: 'white' }, fieldset: { borderColor: 'white' }, '&::placeholder': { color: 'white' } }}
+                                        sx={{ mb: 2, backgroundColor: colors.signuptextarea, borderRadius: 2, input: { color: colors.signupplaceholder }, fieldset: { borderColor: 'white' }, '&::placeholder': { color: 'white' } }}
                                         error={!!errors[field]}
                                         helperText={errors[field]}
                                     />
                                 ))}
                                 <FormControl fullWidth sx={{ mb: 2 }}>
-                                    <InputLabel sx={{ color: 'white' }}>Gender</InputLabel>
+                                    <InputLabel sx={{color: colors.signupplaceholder }}>Gender</InputLabel>
                                     <Select
                                         name="gender"
                                         value={user.gender}
                                         onChange={handleInputChange}
-                                        sx={{ color: 'white', '.MuiOutlinedInput-notchedOutline': { borderColor: 'white' } }}
+                                        sx={{ color: colors.signuptext1 , '.MuiOutlinedInput-notchedOutline': { borderColor: 'white' } }}
                                         error={!!errors.gender}
                                     >
                                         <MenuItem value=""><em>None</em></MenuItem>
@@ -146,7 +147,7 @@ function Register() {
                                     type="date"
                                     value={user.birthday}
                                     onChange={handleInputChange}
-                                    sx={{ mb: 2, backgroundColor: 'black', borderRadius: 2, input: { color: 'white' }, fieldset: { borderColor: 'white' } }}
+                                    sx={{ mb: 2, backgroundColor: colors.signuptextarea , borderRadius: 2, input: { color: colors.signupplaceholder }, fieldset: { borderColor: 'white' } }}
                                     error={!!errors.birthday}
                                     helperText={errors.birthday}
                                     InputLabelProps={{
@@ -158,7 +159,7 @@ function Register() {
                                     label="Accept Terms and Conditions"
                                     sx={{ marginBottom: 2, color: 'white' }}
                                 />
-                                <Button type="submit" fullWidth variant="contained" sx={{ backgroundColor: '#ff932f', py: 1.5, borderRadius: 3, fontWeight: 'bold', boxShadow: 3, textTransform: 'none' }}>
+                                <Button type="submit" fullWidth variant="contained" sx={{ backgroundColor: colors.signupbutton, color:colors.signuptext1,py: 1.5, borderRadius: 3, fontWeight: 'bold', boxShadow: 3, textTransform: 'none' }}>
                                     Create Account
                                 </Button>
                             </Box>

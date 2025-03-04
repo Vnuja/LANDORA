@@ -17,7 +17,7 @@ const menuItems = [
   { text: 'User Management', icon: <FontAwesomeIcon icon={faUsers} />, path: '/admindashboard/user-management' },
   { text: 'Property Management', icon: <FontAwesomeIcon icon={faBuilding} />, path: '/property-management' },
   { text: 'Sales Management', icon: <FontAwesomeIcon icon={faSackDollar} />, path: '/sales-management' },
-  { text: 'Maintanance Management', icon: <FontAwesomeIcon icon={faHammer} />, path: '/maintanance-management' },
+  { text: 'Maintanance Management', icon: <FontAwesomeIcon icon={faHammer} />, path: '/maintanance-management/Requests' },
 ];
 
 function AdminDashboard() {
@@ -64,7 +64,6 @@ function AdminDashboard() {
         variant="permanent"
         anchor="left"
       >
-        <Toolbar sx={{ marginBottom: 0 }} /> {/* Remove margin */}
         <List>
           {menuItems.map((item, index) => (
             <ListItem button key={index} onClick={() => handleMenuClick(item.path)}>
@@ -78,17 +77,15 @@ function AdminDashboard() {
         component="main"
         sx={{
           flexGrow: 1,
-          p: 0, // No padding
-          backgroundColor: '#f4f6f8',
+          backgroundColor: 'linear-gradient(to left, #131313, #ff932f)',
           minHeight: '100vh',
           overflow: 'hidden', // Prevent scrolling
         }}
       >
-        <Toolbar sx={{ margin: 0, padding: 0 }} /> {/* Set margin and padding to 0 */}
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#1976d2', padding: '10px 20px', color: 'white', height: '60px' }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'linear-gradient(to left, #babd02, #ff932f)', padding: '10px 20px', color: 'white', height: '100px' }}>
           <Typography variant="h5">{currentTab}</Typography>
           <div>
-            <Button variant="outlined" onClick={handleLogout} sx={{ marginLeft: 2, color: 'white', borderColor: 'white' }}>
+            <Button variant="outlined" onClick={handleLogout} sx={{ marginLeft: 2, color: 'black', borderColor: 'black' }}>
               <FontAwesomeIcon icon={faSignOutAlt} /> Logout
             </Button>
           </div>

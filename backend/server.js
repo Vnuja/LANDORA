@@ -9,6 +9,7 @@ const app = express();
 // Import routes
 const userRoutes = require('./Routes/UserRoutes');
 const authRoutes = require('./Routes/AuthRoutes');
+const maintenanceRequestRoutes = require('./Routes/maintenanceRequestRoutes');
 
 // Middleware
 app.use(express.json()); // Ensure this is before your routes
@@ -17,6 +18,7 @@ app.use(cors()); // You can configure CORS options if needed
 // Route middleware
 app.use('/users', userRoutes);
 app.use('/auth', authRoutes);
+app.use('/api/maintenance-requests', maintenanceRequestRoutes);
 
 // Serve static files (uploaded images)
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));

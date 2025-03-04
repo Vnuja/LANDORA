@@ -10,6 +10,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Logo from '../Images/landora.png';
+import colors from '../colors';
 
 function Login() {
     const navigate = useNavigate();
@@ -40,7 +41,7 @@ function Login() {
     return (
         <Box sx={{
             minHeight: '100vh',
-            background: 'linear-gradient(to left, #131313, #ff932f)',
+            background: colors.loginbg,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'left'
@@ -51,7 +52,7 @@ function Login() {
                     padding: 5,
                     borderRadius: 3,
                     maxWidth: 900,
-                    background: 'rgba(0, 0, 0, 0.9)',
+                    background: colors.logincard,
                     backdropFilter: 'blur(10px)',
                     boxShadow: 5
                 }}>
@@ -60,10 +61,10 @@ function Login() {
                             <img src={Logo} alt="Crystal Elegance" style={{ maxWidth: '100%', height: 'auto' }} />
                         </Grid>
                         <Grid item xs={12} sm={7}>
-                            <Typography variant="h4" fontWeight="bold" color="#ff932f" gutterBottom>
+                            <Typography variant="h4" fontWeight="bold" color={colors.logintext1} gutterBottom>
                                 Welcome Back
                             </Typography>
-                            <Typography variant="subtitle1" color="textSecondary" gutterBottom>
+                            <Typography variant="subtitle1" color={colors.logintext2} gutterBottom>
                                 Sign in to continue
                             </Typography>
                             <Box component="form" onSubmit={handleSubmit} sx={{ mt: 2 }}>
@@ -77,12 +78,12 @@ function Login() {
                                     InputProps={{
                                         startAdornment: (
                                             <InputAdornment position="start">
-                                                <PersonIcon style={{ color: '#ff932f' }} />
+                                                <PersonIcon style={{ color: colors.loginicon }} />
                                             </InputAdornment>
                                         ),
-                                        sx: { backgroundColor: 'black', borderRadius: 2, border: '1px solid white', color: 'white' }
+                                        sx: { backgroundColor: colors.logintextarea, borderRadius: 2, border: '1px solid white', color: colors.border }
                                     }}
-                                    sx={{ mb: 2, input: { color: 'white' }, '& .MuiOutlinedInput-root': { '&::placeholder': { color: 'white' } } }}
+                                    sx={{ mb: 2, input: { color: colors.placeholder }, '& .MuiOutlinedInput-root': { '&::placeholder': { color: 'white' } } }}
                                 />
                                 <TextField
                                     fullWidth
@@ -95,7 +96,7 @@ function Login() {
                                     InputProps={{
                                         startAdornment: (
                                             <InputAdornment position="start">
-                                                <LockIcon style={{ color: '#ff932f' }}/>
+                                                <LockIcon style={{ color: colors.loginicon }} />
                                             </InputAdornment>
                                         ),
                                         endAdornment: (
@@ -105,16 +106,17 @@ function Login() {
                                                 </IconButton>
                                             </InputAdornment>
                                         ),
-                                        sx: { backgroundColor: 'black', borderRadius: 2, border: '1px solid white', color: 'white' }
+                                        sx: { backgroundColor: colors.logintextarea, borderRadius: 2, border: '1px solid white', color: colors.border }
                                     }}
-                                    sx={{ mb: 3, input: { color: 'white' }, '& .MuiOutlinedInput-root': { '&::placeholder': { color: 'white' } } }}
+                                    sx={{ mb: 2, input: { color: colors.placeholder }, '& .MuiOutlinedInput-root': { '&::placeholder': { color: 'white' } } }}
                                 />
                                 <Button
                                     type="submit"
                                     fullWidth
                                     variant="contained"
                                     sx={{
-                                        backgroundColor: '#ff932f',
+                                        backgroundColor: colors.loginbutton,
+                                        color: colors.logintext2,
                                         py: 1.5,
                                         borderRadius: 3,
                                         fontWeight: 'bold',
@@ -125,7 +127,7 @@ function Login() {
                                     Login Now
                                 </Button>
                                 <Divider sx={{ my: 3 }}>
-                                    <Typography variant="body2" color="textSecondary">Or Sign in with</Typography>
+                                    <Typography variant="body2" color={colors.logintext2}>Or Sign in with</Typography>
                                 </Divider>
                             </Box>
                         </Grid>

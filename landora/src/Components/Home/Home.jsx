@@ -4,6 +4,7 @@ import { Box, Typography, Button } from '@mui/material';
 import { ShoppingCart as ShoppingCartIcon } from '@mui/icons-material';
 import Navbar from '../Navbar/Navbar'; // Ensure the path is correct
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import colors from '../colors'; // Import the colors object
 
 function Home() {
   const [fadeIn, setFadeIn] = useState(false);
@@ -21,15 +22,15 @@ function Home() {
   };
 
   return (
-    <div style={{ 
-      height: '100vh', 
+    <div style={{
+      height: '100vh',
       margin: 0,
       overflow: 'hidden',
       opacity: fadeIn ? 1 : 0,
       transition: 'opacity 2s ease-out',
     }}>
       <Navbar /> {/* Include the Navbar component */}
-      
+
       <Box
         sx={{
           position: 'relative',
@@ -40,7 +41,7 @@ function Home() {
           backgroundPosition: 'left center, right center',
           backgroundRepeat: 'no-repeat, no-repeat',
           backgroundSize: '51% 100%, 51% 100%',
-          background: 'linear-gradient(to left, #131313, #ff932f)',
+          background: colors.homebg, // Use the color from colors object
           opacity: fadeIn ? 1 : 0,
           transition: 'opacity 2s ease-out',
         }}
@@ -54,6 +55,7 @@ function Home() {
             fontWeight: 'bold',
             textAlign: 'center',
             fontSize: '6rem',
+            color: colors.hometext1, // Use the color from colors object
             textShadow: '2px 2px 8px rgba(0, 0, 0, 0.3)',
             background: 'rgba(255, 255, 255, 0.2)',
             borderRadius: '10px',
@@ -87,7 +89,7 @@ function Home() {
             transition: 'transform 2s ease-out, opacity 2s ease-out',
           }}
         >
-Connecting Land Owners and Buyers        </Typography>
+          Connecting Land Owners and Buyers        </Typography>
 
         {/* Shopping Button */}
         <Button

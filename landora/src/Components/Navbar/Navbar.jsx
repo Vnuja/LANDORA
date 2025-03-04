@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../Auth/AuthContext'; // Adjust the path as needed
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import colors from '../colors';
 
 function Navbar() {
   const { authState, logout } = useContext(AuthContext);
@@ -17,16 +18,18 @@ function Navbar() {
   };
 
   return (
-    <Box sx={{ flexGrow: 1}}>
-      <AppBar position="static" sx={{ backgroundColor: '#131313' }}>
-        <Toolbar>
+    <Box >
+      <AppBar position="static" sx={{ backgroundColor: colors.navbg, height: '85px' }}>
+        <Toolbar sx={{ flexGrow: 1 }}>
           {/* Navbar Items */}
-          <Typography variant="h5" component="div" sx={{ flexGrow: 1, color: 'white' }}>
-            <Button color="inherit" component={Link} to="/">Home</Button>
-            <Button color="inherit" component={Link} to="/sale">For Sales</Button>
-            <Button color="inherit" component={Link} to="/rent">Rental</Button>
-            <Button color="inherit" component={Link} to="/About">About Us</Button>
-            <Button color="inherit" component={Link} to="/Contact">Contact Us</Button>
+          <Typography fontSize={20} sx={{ flexGrow: 1, color:colors.navleft }}>
+          <Button color="inherit" sx={{ fontSize: 14 }} component={Link} to="/" ></Button>
+          <Button color="inherit" sx={{ fontSize: 17 }} component={Link} to="/" >LANDORA</Button>
+          <Button color="inherit" sx={{ fontSize: 14 }} component={Link} to="/" ></Button>
+          <Button color="inherit" sx={{ fontSize: 14 }} component={Link} to="/sale">For Sales</Button>
+          <Button color="inherit" sx={{ fontSize: 14 }} component={Link} to="/rent">Rental</Button>
+          <Button color="inherit" sx={{ fontSize: 14 }} component={Link} to="/About">About Us</Button>
+          <Button color="inherit" sx={{ fontSize: 14 }} component={Link} to="/Contact">Contact Us</Button>
            {/* <Button color="inherit" component={Link} to="/appointment">Appointments</Button>*/}
           </Typography>
 
@@ -37,7 +40,7 @@ function Navbar() {
             color="white"
             component={Link} to="/cart"
           >
-            <ShoppingCartIcon sx={{ color: 'white' }}/>
+            <ShoppingCartIcon sx={{ color: colors.dark }}/>
           </IconButton>
 
           {/* Profile Icon */}
@@ -45,7 +48,7 @@ function Navbar() {
             <IconButton
               size="large"
               aria-label="user profile"
-              color="white"
+              color={colors.navicon}
               component={Link} to={`/userprofile/${user.userId}`} // Adjust to your profile route
             >
               <FontAwesomeIcon icon={faUserCircle} size="lg" />
@@ -54,15 +57,16 @@ function Navbar() {
 
           {user ? (
             <>
-              <Typography variant="body1" sx={{ mx: 2, color: 'white' }}>
+              <Typography variant="body1" sx={{ mx: 2, color: colors.navright, fontSize: 16 }}>
                 Hello, {user.name}
               </Typography>
-              <Button color="inherit" onClick={handleLogout} sx={{ mx: 2, color: 'white' }}>Logout</Button>
+              <Button color="inherit" onClick={handleLogout} sx={{ mx: 2, color: colors.danger, fontSize: 16 }}>Logout</Button>
             </>
           ) : (
             <>
-              <Button color="inherit" component={Link} to="/login" sx={{ mx: 2, color: 'white' }}>Sign In</Button>
-              <Button color="inherit" component={Link} to="/signup" sx={{ mx: 2, color: 'white' }}>Sign Up</Button>
+              <Button color="inherit" component={Link} to="/login" sx={{ mx: 2, color: colors.navright, fontSize: 16 }}>Login</Button>
+              |
+              <Button color="inherit" component={Link} to="/signup" sx={{ mx: 2, color: colors.navright, fontSize: 16 }}>Register</Button>
             </>
           )}
         </Toolbar>

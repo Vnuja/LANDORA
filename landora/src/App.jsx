@@ -15,9 +15,9 @@ import TermsOfUse from './Components/pages/TermsOfUse';
 // Admin Components
 import AdminDashboard from './Components/Admin/AdminDashboard';
 import Dashboard from './Components/Admin/Dashboard';
-import UserDetails from './Components/Admin/Users/UserDetails';
-import AddUser from './Components/Admin/Users/AddUser';
-import UpdateUser from './Components/Admin/Users/UpdateUser';
+import UserDetails from './Components/Admin/UserManagement/UserDetails';
+import AddUser from './Components/Admin/UserManagement/AddUser';
+import UpdateUser from './Components/Admin/UserManagement/UpdateUser';
 
 import { AuthProvider } from './Components/Auth/AuthContext';  // Import AuthProvider
 import MakePayment from './Components/pages/MakePayment';
@@ -30,6 +30,10 @@ import SalesList from './Components/Admin/SalesManagement/SalesList';
 
 //Maintenance Components
 import MaintenanceList from './Components/Admin/MaintananceManagement/MaintananceList';
+import Requests from './Components/Admin/MaintananceManagement/Requests';
+import VendorManagement from './Components/Admin/MaintananceManagement/Vendor';
+import Cost from './Components/Admin/MaintananceManagement/Cost';
+import Schedules from './Components/Admin/MaintananceManagement/Schedules';
 
 function App() {
   return (
@@ -59,7 +63,13 @@ function App() {
           <Route path="/termsofuse" element={<TermsOfUse />} />
           <Route path="/property-management" element={<PropertyList />} />
           <Route path="/sales-management" element={<SalesList />} />
-          <Route path="/maintanance-management" element={<MaintenanceList />} />
+
+          <Route path="/maintanance-management" element={<MaintenanceList />} >
+            <Route path="Requests" element={<Requests />} />
+            <Route path="Vendor" element={<VendorManagement />} />
+            <Route path="Costs" element={<Cost />} />
+            <Route path="Schedules" element={<Schedules />} />
+          </Route>
 
           {/* Admin Dashboard Routes */}
           <Route path="/admindashboard" element={<AdminDashboard />}>
