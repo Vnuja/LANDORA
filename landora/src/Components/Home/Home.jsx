@@ -55,7 +55,6 @@ function Home() {
             fontWeight: 'bold',
             textAlign: 'center',
             fontSize: '6rem',
-            color: colors.hometext1, // Use the color from colors object
             textShadow: '2px 2px 8px rgba(0, 0, 0, 0.3)',
             background: 'rgba(255, 255, 255, 0.2)',
             borderRadius: '10px',

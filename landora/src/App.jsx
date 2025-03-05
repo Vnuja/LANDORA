@@ -26,7 +26,12 @@ import MakePayment from './Components/pages/MakePayment';
 import PropertyList from './Components/Admin/PropertyManagement/PropertyList';
 
 //Sales Components
-import SalesList from './Components/Admin/SalesManagement/SalesList';
+import SalesDashboard from './Components/Admin/SalesManagement/SalesList';
+import FinancialTransactions from './Components/Admin/SalesManagement/FinancialTransactions';
+import PaymentsAndReceipts from './Components/Admin/SalesManagement/PaymentsAndReceipts';
+import TransactionStatus from './Components/Admin/SalesManagement/TransactionStatus';
+import ContractsAndAgreements from './Components/Admin/SalesManagement/ContractsAndAgreements';
+import Sales from './Components/Admin/SalesManagement/SalesView';
 
 //Maintenance Components
 import MaintenanceList from './Components/Admin/MaintananceManagement/MaintananceList';
@@ -34,6 +39,7 @@ import Requests from './Components/Admin/MaintananceManagement/Requests';
 import VendorManagement from './Components/Admin/MaintananceManagement/Vendor';
 import Cost from './Components/Admin/MaintananceManagement/Cost';
 import Schedules from './Components/Admin/MaintananceManagement/Schedules';
+
 
 function App() {
   return (
@@ -62,7 +68,14 @@ function App() {
           <Route path="/privacypolicy" element={<PrivacyPolicy />} />
           <Route path="/termsofuse" element={<TermsOfUse />} />
           <Route path="/property-management" element={<PropertyList />} />
-          <Route path="/sales-management" element={<SalesList />} />
+          
+          <Route path="/sales-management" element={<SalesDashboard />} >
+            <Route path="SalesList" element={<Sales />} />
+            <Route path="FinancialTransactions" element={<FinancialTransactions />} />
+            <Route path="PaymentsAndReceipts" element={<PaymentsAndReceipts />} />
+            <Route path="TransactionStatus" element={<TransactionStatus />} />
+            <Route path="ContractsAndAgreements" element={<ContractsAndAgreements />} />    
+          </Route>
 
           <Route path="/maintanance-management" element={<MaintenanceList />} >
             <Route path="Requests" element={<Requests />} />
