@@ -1,37 +1,99 @@
-import React from 'react';
-import { Container, Typography, List, ListItem, ListItemText, Paper } from '@mui/material';
+// eslint-disable-next-line no-unused-vars
+import React, { useState, useEffect, useContext } from 'react';
+import { Drawer, List, ListItem, ListItemIcon, ListItemText, CssBaseline, Box, Typography, Button } from '@mui/material';
+import { useNavigate, Outlet, useLocation } from 'react-router-dom';
+import { AuthContext } from '../../Auth/AuthContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTachometerAlt, faUsers, faDollarSign, faSackDollar, faHammer, faSignOutAlt, faBuilding } from '@fortawesome/free-solid-svg-icons';
 
-const properties = [
-    { id: 1, name: 'Sale 1', location: 'Location 1', price: '$1000' },
-    { id: 2, name: 'Sale 2', location: 'Location 2', price: '$2000' },
-    { id: 3, name: 'Sale 3', location: 'Location 3', price: '$3000' },
+const drawerWidth = 240;
+
+// URL for the background image  
+const sidebarBackground = 'https://wallpapers.com/images/hd/blank-white-vertical-grains-mcf32g28ary3jdej.jpg'; // Replace with your image URL
+
+const menuItems = [
+  { text: 'Main Dashboard', icon: <FontAwesomeIcon icon={faTachometerAlt} />, path: '/admindashboard/dashboard' },
+  { text: 'Sales Management', icon: <FontAwesomeIcon icon={faSackDollar} />, path: '/sales-management/SalesList' },
+  { text: ' financial transactions ', icon: <FontAwesomeIcon icon={faUsers} />, path: '/sales-management/FinancialTransactions' },
+  { text: 'Contracts and agreements ', icon: <FontAwesomeIcon icon={faBuilding} />, path: '/sales-management/ContractsAndAgreements ' },
+  { text: 'Payments and receipts  ', icon: <FontAwesomeIcon icon={faSackDollar} />, path: '/sales-management/PaymentsAndReceipts' },
+  { text: 'transaction status ', icon: <FontAwesomeIcon icon={faHammer} />, path: '/sales-management/TransactionStatus ' },
 ];
 
-const SalesList = () => {
-    return (
-        <Container>
-            <Typography variant="h4" component="h1" gutterBottom>
-                Sale List
-            </Typography>
-            <List>
-                {properties.map(Sale => (
-                    <Paper key={Sale.id} elevation={3} style={{ margin: '10px 0', padding: '10px' }}>
-                        <ListItem>
-                            <ListItemText
-                                primary={<Typography variant="h6">{Sale.name}</Typography>}
-                                secondary={
-                                    <>
-                                        <Typography variant="body2">Location: {Sale.location}</Typography>
-                                        <Typography variant="body2">Price: {Sale.price}</Typography>
-                                    </>
-                                }
-                            />
-                        </ListItem>
-                    </Paper>
-                ))}
-            </List>
-        </Container>
-    );
-};
+function SalesDashboard() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { logout } = useContext(AuthContext);
 
-export default SalesList;
+  const [currentTab, setCurrentTab] = useState('');
+
+
+  useEffect(() => {
+    const currentPath = location.pathname;
+    const currentItem = menuItems.find(item => item.path === currentPath);
+    if (currentItem) {
+      setCurrentTab(currentItem.text);
+    }
+  }, [location.pathname]);
+
+  const handleMenuClick = (path) => {
+    navigate(path);
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
+
+  return (
+    <Box sx={{ display: 'flex' }}>
+      <CssBaseline />
+      <Drawer
+        sx={{
+          width: drawerWidth,
+          flexShrink: 0,
+          '& .MuiDrawer-paper': {
+            width: drawerWidth,
+            boxSizing: 'border-box',
+            backgroundImage: `url(${sidebarBackground})`, // Use the URL for the image
+            backgroundSize: 'cover', // Adjust as needed
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+          },
+        }}
+        variant="permanent"
+        anchor="left"
+      >
+        <List>
+          {menuItems.map((item, index) => (
+            <ListItem button key={index} onClick={() => handleMenuClick(item.path)}>
+              <ListItemIcon>{item.icon}</ListItemIcon>
+              <ListItemText primary={item.text} sx={{ color: 'black' }} /> {/* Change text color to black */}
+            </ListItem>
+          ))}
+        </List>
+      </Drawer>
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          backgroundColor: 'linear-gradient(to left, #131313, #ff932f)',
+          minHeight: '100vh',
+          overflow: 'hidden', // Prevent scrolling
+        }}
+      >
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'linear-gradient(to left, #babd02, #ff932f)', padding: '10px 20px', color: 'white', height: '100px' }}>
+          <Typography variant="h5">{currentTab}</Typography>
+          <div>
+            <Button variant="outlined" onClick={handleLogout} sx={{ marginLeft: 2, color: 'black', borderColor: 'black' }}>
+              <FontAwesomeIcon icon={faSignOutAlt} /> Logout
+            </Button>
+          </div>
+        </Box>
+        <Outlet />{/* Render nested routes */}
+      </Box>
+    </Box>
+  );
+}
+
+export default SalesDashboard;

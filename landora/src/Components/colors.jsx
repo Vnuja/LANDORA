@@ -32,9 +32,9 @@ const colors = {
 
     //Home Page
     //homebg: 'linear-gradient(to left,rgb(255, 255, 255), #ff932f)',
-    homebg: 'rgb(255, 255, 255)',
-    hometext1: ' #ff932f',
-    hometext2: ' #ff932f',
+    homebg: 'rgb(0, 0, 0)',
+    hometext1: 'rgb(255, 123, 0)',
+    hometext2: 'rgb(0, 0, 0)',
     homebutton: ' #ff932f',
     homeicon: ' #ff932f',
 
@@ -76,6 +76,17 @@ const colors = {
     userprofiletextarea: 'rgb(255, 255, 255)',
     userprofileborder: 'rgb(0, 0, 0)',
     userprofileplaceholder: 'rgb(0, 0, 0)',
+
+    //Extra Features Page
+    //efpagebg: 'linear-gradient(to left,rgb(255, 255, 255), #ff932f)',
+    efpagebg: 'rgb(255, 255, 255)',
+    efpagecard: ' #ff932f',
+    efpagetext: ' #000000',
+    efpageicon: ' #ff932f',
+    efpagebutton: ' #ff932f',
+    efpageborder: 'rgb(0, 0, 0)',
+    efpageplaceholder: 'rgb(0, 0, 0)',
+    
 
 
     

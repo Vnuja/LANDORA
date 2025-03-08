@@ -16,7 +16,7 @@ const menuItems = [
   { text: 'Dashboard', icon: <FontAwesomeIcon icon={faTachometerAlt} />, path: '/admindashboard/dashboard' },
   { text: 'User Management', icon: <FontAwesomeIcon icon={faUsers} />, path: '/admindashboard/user-management' },
   { text: 'Property Management', icon: <FontAwesomeIcon icon={faBuilding} />, path: '/property-management' },
-  { text: 'Sales Management', icon: <FontAwesomeIcon icon={faSackDollar} />, path: '/sales-management' },
+  { text: 'Sales Management', icon: <FontAwesomeIcon icon={faSackDollar} />, path: '/sales-management/SalesList' },
   { text: 'Maintanance Management', icon: <FontAwesomeIcon icon={faHammer} />, path: '/maintanance-management/Requests' },
 ];
 

@@ -75,7 +75,7 @@ function Footer() {
       <Divider sx={{ backgroundColor: '#444', my: 3 }} />
 
       {/* Social Media Links */}
-      <Box textAlign="center" mb={2}>
+      <Box textAlign="center" mb={2} sx={{height: '5px'}}>
         <Link href="https://instagram.com" target="_blank" variant="body2" sx={{ mx: 1, color:colors.footertext, textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}>
           Instagram
         </Link>

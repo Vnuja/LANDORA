@@ -1,4 +1,3 @@
-
 // eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect, useContext } from 'react';
 import { Drawer, List, ListItem, ListItemIcon, ListItemText, CssBaseline, Box, Typography, Button } from '@mui/material';
@@ -6,11 +5,10 @@ import { useNavigate, Outlet, useLocation } from 'react-router-dom';
 import { AuthContext } from '../../Auth/AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTachometerAlt, faUsers, faSackDollar, faHammer, faSignOutAlt, faBuilding } from '@fortawesome/free-solid-svg-icons';
-import Request from './Requests';
 
 const drawerWidth = 240;
 
-// URL for the background image
+// URL for the background image  
 const sidebarBackground = 'https://wallpapers.com/images/hd/blank-white-vertical-grains-mcf32g28ary3jdej.jpg'; // Replace with your image URL
 
 const menuItems = [

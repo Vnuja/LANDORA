@@ -4,6 +4,7 @@ import Header from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
 import footerLogo from '../Images/Landora.png'; // Adjust the path for footer logo
 import { Container, Typography, Box, Grid } from '@mui/material';
+import EFpage from '../ExtraFeature/EFpage'; // Ensure the path is correct
 
 function AboutUs() {
   return (
@@ -94,7 +95,7 @@ function AboutUs() {
           </Grid>
         </Grid>
       </Container>
-      <Footer />
+\      <Footer />
     </div>
   );
 }
