@@ -55,10 +55,12 @@ function AdminDashboard() {
           '& .MuiDrawer-paper': {
             width: drawerWidth,
             boxSizing: 'border-box',
-            backgroundImage: `url(${sidebarBackground})`, // Use the URL for the image
-            backgroundSize: 'cover', // Adjust as needed
+            backgroundImage: sidebarBackground, // Apply background with overlay
+            backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
+            color: '#333', // Darker text for better readability
+            paddingTop: '20px'
           },
         }}
         variant="permanent"
@@ -67,7 +69,7 @@ function AdminDashboard() {
         <List>
           {menuItems.map((item, index) => (
             <ListItem button key={index} onClick={() => handleMenuClick(item.path)}>
-              <ListItemIcon>{item.icon}</ListItemIcon>
+                  <ListItemIcon sx={{ color: '#ff932f' }}>{item.icon}</ListItemIcon> {/* Set icon color to #ff932f */}
               <ListItemText primary={item.text} sx={{ color: 'black' }} /> {/* Change text color to black */}
             </ListItem>
           ))}

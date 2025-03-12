@@ -30,6 +30,7 @@ import {
   YAxis,
   CartesianGrid,
 } from 'recharts';
+import * as XLSX from 'xlsx';
 
 const URL = 'http://localhost:4000/users';
 
@@ -136,7 +137,21 @@ function UserDetails() {
 
     doc.save('user-details.pdf');
   };
-
+  const handleExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(users.map(user => ({
+      'User ID': user.userId,
+      'Username': user.userName,
+      'Name': user.name,
+      'Email': user.email,
+      'Phone': user.phone,
+      'Type': user.type,
+      'Gender': user.gender,
+      'Birthday': new Date(user.birthday).toLocaleDateString(),
+    })));
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'User Details');
+    XLSX.writeFile(workbook, 'user-details.xlsx');
+  };
   const calculateUserTypeStats = (data) => {
     const typeCounts = data.reduce((acc, user) => {
       acc[user.type] = (acc[user.type] || 0) + 1;

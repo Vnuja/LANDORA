@@ -13,6 +13,11 @@ const MaintenanceRequestSchema = new mongoose.Schema({
         ref: 'Vendor',
         required: true
     },
+    customerID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Customer',
+        required: true
+    },
     title: {
         type: String,
         required: true
@@ -23,7 +28,7 @@ const MaintenanceRequestSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['Pending', 'In Progress', 'Completed'],
+        enum: ['Pending', 'Inspecting', 'In Progress', 'Completed', 'Rejected'],
         default: 'Pending'
     },
     createdAt: {

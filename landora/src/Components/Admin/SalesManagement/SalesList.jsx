@@ -63,7 +63,7 @@ function SalesDashboard() {
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
-            color: '#333', // Darker text for better readability
+            color: ' #333', // Darker text for better readability
             paddingTop: '20px'
           },
         }}
@@ -82,7 +82,7 @@ function SalesDashboard() {
               }}
             >
               <ListItemIcon>
-                <FontAwesomeIcon icon={item.icon} style={{ color: '#ff932f' }} /> {/* Orange icons */}
+                <FontAwesomeIcon icon={item.icon} style={{ color: ' #ff932f' }} /> {/* Orange icons */}
               </ListItemIcon>
               <ListItemText primary={item.text} />
             </ListItem>

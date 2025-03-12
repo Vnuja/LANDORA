@@ -12,6 +12,11 @@ function Navbar() {
   const { authState, logout } = useContext(AuthContext);
   const navigate = useNavigate();
   const { user } = authState;
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
 
   const handleLogout = () => {
     logout();
@@ -54,7 +59,7 @@ function Navbar() {
               color={colors.navicon}
               component={Link} to={`/userprofile/${user.userId}`} // Adjust to your profile route
             >
-              <FontAwesomeIcon icon={faUserCircle} size="lg" />
+              <FontAwesomeIcon icon={faUserCircle} size="lg" style={{ color: colors.navicon, marginTop: '18px' }} />
             </IconButton>
           )}
 

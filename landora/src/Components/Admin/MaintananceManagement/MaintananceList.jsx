@@ -1,10 +1,11 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect, useContext } from 'react';
-import { Drawer, List, ListItem, ListItemIcon, ListItemText, CssBaseline, Box, Typography, Button } from '@mui/material';
+import { Drawer, List, ListItem, ListItemIcon, ListItemText, CssBaseline, Box, Typography, Button, Card, CardContent, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { useNavigate, Outlet, useLocation } from 'react-router-dom';
 import { AuthContext } from '../../Auth/AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTachometerAlt, faUsers, faSackDollar, faHammer, faSignOutAlt, faBuilding } from '@fortawesome/free-solid-svg-icons';
+import { properties, sampleRequests, maintenanceData } from "../Database/Data";
 
 const drawerWidth = 240;
 
@@ -19,7 +20,7 @@ const menuItems = [
   { text: 'Schedules preventive maintenance', icon: <FontAwesomeIcon icon={faHammer} />, path: '/maintanance-management/Schedules' },
 ];
 
-function MaintananceDashboard() {
+function MaintananceDashboard1() {
   const navigate = useNavigate();
   const location = useLocation();
   const { logout } = useContext(AuthContext);
@@ -54,10 +55,12 @@ function MaintananceDashboard() {
           '& .MuiDrawer-paper': {
             width: drawerWidth,
             boxSizing: 'border-box',
-            backgroundImage: `url(${sidebarBackground})`, // Use the URL for the image
-            backgroundSize: 'cover', // Adjust as needed
+            backgroundImage: sidebarBackground, // Apply background with overlay
+            backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
+            color: '#333', // Darker text for better readability
+            paddingTop: '20px'
           },
         }}
         variant="permanent"
@@ -66,8 +69,8 @@ function MaintananceDashboard() {
         <List>
           {menuItems.map((item, index) => (
             <ListItem button key={index} onClick={() => handleMenuClick(item.path)}>
-              <ListItemIcon>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.text} sx={{ color: 'black' }} /> {/* Change text color to black */}
+                  <ListItemIcon sx={{ color: '#ff932f' }}>{item.icon}</ListItemIcon> {/* Set icon color to #ff932f */}
+                  <ListItemText primary={item.text} sx={{ color: 'black' }} /> {/* Change text color to black */}
             </ListItem>
           ))}
         </List>
@@ -95,4 +98,4 @@ function MaintananceDashboard() {
   );
 }
 
-export default MaintananceDashboard;
+export default MaintananceDashboard1;

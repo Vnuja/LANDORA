@@ -26,7 +26,7 @@ function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("http://localhost:4000/auth/login", user);
+            const response = await axios.post("https://xjnwl62k-4000.asse.devtunnels.ms/auth/login", user);
             if (response.status === 200) {
                 const { token, user: loggedInUser } = response.data;
                 login(token, loggedInUser);
