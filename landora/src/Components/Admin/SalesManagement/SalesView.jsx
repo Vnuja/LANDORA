@@ -1,12 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { Drawer, List, ListItem, ListItemIcon, ListItemText, CssBaseline, Box, Typography, Button, Dialog, DialogTitle, DialogActions, DialogContent, TextField, Container, List as MuiList, Paper } from '@mui/material';
-import { useNavigate, Outlet, useLocation } from 'react-router-dom';
-import { AuthContext } from '../../Auth/AuthContext';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTachometerAlt, faDollarSign, faUsers, faSackDollar, faHammer, faSignOutAlt, faBuilding } from '@fortawesome/free-solid-svg-icons';
-
-
-
+import React, { useState } from 'react';
+import { Button, Container, Typography, Grid, Box, Dialog, DialogTitle, DialogActions, DialogContent, TextField, Paper, List as MuiList, ListItem, ListItemText, IconButton } from '@mui/material';
+import ArchiveIcon from '@mui/icons-material/Archive';
+import EditIcon from '@mui/icons-material/Edit';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import { Stack, } from '@mui/material';
+import { MenuItem } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 
 
 const initialSales = [
@@ -16,34 +15,55 @@ const initialSales = [
     { id: 4, name: "Sale 4", location: "Location 4", price: "$2500", status: "Completed" },
 ];
 
+
 function Sales() {
     const [sales, setSales] = useState(initialSales);
     const [openDialog, setOpenDialog] = useState(false);
-    const [openEditDialog, setOpenEditDialog] = useState(false);
+    const [openModifyDialog, setOpenModifyDialog] = useState(false);
+    const [openNewTransactionDialog, setOpenNewTransactionDialog] = useState(false);
     const [selectedSale, setSelectedSale] = useState(null);
-    const [editData, setEditData] = useState({ name: "", location: "", price: "" });
 
-    const handleNewTransaction = () => {
+
+    const [searchQuery, setSearchQuery] = useState('');
+    const [filterStatus, setFilterStatus] = useState('All');
+
+    const filteredSales = sales.filter((sale) =>
+        sale.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
+        (filterStatus === "All" || sale.status === filterStatus)
+    );
+
+
+    // State for new transaction form
+    const [newTransaction, setNewTransaction] = useState({
+        name: "",
+        location: "",
+        price: "",
+        status: "Active",
+    });
+
+    const handleOpenNewTransaction = () => {
+        setOpenNewTransactionDialog(true);
+    };
+
+    const handleCloseNewTransaction = () => {
+        setOpenNewTransactionDialog(false);
+        setNewTransaction({ name: "", location: "", price: "", status: "Active" });
+    };
+
+    const handleSaveNewTransaction = () => {
+        if (!newTransaction.name || !newTransaction.location || !newTransaction.price) {
+            alert("Please fill in all fields!");
+            return;
+        }
+
         const newSale = {
             id: sales.length + 1,
-            name: `Sale ${sales.length + 1}`,
-            location: `Location ${sales.length + 1}`,
-            price: `$${1000 * (sales.length + 1)}`,
-            status: "Active",
+            ...newTransaction,
+            price: `$${newTransaction.price}`,
         };
+
         setSales([...sales, newSale]);
-    };
-
-    const handleModifyPayment = (id) => {
-        setSales(
-            sales.map((sale) =>
-                sale.id === id ? { ...sale, price: `$${parseInt(sale.price.replace("$", "")) + 500}` } : sale
-            )
-        );
-    };
-
-    const handleArchiveTransaction = (id) => {
-        setSales(sales.map((sale) => (sale.id === id ? { ...sale, status: "Archived" } : sale)));
+        handleCloseNewTransaction();
     };
 
     const handleViewTransaction = (sale) => {
@@ -51,75 +71,185 @@ function Sales() {
         setOpenDialog(true);
     };
 
-    const handleEditTransaction = (sale) => {
+    const handleModifyPayment = (sale) => {
         setSelectedSale(sale);
-        setEditData({ name: sale.name, location: sale.location, price: sale.price });
-        setOpenEditDialog(true);
+        setOpenModifyDialog(true);
     };
 
-    const handleSaveEdit = () => {
-        setSales(
-            sales.map((sale) =>
-                sale.id === selectedSale.id ? { ...sale, ...editData } : sale
-            )
-        );
-        setOpenEditDialog(false);
+    const handleArchiveTransaction = (id) => {
+        setSales(sales.map((sale) => (sale.id === id ? { ...sale, status: "Archived" } : sale)));
     };
 
     return (
         <Container>
-            <Typography variant="h4" component="h1" gutterBottom>
-                Sales Management
-            </Typography>
+            <Box textAlign="center" my={4}>
+                <Typography variant="h4" component="h1" fontWeight="bold" color="primary" gutterBottom>
+                    Sales Management
+                </Typography>
 
-            <Button variant="contained" color="primary" onClick={handleNewTransaction} style={{ marginBottom: "10px" }}>
-                Initialize New Transaction
-            </Button>
+                <Stack direction={{ xs: "column", sm: "row" }} spacing={2} justifyContent="flex">
+                    <Button
+                        variant="contained"
+                        color="success"
+                        sx={{ px: 3, py: 1, borderRadius: 2, fontSize: "1rem" }}
+                        onClick={handleOpenNewTransaction}
+                    >
+                        Add Transaction
+                    </Button>
 
-            <MuiList>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        sx={{ px: 3, py: 1, borderRadius: 2, fontSize: "1rem" }}
+                        onClick={handleOpenNewTransaction}
+                    >
+                        View Archive
+                    </Button>
+              
+                
+        {/* Search Bar */}
+        <TextField
+            marginRight={2}
+            variant="outlined"
+            placeholder="Search Sale..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            InputProps={{
+                startAdornment: <SearchIcon color="action" sx={{ mr: 1 }} />
+            }}
+        />
+
+        {/* Filter Dropdown */}
+        <TextField
+            select
+            variant="outlined"
+            value={filterStatus}
+            onChange={(e) => setFilterStatus(e.target.value)}
+        >
+            <MenuItem value="All">All</MenuItem>
+            <MenuItem value="Active">Active</MenuItem>
+            <MenuItem value="Completed">Completed</MenuItem>
+            <MenuItem value="Archived">Archived</MenuItem>
+        </TextField>
+    </Stack>
+    
+            </Box>
+            <MuiList sx={{ width: "100%", maxWidth: 800, margin: "auto" }}>
                 {sales.map((sale) => (
-                    <Paper key={sale.id} elevation={3} style={{ margin: "10px 0", padding: "10px" }}>
-                        <ListItem>
-                            <ListItemText
-                                primary={<Typography variant="h6">{sale.name}</Typography>}
-                                secondary={
-                                    <>
-                                        <Typography variant="body2">Location: {sale.location}</Typography>
-                                        <Typography variant="body2">Price: {sale.price}</Typography>
-                                        <Typography variant="body2">Status: {sale.status}</Typography>
-                                    </>
-                                }
-                            />
-                        </ListItem>
-                        <Button variant="outlined" color="info" onClick={() => handleViewTransaction(sale)} style={{ marginRight: "10px" }}>
-                            View Transaction
-                        </Button>
-                        <Button variant="outlined" color="secondary" onClick={() => handleModifyPayment(sale.id)} style={{ marginRight: "10px" }}>
-                            Modify Payment Terms
-                        </Button>
-                        <Button variant="outlined" color="success" onClick={() => handleEditTransaction(sale)} style={{ marginRight: "10px" }}>
-                            Edit Transaction
-                        </Button>
-                        {sale.status !== "Archived" && (
-                            <Button variant="outlined" color="error" onClick={() => handleArchiveTransaction(sale.id)}>
-                                Archive Transaction
-                            </Button>
-                        )}
+                    <Paper
+                        key={sale.id}
+                        elevation={4}
+                        sx={{
+                            margin: "12px 0",
+                            padding: 2,
+                            borderRadius: 3,
+                            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+                            transition: "transform 0.2s ease-in-out",
+                            "&:hover": { transform: "scale(1.02)" }
+                        }}
+                    >
+                        <Grid container spacing={2} alignItems="center">
+                            {/* Sale Details */}
+                            <Grid item xs={12} sm={8}>
+                                <ListItemText
+                                    primary={
+                                        <Typography variant="h6" fontWeight="bold" color="primary">
+                                            {sale.name}
+                                        </Typography>
+                                    }
+                                    secondary={
+                                        <>
+                                            <Typography
+                                                variant="body2"
+                                                color={sale.status === "Active" ? "success.main" : "textSecondary"}
+                                                fontWeight="bold"
+                                            >
+                                                🔹 Status: {sale.status}
+                                            </Typography>
+                                        </>
+                                    }
+                                />
+                            </Grid>
+
+                            {/* Action Buttons */}
+                            <Grid item xs={12} sm={4}>
+                                <Box display="flex" justifyContent={{ xs: "center", sm: "flex-end" }} gap={1} flexWrap="wrap">
+                                    <IconButton color="primary" size="medium" onClick={() => handleViewTransaction(sale)}>
+                                        <VisibilityIcon />
+                                    </IconButton>
+                                    <IconButton color="secondary" size="medium" onClick={() => handleModifyPayment(sale)}>
+                                        <EditIcon />
+                                    </IconButton>
+                                    {sale.status !== "Archived" && (
+                                        <IconButton color="error" size="medium" onClick={() => handleArchiveTransaction(sale.id)}>
+                                            <ArchiveIcon />
+                                        </IconButton>
+                                    )}
+                                </Box>
+                            </Grid>
+                        </Grid>
                     </Paper>
                 ))}
             </MuiList>
 
+            {/* New Transaction Dialog */}
+            <Dialog open={openNewTransactionDialog} onClose={handleCloseNewTransaction}>
+                <DialogTitle>New Transaction</DialogTitle>
+                <DialogContent>
+                    <TextField
+                        fullWidth
+                        label="Name"
+                        value={newTransaction.name}
+                        onChange={(e) => setNewTransaction({ ...newTransaction, name: e.target.value })}
+                        margin="dense"
+                        variant="outlined"
+                    />
+                    <TextField
+                        fullWidth
+                        label="Location"
+                        value={newTransaction.location}
+                        onChange={(e) => setNewTransaction({ ...newTransaction, location: e.target.value })}
+                        margin="dense"
+                        variant="outlined"
+                    />
+                    <TextField
+                        fullWidth
+                        label="Price"
+                        type="number"
+                        value={newTransaction.price}
+                        onChange={(e) => setNewTransaction({ ...newTransaction, price: e.target.value })}
+                        margin="dense"
+                        variant="outlined"
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCloseNewTransaction} color="secondary">
+                        Cancel
+                    </Button>
+                    <Button onClick={handleSaveNewTransaction} color="primary">
+                        Save
+                    </Button>
+                </DialogActions>
+            </Dialog>
+
             {/* View Transaction Dialog */}
             <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
                 <DialogTitle>Transaction Details</DialogTitle>
-                {selectedSale && (
-                    <Typography variant="body1" style={{ padding: "20px" }}>
-                        <strong>Name:</strong> {selectedSale.name} <br />
-                        <strong>Location:</strong> {selectedSale.location} <br />
-                        <strong>Price:</strong> {selectedSale.price} <br />
-                        <strong>Status:</strong> {selectedSale.status}
-                    </Typography>
-                )}
+                <DialogContent>
+                    {selectedSale && (
+                        <>
+                            <Typography variant="body2" color="textSecondary">📍 Location: {selectedSale.location}</Typography>
+                            <Typography variant="body2" color="textSecondary">💲 Price: {selectedSale.price}</Typography>
+                            <Typography
+                                variant="body2"
+                                color={selectedSale.status === "Active" ? "success.main" : "textSecondary"}
+                                fontWeight="bold"
+                            >
+                                🔹 Status: {selectedSale.status}
+                            </Typography>
+                        </>
+                    )}
+                </DialogContent>
                 <DialogActions>
                     <Button onClick={() => setOpenDialog(false)} color="primary">
                         Close
@@ -127,37 +257,20 @@ function Sales() {
                 </DialogActions>
             </Dialog>
 
-            {/* Edit Transaction Dialog */}
-            <Dialog open={openEditDialog} onClose={() => setOpenEditDialog(false)}>
-                <DialogTitle>Edit Transaction</DialogTitle>
+            {/* Modify Payment Dialog */}
+            <Dialog open={openModifyDialog} onClose={() => setOpenModifyDialog(false)}>
+                <DialogTitle>Modify Transaction Details</DialogTitle>
                 <DialogContent>
-                    <TextField
-                        fullWidth
-                        label="Name"
-                        value={editData.name}
-                        onChange={(e) => setEditData({ ...editData, name: e.target.value })}
-                        margin="dense"
-                    />
-                    <TextField
-                        fullWidth
-                        label="Location"
-                        value={editData.location}
-                        onChange={(e) => setEditData({ ...editData, location: e.target.value })}
-                        margin="dense"
-                    />
-                    <TextField
-                        fullWidth
-                        label="Price"
-                        value={editData.price}
-                        onChange={(e) => setEditData({ ...editData, price: e.target.value })}
-                        margin="dense"
-                    />
+                    <TextField fullWidth label="Name" defaultValue={selectedSale?.name} margin="dense" variant="outlined" />
+                    <TextField fullWidth label="Location" defaultValue={selectedSale?.location} margin="dense" variant="outlined" />
+                    <TextField fullWidth label="Price" defaultValue={selectedSale?.price} margin="dense" variant="outlined" />
+                    <TextField fullWidth label="Status" defaultValue={selectedSale?.status} margin="dense" variant="outlined" />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={() => setOpenEditDialog(false)} color="secondary">
+                    <Button onClick={() => setOpenModifyDialog(false)} color="secondary">
                         Cancel
                     </Button>
-                    <Button onClick={handleSaveEdit} color="primary">
+                    <Button color="primary">
                         Save
                     </Button>
                 </DialogActions>

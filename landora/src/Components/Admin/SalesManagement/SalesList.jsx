@@ -6,18 +6,22 @@ import { AuthContext } from '../../Auth/AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTachometerAlt, faUsers, faDollarSign, faSackDollar, faHammer, faSignOutAlt, faBuilding } from '@fortawesome/free-solid-svg-icons';
 
-const drawerWidth = 240;
 
-// URL for the background image  
-const sidebarBackground = 'https://wallpapers.com/images/hd/blank-white-vertical-grains-mcf32g28ary3jdej.jpg'; // Replace with your image URL
+const drawerWidth = 260;
+
+// Sidebar Background with overlay
+const sidebarBackground = `
+  linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)),
+  url('https://wallpapers.com/images/hd/blank-white-vertical-grains-mcf32g28ary3jdej.jpg')
+`;
 
 const menuItems = [
-  { text: 'Main Dashboard', icon: <FontAwesomeIcon icon={faTachometerAlt} />, path: '/admindashboard/dashboard' },
-  { text: 'Sales Management', icon: <FontAwesomeIcon icon={faSackDollar} />, path: '/sales-management/SalesList' },
-  { text: ' financial transactions ', icon: <FontAwesomeIcon icon={faUsers} />, path: '/sales-management/FinancialTransactions' },
-  { text: 'Contracts and agreements ', icon: <FontAwesomeIcon icon={faBuilding} />, path: '/sales-management/ContractsAndAgreements ' },
-  { text: 'Payments and receipts  ', icon: <FontAwesomeIcon icon={faSackDollar} />, path: '/sales-management/PaymentsAndReceipts' },
-  { text: 'transaction status ', icon: <FontAwesomeIcon icon={faHammer} />, path: '/sales-management/TransactionStatus ' },
+  { text: 'Main Dashboard', icon: faTachometerAlt, path: '/admindashboard/dashboard' },
+  { text: 'Sales Management', icon: faSackDollar, path: '/sales-management/SalesList' },
+  { text: 'Financial Transactions', icon: faUsers, path: '/sales-management/FinancialTransactions' },
+  { text: 'Contracts & Agreements', icon: faBuilding, path: '/sales-management/ContractsAndAgreements' },
+  { text: 'Payments & Receipts', icon: faSackDollar, path: '/sales-management/PaymentsAndReceipts' },
+  { text: 'Transaction Status', icon: faHammer, path: '/sales-management/TransactionStatus' },
 ];
 
 function SalesDashboard() {
@@ -27,10 +31,8 @@ function SalesDashboard() {
 
   const [currentTab, setCurrentTab] = useState('');
 
-
   useEffect(() => {
-    const currentPath = location.pathname;
-    const currentItem = menuItems.find(item => item.path === currentPath);
+    const currentItem = menuItems.find(item => item.path === location.pathname);
     if (currentItem) {
       setCurrentTab(currentItem.text);
     }
@@ -48,6 +50,8 @@ function SalesDashboard() {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
+      
+      {/* Sidebar Navigation */}
       <Drawer
         sx={{
           width: drawerWidth,
@@ -55,10 +59,12 @@ function SalesDashboard() {
           '& .MuiDrawer-paper': {
             width: drawerWidth,
             boxSizing: 'border-box',
-            backgroundImage: `url(${sidebarBackground})`, // Use the URL for the image
-            backgroundSize: 'cover', // Adjust as needed
+            backgroundImage: sidebarBackground, // Apply background with overlay
+            backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
+            color: '#333', // Darker text for better readability
+            paddingTop: '20px'
           },
         }}
         variant="permanent"
@@ -66,31 +72,64 @@ function SalesDashboard() {
       >
         <List>
           {menuItems.map((item, index) => (
-            <ListItem button key={index} onClick={() => handleMenuClick(item.path)}>
-              <ListItemIcon>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.text} sx={{ color: 'black' }} /> {/* Change text color to black */}
+            <ListItem 
+              button 
+              key={index} 
+              onClick={() => handleMenuClick(item.path)}
+              sx={{
+                '&:hover': { backgroundColor: 'rgba(0, 0, 0, 0.1)' }, // Hover effect
+                padding: '12px 20px',
+              }}
+            >
+              <ListItemIcon>
+                <FontAwesomeIcon icon={item.icon} style={{ color: '#ff932f' }} /> {/* Orange icons */}
+              </ListItemIcon>
+              <ListItemText primary={item.text} />
             </ListItem>
           ))}
         </List>
       </Drawer>
+
+      {/* Main Content */}
       <Box
         component="main"
         sx={{
           flexGrow: 1,
-          backgroundColor: 'linear-gradient(to left, #131313, #ff932f)',
+          backgroundColor: '#f4f4f4', // Light background
           minHeight: '100vh',
-          overflow: 'hidden', // Prevent scrolling
+          overflow: 'hidden',
         }}
       >
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'linear-gradient(to left, #babd02, #ff932f)', padding: '10px 20px', color: 'white', height: '100px' }}>
+        {/* Header Bar */}
+        <Box 
+          sx={{ 
+            display: 'flex', 
+            justifyContent: 'space-between', 
+            alignItems: 'center', 
+            background: 'linear-gradient(to left, #babd02, #ff932f)', 
+            padding: '15px 30px', 
+            color: 'white', 
+            height: '80px' 
+          }}
+        >
           <Typography variant="h5">{currentTab}</Typography>
-          <div>
-            <Button variant="outlined" onClick={handleLogout} sx={{ marginLeft: 2, color: 'black', borderColor: 'black' }}>
-              <FontAwesomeIcon icon={faSignOutAlt} /> Logout
-            </Button>
-          </div>
+
+          <Button 
+            variant="contained" 
+            onClick={handleLogout} 
+            sx={{
+              backgroundColor: '#ff3b3b',
+              color: 'white',
+              '&:hover': { backgroundColor: '#d32f2f' },
+              padding: '8px 16px'
+            }}
+          >
+            <FontAwesomeIcon icon={faSignOutAlt} style={{ marginRight: '8px' }} />
+            Logout
+          </Button>
         </Box>
-        <Outlet />{/* Render nested routes */}
+
+        <Outlet /> {/* Render nested routes */}
       </Box>
     </Box>
   );
