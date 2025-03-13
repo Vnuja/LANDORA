@@ -1,20 +1,20 @@
 const properties = [
-    { id: 1, title: "Luxury Apartment", location: "New York", price: 500000, image: "apartment1.jpg" },
-    { id: 2, title: "Beach House", location: "Los Angeles", price: 750000, image: "beachhouse.jpg" },
-    { id: 3, title: "Modern Villa", location: "Miami", price: 950000, image: "villa.jpg" },
-    { id: 4, title: "Country Cottage", location: "Texas", price: 300000, image: "cottage.jpg" },
-    { id: 5, title: "Penthouse Suite", location: "Chicago", price: 1200000, image: "penthouse.jpg" },
-    { id: 6, title: "Suburban House", location: "Seattle", price: 450000, image: "suburban.jpg" },
-    { id: 7, title: "Downtown Loft", location: "San Francisco", price: 850000, image: "loft.jpg" },
-    { id: 8, title: "Mountain Cabin", location: "Denver", price: 400000, image: "cabin.jpg" },
-    { id: 9, title: "Lake House", location: "Orlando", price: 600000, image: "lakehouse.jpg" },
-    { id: 10, title: "Historic Mansion", location: "Boston", price: 1500000, image: "mansion.jpg" },
-    { id: 11, title: "Urban Condo", location: "Washington D.C.", price: 700000, image: "condo.jpg" },
-    { id: 12, title: "Ranch Estate", location: "Dallas", price: 1100000, image: "ranch.jpg" },
-    { id: 13, title: "Urban Estate", location: "Kaduwela", price: 1100000, image: "ranch.jpg" }
+    { id: 1, title: "Luxury Apartment", location: "New York", price: 500000, image: "apartment1.jpg", buyerID:"B001", VendorID:"V001", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut purus eget nunc." },
+    { id: 2, title: "Cozy Cottage", location: "Los Angeles", price: 300000, image: "cottage1.jpg", buyerID:"B002", VendorID:"V002", description: "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae." },
+    { id: 3, title: "Modern House", location: "Chicago", price: 450000, image: "house1.jpg", buyerID:"B003", VendorID:"V003", description: "Curabitur non nulla sit amet nisl tempus convallis quis ac lectus." },
+    { id: 4, title: "Spacious Villa", location: "Miami", price: 750000, image: "villa1.jpg", buyerID:"B004", VendorID:"V004", description: "Pellentesque in ipsum id orci porta dapibus." },
+    { id: 5, title: "Urban Loft", location: "San Francisco", price: 600000, image: "loft1.jpg", buyerID:"B005", VendorID:"V005", description: "Vivamus suscipit tortor eget felis porttitor volutpat." },
+    { id: 6, title: "Country House", location: "Austin", price: 350000, image: "countryhouse1.jpg", buyerID:"B006", VendorID:"V006", description: "Nulla quis lorem ut libero malesuada feugiat." },
+    { id: 7, title: "Beachfront Condo", location: "San Diego", price: 800000, image: "condo1.jpg", buyerID:"B007", VendorID:"V007", description: "Proin eget tortor risus." },
+    { id: 8, title: "Penthouse Suite", location: "Seattle", price: 900000, image: "penthouse1.jpg", buyerID:"B008", VendorID:"V008", description: "Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a." },
+    { id: 9, title: "Suburban Home", location: "Denver", price: 400000, image: "suburbanhome1.jpg", buyerID:"B009", VendorID:"V009", description: "Donec sollicitudin molestie malesuada." },
+    { id: 10, title: "Downtown Studio", location: "Boston", price: 250000, image: "studio1.jpg", buyerID:"B010", VendorID:"V010", description: "Cras ultricies ligula sed magna dictum porta." },
+    { id: 11, title: "Historic Mansion", location: "Philadelphia", price: 1200000, image: "mansion1.jpg", buyerID:"B011", VendorID:"V011", description: "Quisque velit nisi, pretium ut lacinia in, elementum id enim." },
+    { id: 12, title: "Mountain Cabin", location: "Aspen", price: 550000, image: "cabin1.jpg", buyerID:"B012", VendorID:"V012", description: "Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus." },
+    { id: 13, title: "Lake House", location: "Lake Tahoe", price: 700000, image: "lakehouse1.jpg", buyerID:"B013", VendorID:"V013", description: "Sed porttitor lectus nibh." }
 ];
 
-const sampleRequests = [
+const MntRequests = [
     { _id: '1', property: ' 1', issue: 'Leaky faucet', status: 'Pending' },
     { _id: '2', property: ' 2', issue: 'Broken window', status: 'In Progress' },
     { _id: '3', property: ' 3', issue: 'No hot water', status: 'Completed' },
@@ -43,4 +43,26 @@ const maintenanceData = [
     { id: 13, date: '2024-01-15', description: 'Fence Repair', cost: 200 },
 ];
 
-export { maintenanceData, properties, sampleRequests };
+const Contracts = [
+    { id: 1, date: '2025-03-01', title: 'Contract with Vendor A', status: 'Active' },
+    { id: 2, date: '2025-03-05', title: 'Agreement for Sale #123', status: 'Pending' },
+    { id: 3, date: '2025-03-10', title: 'Contract with Vendor B', status: 'Completed' },
+];
+
+const SalesData = [
+    { id: 1, propertyID:1 ,name: "Sale 1", buyerID:"B001", VendorID:"V001", location: "Location 1", price: "$1000", status: "Active" },
+    { id: 2, propertyID:2 ,name: "Sale 2", buyerID:"B002", VendorID:"V002", location: "Location 2", price: "$2000", status: "Archived" },
+    { id: 3, propertyID:3 ,name: "Sale 3", buyerID:"B003", VendorID:"V003", location: "Location 3", price: "$3000", status: "Completed" },
+    { id: 4, propertyID:4 ,name: "Sale 4", buyerID:"B004", VendorID:"V004", location: "Location 4", price: "$4000", status: "Active" },
+    { id: 5, propertyID:5 ,name: "Sale 5", buyerID:"B005", VendorID:"V005", location: "Location 5", price: "$5000", status: "Archived" },
+    { id: 6, propertyID:6 ,name: "Sale 6", buyerID:"B006", VendorID:"V006", location: "Location 6", price: "$6000", status: "Completed" },
+    { id: 7, propertyID:7 ,name: "Sale 7", buyerID:"B007", VendorID:"V007", location: "Location 7", price: "$7000", status: "Active" },
+    { id: 8, propertyID:8 ,name: "Sale 8", buyerID:"B008", VendorID:"V008", location: "Location 8", price: "$8000", status: "Archived" },
+    { id: 9, propertyID:9 ,name: "Sale 9", buyerID:"B009", VendorID:"V009", location: "Location 9", price: "$9000", status: "Completed" },
+    { id: 10, propertyID:10 ,name: "Sale 10", buyerID:"B010", VendorID:"V010", location: "Location 10", price: "$10000", status: "Active" },
+    { id: 11, propertyID:11 ,name: "Sale 11", buyerID:"B011", VendorID:"V011", location: "Location 11", price: "$11000", status: "Archived" },
+    { id: 12, propertyID:12 ,name: "Sale 12", buyerID:"B012", VendorID:"V012", location: "Location 12", price: "$12000", status: "Completed" },
+    { id: 13, propertyID:13 ,name: "Sale 13", buyerID:"B013", VendorID:"V013", location: "Location 13", price: "$13000", status: "Active" }
+   ];
+
+export { maintenanceData, properties, MntRequests, Contracts, SalesData };

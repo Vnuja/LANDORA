@@ -7,7 +7,7 @@ import { AuthContext } from '../Auth/AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTachometerAlt, faUsers, faSackDollar, faHammer, faSignOutAlt, faBuilding } from '@fortawesome/free-solid-svg-icons';
 
-const drawerWidth = 240;
+const drawerWidth = 210;
 
 // URL for the background image
 const sidebarBackground = 'https://wallpapers.com/images/hd/blank-white-vertical-grains-mcf32g28ary3jdej.jpg'; // Replace with your image URL
@@ -15,7 +15,7 @@ const sidebarBackground = 'https://wallpapers.com/images/hd/blank-white-vertical
 const menuItems = [
   { text: 'Dashboard', icon: <FontAwesomeIcon icon={faTachometerAlt} />, path: '/admindashboard/dashboard' },
   { text: 'User Management', icon: <FontAwesomeIcon icon={faUsers} />, path: '/admindashboard/user-management' },
-  { text: 'Property Management', icon: <FontAwesomeIcon icon={faBuilding} />, path: '/property-management' },
+  { text: 'Property Management', icon: <FontAwesomeIcon icon={faBuilding} />, path: '/property-management/list' },
   { text: 'Sales Management', icon: <FontAwesomeIcon icon={faSackDollar} />, path: '/sales-management/SalesList' },
   { text: 'Maintanance Management', icon: <FontAwesomeIcon icon={faHammer} />, path: '/maintanance-management/Requests' },
 ];

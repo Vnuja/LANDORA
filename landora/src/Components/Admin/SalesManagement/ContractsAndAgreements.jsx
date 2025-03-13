@@ -1,14 +1,9 @@
 import React, { useState } from 'react';
 import { Container, Typography, Button, TextField, Grid, Paper, List, ListItem, ListItemText, Dialog, DialogActions, DialogTitle, DialogContent } from '@mui/material';
-
-const initialContracts = [
-  { id: 1, date: '2025-03-01', title: 'Contract with Vendor A', status: 'Active' },
-  { id: 2, date: '2025-03-05', title: 'Agreement for Sale #123', status: 'Pending' },
-  { id: 3, date: '2025-03-10', title: 'Contract with Vendor B', status: 'Completed' },
-];
+import {Contracts} from '../Database/Data';
 
 const ContractsAndAgreements = () => {
-  const [contracts, setContracts] = useState(initialContracts);
+  const [contracts, setContracts] = useState(Contracts);
   const [openDialog, setOpenDialog] = useState(false);
   const [newContract, setNewContract] = useState({ date: '', title: '', status: 'Pending' });
 

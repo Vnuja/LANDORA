@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTachometerAlt, faUsers, faDollarSign, faSackDollar, faHammer, faSignOutAlt, faBuilding } from '@fortawesome/free-solid-svg-icons';
 
 
-const drawerWidth = 260;
+const drawerWidth = 230;
 
 // Sidebar Background with overlay
 const sidebarBackground = `
@@ -50,7 +50,7 @@ function SalesDashboard() {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      
+
       {/* Sidebar Navigation */}
       <Drawer
         sx={{
@@ -72,19 +72,10 @@ function SalesDashboard() {
       >
         <List>
           {menuItems.map((item, index) => (
-            <ListItem 
-              button 
-              key={index} 
-              onClick={() => handleMenuClick(item.path)}
-              sx={{
-                '&:hover': { backgroundColor: 'rgba(0, 0, 0, 0.1)' }, // Hover effect
-                padding: '12px 20px',
-              }}
-            >
+            <ListItem button key={index} onClick={() => handleMenuClick(item.path)} >
               <ListItemIcon>
-                <FontAwesomeIcon icon={item.icon} style={{ color: ' #ff932f' }} /> {/* Orange icons */}
-              </ListItemIcon>
-              <ListItemText primary={item.text} />
+                <FontAwesomeIcon icon={item.icon} style={{ color: ' #ff932f' }} /> {/* Orange icons */} </ListItemIcon>
+              <ListItemText primary={item.text} sx={{ color: 'black' }} />
             </ListItem>
           ))}
         </List>
@@ -101,22 +92,22 @@ function SalesDashboard() {
         }}
       >
         {/* Header Bar */}
-        <Box 
-          sx={{ 
-            display: 'flex', 
-            justifyContent: 'space-between', 
-            alignItems: 'center', 
-            background: 'linear-gradient(to left, #babd02, #ff932f)', 
-            padding: '15px 30px', 
-            color: 'white', 
-            height: '80px' 
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            background: 'linear-gradient(to left, #babd02, #ff932f)',
+            padding: '15px 30px',
+            color: 'white',
+            height: '80px'
           }}
         >
           <Typography variant="h5">{currentTab}</Typography>
 
-          <Button 
-            variant="contained" 
-            onClick={handleLogout} 
+          <Button
+            variant="contained"
+            onClick={handleLogout}
             sx={{
               backgroundColor: '#ff3b3b',
               color: 'white',
@@ -124,7 +115,7 @@ function SalesDashboard() {
               padding: '8px 16px'
             }}
           >
-            <FontAwesomeIcon icon={faSignOutAlt} style={{ marginRight: '8px' }} />
+            <FontAwesomeIcon icon={faSignOutAlt} />
             Logout
           </Button>
         </Box>

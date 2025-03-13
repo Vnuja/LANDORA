@@ -6,12 +6,12 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import { sampleRequests, properties } from '../Database/Data';
+import { MntRequests, properties } from '../Database/Data';
 
 const Requests = () => {
     const [filterStatus, setFilterStatus] = useState("All");
     const [searchQuery, setSearchQuery] = useState("");
-    const [requests, setRequests] = useState(sampleRequests);
+    const [requests, setRequests] = useState(MntRequests);
     const [editDialog, setEditDialog] = useState({ open: false, id: null, status: "" });
     const [selectedRequest, setSelectedRequest] = useState(null);
     const [openViewDialog, setOpenViewDialog] = useState(false);
@@ -46,16 +46,16 @@ const Requests = () => {
     );
 
     return (
-        <div style={{ padding: "24px", backgroundColor: "rgb(253, 253, 227)", minHeight: "100vh" }}>
-            <div style={{ display: "flex", gap: "16px", marginBottom: "16px", justifyContent: "center" }}>
+        <div style={{ padding: "10px", backgroundColor: "rgb(253, 253, 227)", minHeight: "100vh" }}>
+            <div style={{ display: "flex", gap: "8px", marginBottom: "16px", justifyContent: "center" }}>
                 <TextField sx={{ flexGrow: 1 }}
                     label="Search by Property Name"
                     variant="outlined"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    style={{ width: "300px" }}
+                    style={{ width: "250px" }}
                 />
-                <FormControl variant="outlined" style={{ minWidth: "200px" }}>
+                <FormControl variant="outlined" style={{ minWidth: "150px" }}>
                     <InputLabel>Status</InputLabel>
                     <Select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)} label="Status">
                         <MenuItem value="All">All</MenuItem>
@@ -66,16 +66,16 @@ const Requests = () => {
                 </FormControl>
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))", gap: "10px", padding: "20px" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))", gap: "8px", padding: "16px" }}>
                 {filteredRequests.map((req) => (
-                    <Card key={req._id} style={{ padding: "16px", borderRadius: "12px", boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)" }}>
+                    <Card key={req._id} style={{ padding: "12px", borderRadius: "8px", boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.1)" }}>
                         <CardContent>
                             <Typography variant="h6" style={{ fontWeight: "bold", color: "#0d47a1" }}>{req.propertyDetails?.title || "Unknown Property"}</Typography>
-                            {/*<Typography color="textSecondary">Location: {req.propertyDetails?.location || "N/A"}</Typography>*/}
                             <Typography variant="body1" style={{ marginTop: "8px" }}><strong>Issue:</strong> {req.issue}</Typography>
                             <Typography variant="body2" style={{ fontWeight: "bold", color: req.status === "Pending" ? "#d32f2f" : req.status === "In Progress" ? "#f9a825" : "#388e3c" }}>
                                 <strong>Status:</strong> {req.status}
                             </Typography>
+                            <div style={{ marginTop: "8px", display: "flex", gap: "4px" }}></div>
                             <div style={{ marginTop: "12px", display: "flex", gap: "8px" }}>
                                 <IconButton color="primary" size="medium" onClick={() => handleViewRequest(req)}>
                                     <VisibilityIcon />
@@ -119,7 +119,7 @@ const Requests = () => {
                         <div>
                             <Typography variant="h6"><strong>Property:</strong> {selectedRequest.propertyDetails?.title || "Unknown Property"}</Typography>
                             <Typography variant="body1"><strong>Issue:</strong> {selectedRequest.issue}</Typography>
-                            <Typography variant="body1"><strong>Price:</strong> {selectedRequest.propertyDetails?.price}</Typography>
+                            {/* <Typography variant="body1"><strong>Price:</strong> {selectedRequest.propertyDetails?.price}</Typography> */}
                             <Typography variant="body1"><strong>Location:</strong> {selectedRequest.propertyDetails?.location}</Typography>
                             <Typography variant="body2" style={{ fontWeight: "bold", color: selectedRequest.status === "Pending" ? "#d32f2f" : selectedRequest.status === "In Progress" ? "#f9a825" : "#388e3c" }}>
                                 <strong>Status:</strong> {selectedRequest.status}

@@ -22,9 +22,6 @@ import UpdateUser from './Components/Admin/UserManagement/UpdateUser';
 import { AuthProvider } from './Components/Auth/AuthContext';  // Import AuthProvider
 import MakePayment from './Components/pages/MakePayment';
 
-//Property Components
-import PropertyList from './Components/Admin/PropertyManagement/PropertyList';
-
 //Sales Components
 import SalesDashboard from './Components/Admin/SalesManagement/SalesList';
 import FinancialTransactions from './Components/Admin/SalesManagement/FinancialTransactions';
@@ -39,6 +36,10 @@ import Requests from './Components/Admin/MaintananceManagement/Requests';
 import VendorManagement from './Components/Admin/MaintananceManagement/Vendor';
 import Cost from './Components/Admin/MaintananceManagement/Cost';
 import Schedules from './Components/Admin/MaintananceManagement/Schedules';
+
+//Property Components
+import PropertyList from './Components/Admin/PropertyManagement/PropertyList';
+import PropertyDetails from './Components/Admin/PropertyManagement/PropertyDetails';
 
 //Extra Features
 import EFpage from './Components/ExtraFeature/EFpage';
@@ -70,7 +71,6 @@ function App() {
           <Route path="/makepayment/:id" element={<MakePayment />} />
           <Route path="/privacypolicy" element={<PrivacyPolicy />} />
           <Route path="/termsofuse" element={<TermsOfUse />} />
-          <Route path="/property-management" element={<PropertyList />} />
           
           <Route path="/sales-management" element={<SalesDashboard />} >
             <Route path="SalesList" element={<Sales />} />
@@ -86,6 +86,14 @@ function App() {
             <Route path="Costs" element={<Cost />} />
             <Route path="Schedules" element={<Schedules />} />
           </Route>
+
+          <Route path="/property-management" element={<PropertyList />} >
+            <Route path="list" element={<PropertyDetails />} />
+            <Route path="Vendor" element={<VendorManagement />} />
+            <Route path="Costs" element={<Cost />} />
+            <Route path="Schedules" element={<Schedules />} />
+          </Route>
+
 
           {/* Admin Dashboard Routes */}
           <Route path="/admindashboard" element={<AdminDashboard />}>

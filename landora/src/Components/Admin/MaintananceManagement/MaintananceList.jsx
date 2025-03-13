@@ -5,19 +5,21 @@ import { useNavigate, Outlet, useLocation } from 'react-router-dom';
 import { AuthContext } from '../../Auth/AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTachometerAlt, faUsers, faSackDollar, faHammer, faSignOutAlt, faBuilding } from '@fortawesome/free-solid-svg-icons';
-import { properties, sampleRequests, maintenanceData } from "../Database/Data";
+import { properties, MntRequests, maintenanceData } from "../Database/Data";
 
-const drawerWidth = 240;
+const drawerWidth = 230;
 
 // URL for the background image  
-const sidebarBackground = 'https://wallpapers.com/images/hd/blank-white-vertical-grains-mcf32g28ary3jdej.jpg'; // Replace with your image URL
-
+const sidebarBackground = `
+  linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)),
+  url('https://wallpapers.com/images/hd/blank-white-vertical-grains-mcf32g28ary3jdej.jpg')
+`;
 const menuItems = [
-  { text: 'Main Dashboard', icon: <FontAwesomeIcon icon={faTachometerAlt} />, path: '/admindashboard/dashboard' },
-  { text: 'Maintenance Requests', icon: <FontAwesomeIcon icon={faUsers} />, path: '/maintanance-management/Requests' },
-  { text: 'Vendor Management', icon: <FontAwesomeIcon icon={faBuilding} />, path: '/maintanance-management/Vendor' },
-  { text: 'Maintenance Costs', icon: <FontAwesomeIcon icon={faSackDollar} />, path: '/maintanance-management/Costs' },
-  { text: 'Schedules preventive maintenance', icon: <FontAwesomeIcon icon={faHammer} />, path: '/maintanance-management/Schedules' },
+  { text: 'Main Dashboard', icon: faTachometerAlt, path: '/admindashboard/dashboard' },
+  { text: 'Maintenance Requests', icon: faUsers, path: '/maintanance-management/Requests' },
+  { text: 'Vendor Management', icon: faBuilding, path: '/maintanance-management/Vendor' },
+  { text: 'Maintenance Costs', icon: faSackDollar, path: '/maintanance-management/Costs' },
+  { text: 'Schedules preventive maintenance', icon: faHammer, path: '/maintanance-management/Schedules' },
 ];
 
 function MaintananceDashboard1() {
@@ -59,7 +61,7 @@ function MaintananceDashboard1() {
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
-            color: '#333', // Darker text for better readability
+            color: ' #333', // Darker text for better readability
             paddingTop: '20px'
           },
         }}
@@ -68,32 +70,55 @@ function MaintananceDashboard1() {
       >
         <List>
           {menuItems.map((item, index) => (
-            <ListItem button key={index} onClick={() => handleMenuClick(item.path)}>
-                  <ListItemIcon sx={{ color: '#ff932f' }}>{item.icon}</ListItemIcon> {/* Set icon color to #ff932f */}
-                  <ListItemText primary={item.text} sx={{ color: 'black' }} /> {/* Change text color to black */}
+            <ListItem key={index} onClick={() => handleMenuClick(item.path)}>
+              <ListItemIcon>
+                <FontAwesomeIcon icon={item.icon} style={{ color: ' #ff932f' }} /> {/* Orange icons */}
+              </ListItemIcon>
+              <ListItemText primary={item.text} sx={{ color: 'black' }} />
             </ListItem>
           ))}
         </List>
       </Drawer>
       <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          backgroundColor: 'linear-gradient(to left, #131313, #ff932f)',
-          minHeight: '100vh',
-          overflow: 'hidden', // Prevent scrolling
-        }}
-      >
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'linear-gradient(to left, #babd02, #ff932f)', padding: '10px 20px', color: 'white', height: '100px' }}>
-          <Typography variant="h5">{currentTab}</Typography>
-          <div>
-            <Button variant="outlined" onClick={handleLogout} sx={{ marginLeft: 2, color: 'black', borderColor: 'black' }}>
-              <FontAwesomeIcon icon={faSignOutAlt} /> Logout
-            </Button>
-          </div>
-        </Box>
-        <Outlet />{/* Render nested routes */}
-      </Box>
+              component="main"
+              sx={{
+                flexGrow: 1,
+                backgroundColor: '#f4f4f4', // Light background
+                minHeight: '100vh',
+                overflow: 'hidden',
+              }}
+            >
+              {/* Header Bar */}
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  background: 'linear-gradient(to left, #babd02, #ff932f)',
+                  padding: '15px 30px',
+                  color: 'white',
+                  height: '80px'
+                }}
+              >
+                <Typography variant="h5">{currentTab}</Typography>
+      
+                <Button
+                  variant="contained"
+                  onClick={handleLogout}
+                  sx={{
+                    backgroundColor: '#ff3b3b',
+                    color: 'white',
+                    '&:hover': { backgroundColor: '#d32f2f' },
+                    padding: '8px 16px'
+                  }}
+                >
+                  <FontAwesomeIcon icon={faSignOutAlt} />
+                  Logout
+                </Button>
+              </Box>
+      
+              <Outlet /> {/* Render nested routes */}
+            </Box>
     </Box>
   );
 }
