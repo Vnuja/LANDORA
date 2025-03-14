@@ -78,8 +78,8 @@ function AdminDashboard() {
             </ListItemButton>
           ))}
         </List>
-        <Button variant="contained" sx={{ m: 2 }} onClick={toggleView}>
-          {showEFPage ? 'Show Dashboard' : 'Show AI Assistant'}
+        <Button variant="contained" sx={{ m: 2, bgcolor:" #ffc400", color:" #000000" }} onClick={toggleView}>
+          {showEFPage ? 'Show Dashboard' : 'LANDORA'}
         </Button>
       </Drawer>
 

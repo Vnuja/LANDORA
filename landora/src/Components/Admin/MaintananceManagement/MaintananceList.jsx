@@ -6,6 +6,7 @@ import { AuthContext } from '../../Auth/AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTachometerAlt, faUsers, faSackDollar, faHammer, faSignOutAlt, faBuilding } from '@fortawesome/free-solid-svg-icons';
 import { properties, MntRequests, maintenanceData } from "../Database/Data";
+import EFpage from '../../ExtraFeature/EFpage';
 
 const drawerWidth = 230;
 
@@ -26,7 +27,7 @@ function MaintananceDashboard1() {
   const navigate = useNavigate();
   const location = useLocation();
   const { logout } = useContext(AuthContext);
-
+  const [showEFPage, setShowEFPage] = useState(false);
   const [currentTab, setCurrentTab] = useState('');
 
 
@@ -45,6 +46,10 @@ function MaintananceDashboard1() {
   const handleLogout = () => {
     logout();
     navigate('/login');
+  };
+
+  const toggleView = () => {
+    setShowEFPage((prev) => !prev);
   };
 
   return (
@@ -78,47 +83,50 @@ function MaintananceDashboard1() {
             </ListItem>
           ))}
         </List>
+        <Button variant="contained" sx={{ m: 2, bgcolor: " #ffc400", color: " #000000" }} onClick={toggleView}>
+          {showEFPage ? 'Show Dashboard' : 'LANDORA'}
+        </Button>
       </Drawer>
       <Box
-              component="main"
-              sx={{
-                flexGrow: 1,
-                backgroundColor: '#f4f4f4', // Light background
-                minHeight: '100vh',
-                overflow: 'hidden',
-              }}
-            >
-              {/* Header Bar */}
-              <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  background: 'linear-gradient(to left, #babd02, #ff932f)',
-                  padding: '15px 30px',
-                  color: 'white',
-                  height: '80px'
-                }}
-              >
-                <Typography variant="h5">{currentTab}</Typography>
-      
-                <Button
-                  variant="contained"
-                  onClick={handleLogout}
-                  sx={{
-                    backgroundColor: '#ff3b3b',
-                    color: 'white',
-                    '&:hover': { backgroundColor: '#d32f2f' },
-                    padding: '8px 16px'
-                  }}
-                >
-                  <FontAwesomeIcon icon={faSignOutAlt} />
-                  Logout
-                </Button>
-              </Box>
-      
-              <Outlet /> {/* Render nested routes */}
-            </Box>
+        component="main"
+        sx={{
+          flexGrow: 1,
+          backgroundColor: '#f4f4f4', // Light background
+          minHeight: '100vh',
+          overflow: 'hidden',
+        }}
+      >
+        {/* Header Bar */}
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            background: 'linear-gradient(to left, #babd02, #ff932f)',
+            padding: '15px 30px',
+            color: 'white',
+            height: '80px'
+          }}
+        >
+          <Typography variant="h5">{currentTab}</Typography>
+
+          <Button
+            variant="contained"
+            onClick={handleLogout}
+            sx={{
+              backgroundColor: '#ff3b3b',
+              color: 'white',
+              '&:hover': { backgroundColor: '#d32f2f' },
+              padding: '8px 16px'
+            }}
+          >
+            <FontAwesomeIcon icon={faSignOutAlt} />
+            Logout
+          </Button>
+        </Box>
+
+        {showEFPage ? <EFpage /> : <Outlet />}
+      </Box>
     </Box>
   );
 }

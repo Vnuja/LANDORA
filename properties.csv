@@ -1,0 +1,4 @@
+id,title,location,price,image,buyerID,VendorID,description
+1,Luxury Apartment,New York,500000,apartment1.jpg,B001,V001,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut purus eget nunc."
+2,Cozy Cottage,Los Angeles,300000,cottage1.jpg,B002,V002,Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.
+3,Modern House,Chicago,450000,house1.jpg,B003,V003,Curabitur non nulla sit amet nisl tempus convallis quis ac lectus.

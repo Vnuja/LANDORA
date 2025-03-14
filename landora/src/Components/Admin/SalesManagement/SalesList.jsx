@@ -5,6 +5,7 @@ import { useNavigate, Outlet, useLocation } from 'react-router-dom';
 import { AuthContext } from '../../Auth/AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTachometerAlt, faUsers, faDollarSign, faSackDollar, faHammer, faSignOutAlt, faBuilding } from '@fortawesome/free-solid-svg-icons';
+import EFpage from '../../ExtraFeature/EFpage';
 
 
 const drawerWidth = 230;
@@ -28,7 +29,7 @@ function SalesDashboard() {
   const navigate = useNavigate();
   const location = useLocation();
   const { logout } = useContext(AuthContext);
-
+  const [showEFPage, setShowEFPage] = useState(false);
   const [currentTab, setCurrentTab] = useState('');
 
   useEffect(() => {
@@ -45,6 +46,10 @@ function SalesDashboard() {
   const handleLogout = () => {
     logout();
     navigate('/login');
+  };
+
+  const toggleView = () => {
+    setShowEFPage((prev) => !prev);
   };
 
   return (
@@ -79,6 +84,9 @@ function SalesDashboard() {
             </ListItem>
           ))}
         </List>
+        <Button variant="contained" sx={{ m: 2, bgcolor: " #ffc400", color: " #000000" }} onClick={toggleView}>
+          {showEFPage ? 'Show Dashboard' : 'LANDORA'}
+        </Button>
       </Drawer>
 
       {/* Main Content */}
@@ -120,7 +128,7 @@ function SalesDashboard() {
           </Button>
         </Box>
 
-        <Outlet /> {/* Render nested routes */}
+        {showEFPage ? <EFpage /> : <Outlet />}
       </Box>
     </Box>
   );

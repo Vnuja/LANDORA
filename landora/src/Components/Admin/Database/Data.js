@@ -3,7 +3,11 @@ const properties = [
     { id: 2, title: "Cozy Cottage", location: "Los Angeles", price: 300000, image: "cottage1.jpg", buyerID:"B002", VendorID:"V002", description: "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae." },
     { id: 3, title: "Modern House", location: "Chicago", price: 450000, image: "house1.jpg", buyerID:"B003", VendorID:"V003", description: "Curabitur non nulla sit amet nisl tempus convallis quis ac lectus." },
     { id: 4, title: "Spacious Villa", location: "Miami", price: 750000, image: "villa1.jpg", buyerID:"B004", VendorID:"V004", description: "Pellentesque in ipsum id orci porta dapibus." },
-    { id: 5, title: "Urban Loft", location: "San Francisco", price: 600000, image: "loft1.jpg", buyerID:"B005", VendorID:"V005", description: "Vivamus suscipit tortor eget felis porttitor volutpat." },
+    { id: 5, title: "Urban Loft 1", location: "San Francisco", price: 600000, image: "loft1.jpg", buyerID:"B005", VendorID:"V005", description: "Vivamus suscipit tortor eget felis porttitor volutpat." },
+    { id: 5, title: "Urban Loft 2", location: "San Francisco", price: 650000, image: "loft1.jpg", buyerID:"B005", VendorID:"V005", description: "Vivamus suscipit tortor eget felis porttitor volutpat." },
+    { id: 5, title: "Urban Loft 3", location: "San Francisco", price: 500000, image: "loft1.jpg", buyerID:"B0014", VendorID:"V005", description: "Vivamus suscipit tortor eget felis porttitor volutpat." },
+    { id: 5, title: "Urban Loft 4", location: "San Francisco", price: 700000, image: "loft1.jpg", buyerID:"B0015", VendorID:"V005", description: "Vivamus suscipit tortor eget felis porttitor volutpat." },
+    { id: 5, title: "Urban Loft 5", location: "San Francisco", price: 900000, image: "loft1.jpg", buyerID:"B0010", VendorID:"V011", description: "Vivamus suscipit tortor eget felis porttitor volutpat." },
     { id: 6, title: "Country House", location: "Austin", price: 350000, image: "countryhouse1.jpg", buyerID:"B006", VendorID:"V006", description: "Nulla quis lorem ut libero malesuada feugiat." },
     { id: 7, title: "Beachfront Condo", location: "San Diego", price: 800000, image: "condo1.jpg", buyerID:"B007", VendorID:"V007", description: "Proin eget tortor risus." },
     { id: 8, title: "Penthouse Suite", location: "Seattle", price: 900000, image: "penthouse1.jpg", buyerID:"B008", VendorID:"V008", description: "Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a." },
@@ -65,4 +69,42 @@ const SalesData = [
     { id: 13, propertyID:13 ,name: "Sale 13", buyerID:"B013", VendorID:"V013", location: "Location 13", price: "$13000", status: "Active" }
    ];
 
-export { maintenanceData, properties, MntRequests, Contracts, SalesData };
+const vendors = [
+    { VendorID: "V001", name: "John Doe", contact: "john.doe@example.com", phone: "123-456-7890" },
+    { VendorID: "V002", name: "Jane Smith", contact: "jane.smith@example.com", phone: "234-567-8901" },
+    { VendorID: "V003", name: "Michael Johnson", contact: "michael.johnson@example.com", phone: "345-678-9012" },
+    { VendorID: "V004", name: "Emily Davis", contact: "emily.davis@example.com", phone: "456-789-0123" },
+    { VendorID: "V005", name: "David Wilson", contact: "david.wilson@example.com", phone: "567-890-1234" },
+    { VendorID: "V006", name: "Sarah Brown", contact: "sarah.brown@example.com", phone: "678-901-2345" },
+    { VendorID: "V007", name: "James Taylor", contact: "james.taylor@example.com", phone: "789-012-3456" },
+    { VendorID: "V008", name: "Jessica Martinez", contact: "jessica.martinez@example.com", phone: "890-123-4567" },
+    { VendorID: "V009", name: "Daniel Anderson", contact: "daniel.anderson@example.com", phone: "901-234-5678" },
+    { VendorID: "V010", name: "Laura Thomas", contact: "laura.thomas@example.com", phone: "012-345-6789" },
+    { VendorID: "V011", name: "Robert Jackson", contact: "robert.jackson@example.com", phone: "123-456-7891" },
+    { VendorID: "V012", name: "Linda White", contact: "linda.white@example.com", phone: "234-567-8902" },
+    { VendorID: "V013", name: "William Harris", contact: "william.harris@example.com", phone: "345-678-9013" }
+];
+const vendorPropertyCount = vendors.map(vendor => {
+    const propertyCount = properties.filter(property => property.VendorID === vendor.VendorID).length;
+    return { ...vendor, propertyCount };
+});
+const buyers = [
+    { buyerID: "B001", name: "Alice Johnson", contact: "alice.johnson@example.com", phone: "123-456-7890" },
+    { buyerID: "B002", name: "Bob Smith", contact: "bob.smith@example.com", phone: "234-567-8901" },
+    { buyerID: "B003", name: "Charlie Brown", contact: "charlie.brown@example.com", phone: "345-678-9012" },
+    { buyerID: "B004", name: "Diana Prince", contact: "diana.prince@example.com", phone: "456-789-0123" },
+    { buyerID: "B005", name: "Ethan Hunt", contact: "ethan.hunt@example.com", phone: "567-890-1234" },
+    { buyerID: "B006", name: "Fiona Gallagher", contact: "fiona.gallagher@example.com", phone: "678-901-2345" },
+    { buyerID: "B007", name: "George Clooney", contact: "george.clooney@example.com", phone: "789-012-3456" },
+    { buyerID: "B008", name: "Hannah Montana", contact: "hannah.montana@example.com", phone: "890-123-4567" },
+    { buyerID: "B009", name: "Ian Somerhalder", contact: "ian.somerhalder@example.com", phone: "901-234-5678" },
+    { buyerID: "B010", name: "Jack Sparrow", contact: "jack.sparrow@example.com", phone: "012-345-6789" },
+    { buyerID: "B011", name: "Karen Gillan", contact: "karen.gillan@example.com", phone: "123-456-7891" },
+    { buyerID: "B012", name: "Liam Neeson", contact: "liam.neeson@example.com", phone: "234-567-8902" },
+    { buyerID: "B013", name: "Megan Fox", contact: "megan.fox@example.com", phone: "345-678-9013" },
+    { buyerID: "B014", name: "Nina Dobrev", contact: "nina.dobrev@example.com", phone: "456-789-0124" },
+    { buyerID: "B015", name: "Oscar Isaac", contact: "oscar.isaac@example.com", phone: "567-890-1235" }
+];
+
+export { maintenanceData, properties, MntRequests, Contracts, SalesData, vendors, buyers };
+
