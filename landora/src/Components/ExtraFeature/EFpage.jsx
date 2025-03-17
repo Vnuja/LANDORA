@@ -50,7 +50,7 @@ const EFpage = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post("https://xjnwl62k-4000.asse.devtunnels.ms/api/prompt-post", { prompt: input });
+      const response = await axios.post("http://localhost:4000/api/prompt-post", { prompt: input });
       const botMessage = { role: "assistant", content: response.data.response || "🤖 No response received." };
       setMessages((prev) => [...prev, botMessage]);
     } catch (error) {
