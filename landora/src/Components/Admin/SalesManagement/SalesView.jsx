@@ -106,6 +106,7 @@ function Sales() {
                     >
                         View All
                     </Button>
+                
                     <TextField
                         marginRight={2}
                         variant="outlined"
@@ -128,6 +129,7 @@ function Sales() {
                         <MenuItem value="Active">Active</MenuItem>
                         <MenuItem value="Completed">Completed</MenuItem>
                         <MenuItem value="Archived">Archived</MenuItem>
+                        <MenuItem value="Pending">Pending</MenuItem>
                     </TextField>
                 </Box>
                 <MuiList sx={{ width: "100%", maxWidth: 800, margin: "auto" }}>
@@ -158,7 +160,7 @@ function Sales() {
                                             <>
                                                 <Typography
                                                     variant="body2"
-                                                    color={sale.status === "Active" ? "success.main" :sale.status === "Completed" ? "info.main" : sale.status === "Archived" ? "warning.main" : "textSecondary"}
+                                                    color={sale.status === "Active" ? "success.main" :sale.status === "Completed" ? "info.main" : sale.status === "Archived" ? "warning.main" : sale.status === "Pending" ? "error.main" : "textSecondary"}
 
                                                     fontWeight="bold"
                                                 >
