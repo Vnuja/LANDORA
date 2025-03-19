@@ -53,6 +53,7 @@ async function run(prompt) {
   // You may need to update the file paths
   const files = [
     await uploadToGemini("../landora/src/Components/Admin/Database/Data.js", "text/javascript"),
+    await uploadToGemini("../landora/src/Components/Admin/Database/user-details.csv", "text/csv")
   ];
 
   // Some files have a processing delay. Wait for them to be ready.
@@ -113,6 +114,84 @@ async function run(prompt) {
         role: "model",
         parts: [
           {text: "Okay, Landora here. I understand. That's a good company description. It establishes Landora's purpose, founding year (2025), and commitment to customers. I'll keep this in mind. How can I help you using the Data?\n"},
+        ],
+      },
+      {
+        role: "user",
+        parts: [
+          {
+            fileData: {
+              mimeType: files[1].mimeType,
+              fileUri: files[1].uri,
+            },
+          },
+          {text: "another data file"},
+        ],
+      },
+      {
+        role: "model",
+        parts: [
+          {text: "Okay, Landora here. I acknowledge the `user-details.csv` file. I will only respond to your questions directly using the data from the files provided. Ask away!\n"},
+        ],
+      },
+      {
+        role: "user",
+        parts: [
+          {text: "[0] *   **User ID:** C003\n[0] *   **Username:** amasha\n[0] *   **Name:** amasha\n[0] *   **Email:** amasha@landora.com\n[0] *   **Phone:** 0712345678\n[0] *   **Type:** admin\n[0] *   **Gender:** female\n[0] *   **Birthday:** 2025-1-1\n[0]\n[0] *   **User ID:** C004\n[0] *   **Username:** kavitha\n[0] *   **Name:** kavitha\n[0] *   **Email:** kavitha@landora.com\n[0] *   **Phone:** 0712345678\n[0] *   **Type:** admin\n[0] *   **Gender:** female\n[0] *   **Birthday:** 2025-1-1\n[0]\n[0] *   **User ID:** C005\n[0] *   **Username:** kenuri\n[0] *   **Name:** kenuri\n[0] *   **Email:** kenuri@landora.com\n[0] *   **Phone:** 0712345678\n[0] *   **Type:** admin\n[0] *   **Gender:** female\n[0] *   **Birthday:** 2025-1-1\n\nthis is ur answer and its not clear give proper structure to show answers like this"},
+        ],
+      },
+      {
+        role: "model",
+        parts: [
+          {text: "Okay, Landora here. I understand. I will provide more clearly structured answers.\n\nHere are the user details you requested, presented in a table-like format for better readability:\n\n| User ID | Username | Name     | Email                 | Phone      | Type  | Gender | Birthday   |\n| :------ | :------- | :------- | :-------------------- | :--------- | :---- | :----- | :--------- |\n| C003    | amasha   | amasha   | amasha@landora.com    | 0712345678 | admin | female | 2025-01-01 |\n| C004    | kavitha  | kavitha  | kavitha@landora.com   | 0712345678 | admin | female | 2025-01-01 |\n| C005    | kenuri   | kenuri   | kenuri@landora.com    | 0712345678 | admin | female | 2025-01-01 |\n\nIs this format better? How else can I improve the clarity of my responses for you?\n"},
+        ],
+      },
+      {
+        role: "user",
+        parts: [
+          {text: "yeah"},
+        ],
+      },
+      {
+        role: "model",
+        parts: [
+          {text: "Okay, Landora here. I'm glad that format is better. What is your question?\n"},
+        ],
+      },
+      {
+        role: "user",
+        parts: [
+          {text: "[0] Okay, Landora here. Here are the female users from the user details data, presented in a table:\n[0]\n[0] | User ID | Username | Name            | Email                   | Phone        | Type     | Gender | Birthday   |\n[0] | :------ | :------- | :-------------- | :---------------------- | :----------- | :------- | :----- | :--------- |\n[0] | C003    | amasha   | Amasha Nethmi   | amasha10nethmi@gmail.com | 0741196152   | admin    | female | 2002-03-10 |\n[0] | C004    | kavitha  | kavitha         | kavitha@landora.com     | 0712345678   | admin    | female | 2025-01-01 |\n[0] | C005    | kenuri   | kenuri          | kenuri@landora.com      | 0712345678   | admin    | female | 2025-01-01 |\n[0] | C006    | ransith  | ransith         | ransith@landora.com     | 0712345678   | customer | female | 2025-01-01 |\nfor response like above youhave to\ninsert a row to say \"All female users\"\n[0] |All female user|\n[0] | User ID | Username | Name            | Email                   | Phone        | Type     | Gender | Birthday   |\n[0] | :------ | :------- | :-------------- | :---------------------- | :----------- | :------- | :----- | :--------- |\n[0] | C003    | amasha   | Amasha Nethmi   | amasha10nethmi@gmail.com | 0741196152   | admin    | female | 2002-03-10 |\n[0] | C004    | kavitha  | kavitha         | kavitha@landora.com     | 0712345678   | admin    | female | 2025-01-01 |\n[0] | C005    | kenuri   | kenuri          | kenuri@landora.com      | 0712345678   | admin    | female | 2025-01-01 |\n[0] | C006    | ransith  | ransith         | ransith@landora.com     | 0712345678   | customer | female | 2025-01-01 |"},
+        ],
+      },
+      {
+        role: "model",
+        parts: [
+          {text: "Okay, Landora here. I understand. When providing a table of all female users, I will insert a row at the top that says \"All female users\".\n\nLike this:\n\n| All female users |                                                                                             |\n| :--------------- | :------------------------------------------------------------------------------------------ |\n| User ID          | Username | Name            | Email                   | Phone        | Type     | Gender | Birthday   |\n| C003             | amasha   | Amasha Nethmi   | amasha10nethmi@gmail.com | 0741196152   | admin    | female | 2002-03-10 |\n| C004             | kavitha  | kavitha         | kavitha@landora.com     | 0712345678   | admin    | female | 2025-01-01 |\n| C005             | kenuri   | kenuri          | kenuri@landora.com      | 0712345678   | admin    | female | 2025-01-01 |\n| C006             | ransith  | ransith         | ransith@landora.com     | 0712345678   | customer | female | 2025-01-01 |\n"},
+        ],
+      },
+      {
+        role: "user",
+        parts: [
+          {text: "yes"},
+        ],
+      },
+      {
+        role: "model",
+        parts: [
+          {text: "Okay, Landora here. Great! What is your next request?\n"},
+        ],
+      },
+      {
+        role: "user",
+        parts: [
+          {text: "dont use Okay, Landora here. always?\n"},
+        ],
+      },
+      {
+        role: "model",
+        parts: [
+          {text: "Understood. I will stop using \"Okay, Landora here.\" before my responses.\n"},
         ],
       },
     ],

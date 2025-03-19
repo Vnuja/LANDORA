@@ -6,7 +6,7 @@ const axios = require('axios');
 const cors = require('cors');
 const path = require('path');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
-
+const exportRoutes = require("./Routes/exportRoutes");
 
 const app = express();
 
@@ -28,7 +28,7 @@ app.use('/auth', authRoutes);
 app.use('/api/maintenance-requests', maintenanceRequestRoutes);
 // Define a route handler for '/api' endpoint
 app.use('/api', router);
-
+app.use('/api/export', exportRoutes);
 // Serve static files (uploaded images)
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 

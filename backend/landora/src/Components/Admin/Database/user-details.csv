@@ -1,0 +1,12 @@
+User ID,Username,Name,Email,Phone,Type,Gender,Birthday
+C001,admin,admin,admin@landora.com,0712345678,admin,male,2025-1-1
+C002,vinuja,vinuja,vinuja@landora.com,0712345678,admin,male,2025-1-1
+C003,amasha,amasha,amasha@landora.com,0712345678,admin,female,2025-1-1
+C004,kavitha,kavitha,kavitha@landora.com,0712345678,admin,female,2025-1-1
+C005,kenuri,kenuri,kenuri@landora.com,0712345678,admin,female,2025-1-1
+C006,ransith,ransith,ransith@landora.com,0712345678,customer,female,2025-1-1
+C007,test,test,test@test.com,0111222333,customer,male,2025-3-2
+C008,test1,test1,test1@test.com,1111111111,customer,male,2025-3-4
+C009,asd,asd,asd@landora.com,0798789789,user,bot,2025-3-8
+C010,ravidu,miuranga,ravidu@gmail.com,0770528901,customer,male,2002-9-28
+C011,check,check,check@landora.test,0778899888,customer,male,2025-3-16
