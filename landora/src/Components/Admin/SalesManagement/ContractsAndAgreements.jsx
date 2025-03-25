@@ -1,41 +1,68 @@
 import React, { useState } from 'react';
-import { Container, Typography, Button, TextField, Grid, Paper, List as MuiList, ListItem, ListItemText, Dialog, DialogActions, DialogTitle, DialogContent, Box, IconButton, MenuItem } from '@mui/material';
+import { Container, Typography, Button, TextField, Grid, Paper, List as MuiList, ListItemText, Dialog, DialogActions, DialogTitle, DialogContent, Box, IconButton, MenuItem } from '@mui/material';
 import ArchiveIcon from '@mui/icons-material/Archive';
 import UnarchiveIcon from '@mui/icons-material/Unarchive';
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import SearchIcon from '@mui/icons-material/Search';
+import DownloadIcon from '@mui/icons-material/Download';
+
 import { Contracts } from '../Database/Data';
+import jsPDF from 'jspdf';
+
+const handleDownloadPDF = (contract) => {
+  const doc = new jsPDF();
+  doc.text(`Contract Details`, 10, 10);
+  doc.text(`Date: ${contract.date}`, 10, 20);
+  doc.text(`Title: ${contract.title}`, 10, 30);
+  doc.text(`Status: ${contract.status}`, 10, 40);
+  doc.save(`${contract.title}.pdf`);
+};
 
 const ContractsAndAgreements = () => {
   const [contracts, setContracts] = useState(Contracts);
   const [openDialog, setOpenDialog] = useState(false);
   const [newContract, setNewContract] = useState({ date: '', title: '', status: 'Pending' });
+  const [errors, setErrors] = useState({ date: '', title: '', status: '' });
   const [searchQuery, setSearchQuery] = useState('');
   const [filterStatus, setFilterStatus] = useState('All');
   const [selectedContract, setSelectedContract] = useState(null);
   const [openViewDialog, setOpenViewDialog] = useState(false);
 
-  // Open Add Contract dialog
-  const handleAddContract = () => {
-    setOpenDialog(true);
+  // Validation function
+  const validate = () => {
+    let tempErrors = { date: '', title: '', status: '' };
+    let isValid = true;
+
+    if (!newContract.date) {
+      tempErrors.date = 'Date is required.';
+      isValid = false;
+    }
+    if (!newContract.title) {
+      tempErrors.title = 'Title is required.';
+      isValid = false;
+    }
+    if (!newContract.status) {
+      tempErrors.status = 'Status is required.';
+      isValid = false;
+    }
+
+    setErrors(tempErrors);
+    return isValid;
   };
 
   // Handle saving new contract
   const handleSaveContract = () => {
-    const contract = {
-      id: contracts.length + 1,
-      ...newContract,
-    };
-    setContracts([...contracts, contract]);
-    setOpenDialog(false);
-    setNewContract({ date: '', title: '', status: 'Pending' });
-  };
-
-  // Handle viewing contract details
-  const handleViewContract = (contract) => {
-    setSelectedContract(contract);
-    setOpenViewDialog(true);
+    if (validate()) {
+      const contract = {
+        id: contracts.length + 1,
+        ...newContract,
+      };
+      setContracts([...contracts, contract]);
+      setOpenDialog(false);
+      setNewContract({ date: '', title: '', status: 'Pending' });
+      setErrors({ date: '', title: '', status: '' }); // Clear errors
+    }
   };
 
   // Handle filtering
@@ -54,7 +81,7 @@ const ContractsAndAgreements = () => {
             variant="contained"
             color="success"
             sx={{ px: 3, py: 1, borderRadius: 2, fontSize: '1rem', mx: 2, my: 1 }}
-            onClick={handleAddContract}
+            onClick={() => setOpenDialog(true)}
           >
             Add Contract
           </Button>
@@ -138,11 +165,14 @@ const ContractsAndAgreements = () => {
                 </Grid>
                 <Grid item xs={12} sm={4}>
                   <Box display="flex" justifyContent={{ xs: 'center', sm: 'flex-end' }} gap={1} flexWrap="wrap">
-                    <IconButton color="primary" size="medium" onClick={() => handleViewContract(contract)}>
+                    <IconButton color="primary" size="medium" onClick={() => setSelectedContract(contract)}>
                       <VisibilityIcon />
                     </IconButton>
                     <IconButton color="secondary" size="medium">
                       <EditIcon />
+                    </IconButton>
+                    <IconButton color="success" size="medium" onClick={() => handleDownloadPDF(contract)}>
+                      <DownloadIcon />
                     </IconButton>
                     {contract.status !== 'Archived' && (
                       <IconButton color="warning" size="medium">
@@ -173,6 +203,8 @@ const ContractsAndAgreements = () => {
               onChange={(e) => setNewContract({ ...newContract, date: e.target.value })}
               margin="dense"
               InputLabelProps={{ shrink: true }}
+              error={Boolean(errors.date)}
+              helperText={errors.date}
             />
             <TextField
               label="Contract Title"
@@ -180,6 +212,8 @@ const ContractsAndAgreements = () => {
               value={newContract.title}
               onChange={(e) => setNewContract({ ...newContract, title: e.target.value })}
               margin="dense"
+              error={Boolean(errors.title)}
+              helperText={errors.title}
             />
             <TextField
               label="Status"
@@ -187,6 +221,8 @@ const ContractsAndAgreements = () => {
               value={newContract.status}
               onChange={(e) => setNewContract({ ...newContract, status: e.target.value })}
               margin="dense"
+              error={Boolean(errors.status)}
+              helperText={errors.status}
             />
           </DialogContent>
           <DialogActions>

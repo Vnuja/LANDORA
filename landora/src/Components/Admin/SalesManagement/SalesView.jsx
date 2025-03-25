@@ -3,10 +3,13 @@ import { Button, Container, Typography, Grid, Box, Dialog, DialogTitle, DialogAc
 import ArchiveIcon from '@mui/icons-material/Archive';
 import UnarchiveIcon from '@mui/icons-material/Unarchive';
 import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { MenuItem } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { SalesData } from '../Database/Data';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 
 function Sales() {
@@ -35,6 +38,11 @@ function Sales() {
         status: "Active",
     });
 
+
+    const handleDeleteTransaction = (id) => {
+        setSales(sales.filter((sale) => sale.id !== id));
+    };
+    
     const handleOpenNewTransaction = () => {
         setOpenNewTransactionDialog(true);
     };
@@ -78,6 +86,30 @@ function Sales() {
         setSales(sales.map((sale) => (sale.id === id ? { ...sale, status: "Active" } : sale)));
     };
 
+    const handleDownloadPDF = () => {
+        const doc = new jsPDF();
+        const tableColumn = ["ID", "Name", "Location","Vendor","Buyer", "Price", "Status"];
+        const tableRows = [];
+    
+        sales.forEach(sale => {
+            const saleData = [
+                sale.id,
+                sale.name,
+                sale.location,
+                sale.VendorID,
+                sale.buyerID,
+                sale.price,
+                sale.status
+
+            ];
+            tableRows.push(saleData);
+        });
+    
+        doc.autoTable(tableColumn, tableRows, { startY: 20 });
+        doc.text("Sales Transactions", 14, 15);
+        doc.save("sales_transactions.pdf");
+    };
+
     return (
         <div style={{ padding: "10px", backgroundColor: "rgb(253, 253, 227)", minHeight: "100vh" }}>
             <Container>
@@ -105,6 +137,13 @@ function Sales() {
                         onClick={() => setFilterStatus('All')}
                     >
                         View All
+                    </Button>
+                    <Button
+                        variant="contained"
+                        sx={{ px: 3, py: 1, borderRadius: 2, fontSize: "1rem", mx: 2, my: 1, backgroundColor: "#4caf50", color: "#fff", '&:hover': { backgroundColor: "#388e3c" } }}
+                        onClick={handleDownloadPDF}
+                    >
+                        Download PDF
                     </Button>
                 
                     <TextField
@@ -176,6 +215,9 @@ function Sales() {
                                     <Box display="flex" justifyContent={{ xs: "center", sm: "flex-end" }} gap={1} flexWrap="wrap">
                                         <IconButton color="primary" size="medium" onClick={() => handleViewTransaction(sale)}>
                                             <VisibilityIcon />
+                                        </IconButton>
+                                        <IconButton color="error" size="medium" onClick={() => handleDeleteTransaction(sale.id)}>
+                                            <DeleteIcon />
                                         </IconButton>
                                         <IconButton color="secondary" size="medium" onClick={() => handleModifyPayment(sale)}>
                                             <EditIcon />
