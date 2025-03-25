@@ -40,7 +40,7 @@ router.post("/export-csv", (req, res) => {
       console.error("Error saving file:", err);
       return res.status(500).json({ message: "Error saving CSV file" });
     }
-    res.status(200).json({ message: "CSV file saved successfully", filePath });
+    res.status(200).json({ message: "Server Refreshed successfully", filePath });
   });
 });
 

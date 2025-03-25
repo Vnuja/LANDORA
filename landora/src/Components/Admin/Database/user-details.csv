@@ -1,11 +1,12 @@
 User ID,Username,Name,Email,Phone,Type,Gender,Birthday
-C001,admin,admin,admin@landora.com,0712345678,admin,male,2025-1-1
-C002,vinuja,vinuja,vinuja@landora.com,0712345678,admin,male,2025-1-1
-C003,amasha,Amasha Nethmi,amasha10nethmi@gmail.com,0741196152,admin,female,2002-3-10
-C004,kavitha,kavitha,kavitha@landora.com,0712345678,admin,female,2025-1-1
-C005,kenuri,kenuri,kenuri@landora.com,0712345678,admin,female,2025-1-1
-C006,ransith,ransith,ransith@landora.com,0712345678,customer,male,2025-1-1
-C007,test,test,test@test.com,0111222333,customer,male,2025-3-2
-C010,ravidu,miuranga,ravidu@gmail.com,0770528901,customer,male,2002-9-28
-C011,check,check,check@landora.test,0778899888,customer,male,2025-3-16
-C012,mana,Venuja G Manathunga,venujageenodh@gmail.com,0703451261,customer,male,2002-10-16
+C001,admin,admin,admin@landora.com,0712345678,admin,male,1/1/2025
+C002,vinuja,vinuja,vinuja@landora.com,0712345678,admin,male,1/1/2025
+C003,amasha,Amasha Nethmi,amasha10nethmi@gmail.com,0741196152,admin,female,3/10/2002
+C004,kavitha,kavitha,kavitha@landora.com,0712345678,admin,female,1/1/2025
+C005,kenuri,kenuri,kenuri@landora.com,0712345678,admin,female,1/1/2025
+C006,ransith,ransith,ransith@landora.com,0712345678,customer,male,1/1/2025
+C010,ravidu,miuranga,ravidu@gmail.com,0770528901,customer,male,9/28/2002
+C011,check,check,check@landora.test,0778899888,customer,male,3/16/2025
+C012,mana,Venuja G Manathunga,venujageenodh@gmail.com,0703451261,customer,male,10/16/2002
+C013,dewna,Dewna Udaththapola,dewnaudaththapola@gmail.com,0718814764,customer,male,4/26/2006
+B001,lakshitha,Lakshitha,laki@gmail.com,0112233445,vendor,male,3/21/2025

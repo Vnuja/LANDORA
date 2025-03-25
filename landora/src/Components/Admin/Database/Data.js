@@ -1,21 +1,21 @@
 const properties = [
-    { id: 1, title: "Luxury Apartment", location: "New York", price: 500000, image: "apartment1.jpg", buyerID:"B001", VendorID:"V001", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut purus eget nunc." },
-    { id: 2, title: "Cozy Cottage", location: "Los Angeles", price: 300000, image: "cottage1.jpg", buyerID:"B002", VendorID:"V002", description: "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae." },
-    { id: 3, title: "Modern House", location: "Chicago", price: 450000, image: "house1.jpg", buyerID:"B003", VendorID:"V003", description: "Curabitur non nulla sit amet nisl tempus convallis quis ac lectus." },
-    { id: 4, title: "Spacious Villa", location: "Miami", price: 750000, image: "villa1.jpg", buyerID:"B004", VendorID:"V004", description: "Pellentesque in ipsum id orci porta dapibus." },
-    { id: 5, title: "Urban Loft 1", location: "San Francisco", price: 600000, image: "loft1.jpg", buyerID:"B005", VendorID:"V005", description: "Vivamus suscipit tortor eget felis porttitor volutpat." },
-    { id: 5, title: "Urban Loft 2", location: "San Francisco", price: 650000, image: "loft1.jpg", buyerID:"B005", VendorID:"V005", description: "Vivamus suscipit tortor eget felis porttitor volutpat." },
-    { id: 5, title: "Urban Loft 3", location: "San Francisco", price: 500000, image: "loft1.jpg", buyerID:"B0014", VendorID:"V005", description: "Vivamus suscipit tortor eget felis porttitor volutpat." },
-    { id: 5, title: "Urban Loft 4", location: "San Francisco", price: 700000, image: "loft1.jpg", buyerID:"B0015", VendorID:"V005", description: "Vivamus suscipit tortor eget felis porttitor volutpat." },
-    { id: 5, title: "Urban Loft 5", location: "San Francisco", price: 900000, image: "loft1.jpg", buyerID:"B0010", VendorID:"V011", description: "Vivamus suscipit tortor eget felis porttitor volutpat." },
-    { id: 6, title: "Country House", location: "Austin", price: 350000, image: "countryhouse1.jpg", buyerID:"B006", VendorID:"V006", description: "Nulla quis lorem ut libero malesuada feugiat." },
-    { id: 7, title: "Beachfront Condo", location: "San Diego", price: 800000, image: "condo1.jpg", buyerID:"B007", VendorID:"V007", description: "Proin eget tortor risus." },
-    { id: 8, title: "Penthouse Suite", location: "Seattle", price: 900000, image: "penthouse1.jpg", buyerID:"B008", VendorID:"V008", description: "Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a." },
-    { id: 9, title: "Suburban Home", location: "Denver", price: 400000, image: "suburbanhome1.jpg", buyerID:"B009", VendorID:"V009", description: "Donec sollicitudin molestie malesuada." },
-    { id: 10, title: "Downtown Studio", location: "Boston", price: 250000, image: "studio1.jpg", buyerID:"B010", VendorID:"V010", description: "Cras ultricies ligula sed magna dictum porta." },
-    { id: 11, title: "Historic Mansion", location: "Philadelphia", price: 1200000, image: "mansion1.jpg", buyerID:"B011", VendorID:"V011", description: "Quisque velit nisi, pretium ut lacinia in, elementum id enim." },
-    { id: 12, title: "Mountain Cabin", location: "Aspen", price: 550000, image: "cabin1.jpg", buyerID:"B012", VendorID:"V012", description: "Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus." },
-    { id: 13, title: "Lake House", location: "Lake Tahoe", price: 700000, image: "lakehouse1.jpg", buyerID:"B013", VendorID:"V013", description: "Sed porttitor lectus nibh." }
+    { id: 1, title: "Luxury Apartment", location: "New York", price: 500000, image: "apartment1.jpg", customerID:"C001", VendorID:"V001", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut purus eget nunc." },
+    { id: 2, title: "Cozy Cottage", location: "Los Angeles", price: 300000, image: "cottage1.jpg", customerID:"C002", VendorID:"V002", description: "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae." },
+    { id: 3, title: "Modern House", location: "Chicago", price: 450000, image: "house1.jpg", customerID:"C003", VendorID:"V003", description: "Curabitur non nulla sit amet nisl tempus convallis quis ac lectus." },
+    { id: 4, title: "Spacious Villa", location: "Miami", price: 750000, image: "villa1.jpg", customerID:"C004", VendorID:"V004", description: "Pellentesque in ipsum id orci porta dapibus." },
+    { id: 5, title: "Urban Loft 1", location: "San Francisco", price: 600000, image: "loft1.jpg", customerID:"C005", VendorID:"V005", description: "Vivamus suscipit tortor eget felis porttitor volutpat." },
+    { id: 6, title: "Urban Loft 2", location: "San Francisco", price: 650000, image: "loft1.jpg", customerID:"C005", VendorID:"V005", description: "Vivamus suscipit tortor eget felis porttitor volutpat." },
+    { id: 7, title: "Urban Loft 3", location: "San Francisco", price: 500000, image: "loft1.jpg", customerID:"C0014", VendorID:"V005", description: "Vivamus suscipit tortor eget felis porttitor volutpat." },
+    { id: 8, title: "Urban Loft 4", location: "San Francisco", price: 700000, image: "loft1.jpg", customerID:"C0015", VendorID:"V005", description: "Vivamus suscipit tortor eget felis porttitor volutpat." },
+    { id: 5, title: "Urban Loft 5", location: "San Francisco", price: 900000, image: "loft1.jpg", customerID:"C0010", VendorID:"V011", description: "Vivamus suscipit tortor eget felis porttitor volutpat." },
+    { id: 9, title: "Country House", location: "Austin", price: 350000, image: "countryhouse1.jpg", customerID:"C006", VendorID:"V006", description: "Nulla quis lorem ut libero malesuada feugiat." },
+    { id: 10, title: "Beachfront Condo", location: "San Diego", price: 800000, image: "condo1.jpg", customerID:"C007", VendorID:"V007", description: "Proin eget tortor risus." },
+    { id: 11, title: "Penthouse Suite", location: "Seattle", price: 900000, image: "penthouse1.jpg", customerID:"C008", VendorID:"V008", description: "Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a." },
+    { id: 12, title: "Suburban Home", location: "Denver", price: 400000, image: "suburbanhome1.jpg", customerID:"C009", VendorID:"V009", description: "Donec sollicitudin molestie malesuada." },
+    { id: 13, title: "Downtown Studio", location: "Boston", price: 250000, image: "studio1.jpg", customerID:"C010", VendorID:"V010", description: "Cras ultricies ligula sed magna dictum porta." },
+    { id: 14, title: "Historic Mansion", location: "Philadelphia", price: 1200000, image: "mansion1.jpg", customerID:"C011", VendorID:"V011", description: "Quisque velit nisi, pretium ut lacinia in, elementum id enim." },
+    { id: 15, title: "Mountain Cabin", location: "Aspen", price: 550000, image: "cabin1.jpg", customerID:"C012", VendorID:"V012", description: "Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus." },
+    { id: 16, title: "Lake House", location: "Lake Tahoe", price: 700000, image: "lakehouse1.jpg", customerID:"C013", VendorID:"V013", description: "Sed porttitor lectus nibh." }
 ];
 
 const MntRequests = [
@@ -54,20 +54,20 @@ const Contracts = [
 ];
 
 const SalesData = [
-    { id: 1, propertyID:1 ,name: "Sale 1", buyerID:"B001", VendorID:"V001", location: "Location 1", price: "$1000", status: "Active" },
-    { id: 2, propertyID:2 ,name: "Sale 2", buyerID:"B002", VendorID:"V002", location: "Location 2", price: "$2000", status: "Archived" },
-    { id: 3, propertyID:3 ,name: "Sale 3", buyerID:"B003", VendorID:"V003", location: "Location 3", price: "$3000", status: "Completed" },
-    { id: 4, propertyID:4 ,name: "Sale 4", buyerID:"B004", VendorID:"V004", location: "Location 4", price: "$4000", status: "Active" },
-    { id: 5, propertyID:5 ,name: "Sale 5", buyerID:"B005", VendorID:"V005", location: "Location 5", price: "$5000", status: "Archived" },
-    { id: 6, propertyID:6 ,name: "Sale 6", buyerID:"B006", VendorID:"V006", location: "Location 6", price: "$6000", status: "Completed" },
-    { id: 7, propertyID:7 ,name: "Sale 7", buyerID:"B007", VendorID:"V007", location: "Location 7", price: "$7000", status: "Active" },
-    { id: 8, propertyID:8 ,name: "Sale 8", buyerID:"B008", VendorID:"V008", location: "Location 8", price: "$8000", status: "Archived" },
-    { id: 9, propertyID:9 ,name: "Sale 9", buyerID:"B009", VendorID:"V009", location: "Location 9", price: "$9000", status: "Completed" },
-    { id: 10, propertyID:10 ,name: "Sale 10", buyerID:"B010", VendorID:"V010", location: "Location 10", price: "$10000", status: "Active" },
-    { id: 11, propertyID:11 ,name: "Sale 11", buyerID:"B011", VendorID:"V011", location: "Location 11", price: "$11000", status: "Archived" },
-    { id: 12, propertyID:12 ,name: "Sale 12", buyerID:"B012", VendorID:"V012", location: "Location 12", price: "$12000", status: "Completed" },
-    { id: 13, propertyID:13 ,name: "Sale 13", buyerID:"B013", VendorID:"V013", location: "Location 13", price: "$13000", status: "Active" }
-   ];
+    { id: 1, propertyID:1 ,name: "Sale 1", customerID:"C001", VendorID:"V001", location: "Location 1", price: "$1000", status: "Active" },
+    { id: 2, propertyID:2 ,name: "Sale 2", customerID:"C002", VendorID:"V002", location: "Location 2", price: "$2000", status: "Archived" },
+    { id: 3, propertyID:3 ,name: "Sale 3", customerID:"C003", VendorID:"V003", location: "Location 3", price: "$3000", status: "Completed" },
+    { id: 4, propertyID:4 ,name: "Sale 4", customerID:"C004", VendorID:"V004", location: "Location 4", price: "$4000", status: "Active" },
+    { id: 5, propertyID:5 ,name: "Sale 5", customerID:"C005", VendorID:"V005", location: "Location 5", price: "$5000", status: "Archived" },
+    { id: 6, propertyID:6 ,name: "Sale 6", customerID:"C006", VendorID:"V006", location: "Location 6", price: "$6000", status: "Completed" },
+    { id: 7, propertyID:7 ,name: "Sale 7", customerID:"C007", VendorID:"V007", location: "Location 7", price: "$7000", status: "Active" },
+    { id: 8, propertyID:8 ,name: "Sale 8", customerID:"C008", VendorID:"V008", location: "Location 8", price: "$8000", status: "Archived" },
+    { id: 9, propertyID:9 ,name: "Sale 9", customerID:"C009", VendorID:"V009", location: "Location 9", price: "$9000", status: "Completed" },
+    { id: 10, propertyID:10 ,name: "Sale 10", customerID:"C010", VendorID:"V010", location: "Location 10", price: "$10000", status: "Active" },
+    { id: 11, propertyID:11 ,name: "Sale 11", customerID:"C011", VendorID:"V011", location: "Location 11", price: "$11000", status: "Archived" },
+    { id: 12, propertyID:12 ,name: "Sale 12", customerID:"C012", VendorID:"V012", location: "Location 12", price: "$12000", status: "Completed" },
+    { id: 13, propertyID:13 ,name: "Sale 13", customerID:"C013", VendorID:"V013", location: "Location 13", price: "$13000", status: "Active" }
+];
 
 const vendors = [
     { VendorID: "V001", name: "John Doe", contact: "john.doe@example.com", phone: "123-456-7890" },
@@ -84,27 +84,29 @@ const vendors = [
     { VendorID: "V012", name: "Linda White", contact: "linda.white@example.com", phone: "234-567-8902" },
     { VendorID: "V013", name: "William Harris", contact: "william.harris@example.com", phone: "345-678-9013" }
 ];
+
 const vendorPropertyCount = vendors.map(vendor => {
     const propertyCount = properties.filter(property => property.VendorID === vendor.VendorID).length;
     return { ...vendor, propertyCount };
 });
-const buyers = [
-    { buyerID: "B001", name: "Alice Johnson", contact: "alice.johnson@example.com", phone: "123-456-7890" },
-    { buyerID: "B002", name: "Bob Smith", contact: "bob.smith@example.com", phone: "234-567-8901" },
-    { buyerID: "B003", name: "Charlie Brown", contact: "charlie.brown@example.com", phone: "345-678-9012" },
-    { buyerID: "B004", name: "Diana Prince", contact: "diana.prince@example.com", phone: "456-789-0123" },
-    { buyerID: "B005", name: "Ethan Hunt", contact: "ethan.hunt@example.com", phone: "567-890-1234" },
-    { buyerID: "B006", name: "Fiona Gallagher", contact: "fiona.gallagher@example.com", phone: "678-901-2345" },
-    { buyerID: "B007", name: "George Clooney", contact: "george.clooney@example.com", phone: "789-012-3456" },
-    { buyerID: "B008", name: "Hannah Montana", contact: "hannah.montana@example.com", phone: "890-123-4567" },
-    { buyerID: "B009", name: "Ian Somerhalder", contact: "ian.somerhalder@example.com", phone: "901-234-5678" },
-    { buyerID: "B010", name: "Jack Sparrow", contact: "jack.sparrow@example.com", phone: "012-345-6789" },
-    { buyerID: "B011", name: "Karen Gillan", contact: "karen.gillan@example.com", phone: "123-456-7891" },
-    { buyerID: "B012", name: "Liam Neeson", contact: "liam.neeson@example.com", phone: "234-567-8902" },
-    { buyerID: "B013", name: "Megan Fox", contact: "megan.fox@example.com", phone: "345-678-9013" },
-    { buyerID: "B014", name: "Nina Dobrev", contact: "nina.dobrev@example.com", phone: "456-789-0124" },
-    { buyerID: "B015", name: "Oscar Isaac", contact: "oscar.isaac@example.com", phone: "567-890-1235" }
+
+const customers = [
+    { customerID: "C001", name: "Alice Johnson", contact: "alice.johnson@example.com", phone: "123-456-7890" },
+    { customerID: "C002", name: "Bob Smith", contact: "bob.smith@example.com", phone: "234-567-8901" },
+    { customerID: "C003", name: "Charlie Brown", contact: "charlie.brown@example.com", phone: "345-678-9012" },
+    { customerID: "C004", name: "Diana Prince", contact: "diana.prince@example.com", phone: "456-789-0123" },
+    { customerID: "C005", name: "Ethan Hunt", contact: "ethan.hunt@example.com", phone: "567-890-1234" },
+    { customerID: "C006", name: "Fiona Gallagher", contact: "fiona.gallagher@example.com", phone: "678-901-2345" },
+    { customerID: "C007", name: "George Clooney", contact: "george.clooney@example.com", phone: "789-012-3456" },
+    { customerID: "C008", name: "Hannah Montana", contact: "hannah.montana@example.com", phone: "890-123-4567" },
+    { customerID: "C009", name: "Ian Somerhalder", contact: "ian.somerhalder@example.com", phone: "901-234-5678" },
+    { customerID: "C010", name: "Jack Sparrow", contact: "jack.sparrow@example.com", phone: "012-345-6789" },
+    { customerID: "C011", name: "Karen Gillan", contact: "karen.gillan@example.com", phone: "123-456-7891" },
+    { customerID: "C012", name: "Liam Neeson", contact: "liam.neeson@example.com", phone: "234-567-8902" },
+    { customerID: "C013", name: "Megan Fox", contact: "megan.fox@example.com", phone: "345-678-9013" },
+    { customerID: "C014", name: "Nina Dobrev", contact: "nina.dobrev@example.com", phone: "456-789-0124" },
+    { customerID: "C015", name: "Oscar Isaac", contact: "oscar.isaac@example.com", phone: "567-890-1235" }
 ];
 
-export { maintenanceData, properties, MntRequests, Contracts, SalesData, vendors, buyers };
+export { maintenanceData, properties, MntRequests, Contracts, SalesData, vendors, customers };
 

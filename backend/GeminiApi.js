@@ -53,7 +53,8 @@ async function run(prompt) {
   // You may need to update the file paths
   const files = [
     await uploadToGemini("../landora/src/Components/Admin/Database/Data.js", "text/javascript"),
-    await uploadToGemini("../landora/src/Components/Admin/Database/user-details.csv", "text/csv")
+    await uploadToGemini("../landora/src/Components/Admin/Database/user-details.csv", "text/csv"),
+    await uploadToGemini("../landora/src/Components/Admin/Database/request-details.csv", "text/csv")
   ];
 
   // Some files have a processing delay. Wait for them to be ready.
@@ -132,6 +133,24 @@ async function run(prompt) {
         role: "model",
         parts: [
           {text: "Okay, Landora here. I acknowledge the `user-details.csv` file. I will only respond to your questions directly using the data from the files provided. Ask away!\n"},
+        ],
+      },
+      {
+        role: "user",
+        parts: [
+          {
+            fileData: {
+              mimeType: files[1].mimeType,
+              fileUri: files[1].uri,
+            },
+          },
+          {text: "another data file"},
+        ],
+      },
+      {
+        role: "model",
+        parts: [
+          {text: "Okay, Landora here. I acknowledge the `request-details.csv` file. I will only respond to your questions directly using the data from the files provided. Ask away!\n"},
         ],
       },
       {

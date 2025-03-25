@@ -6,7 +6,8 @@ const axios = require('axios');
 const cors = require('cors');
 const path = require('path');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
-const exportRoutes = require("./Routes/exportRoutes");
+const exportUserRoutes = require("./Routes/Export/exportUserRoutes");
+const exportmRequestRoutes = require("./Routes/Export/exportmRequestRoutes");
 
 const app = express();
 
@@ -19,18 +20,22 @@ app.use(cors({ origin: process.env.CLIENT_URL || '*' })); // Adjust CLIENT_URL i
 // Import routes
 const userRoutes = require('./Routes/UserRoutes');
 const authRoutes = require('./Routes/AuthRoutes');
-const maintenanceRequestRoutes = require('./Routes/maintenanceRequestRoutes');
 const router = require('./router');
+const MaintanancneRoutes = require('./Routes/mRequestRoutes');
+const SalesRoutes = require('./Routes/salesroutes');
 
 // Route middleware
+app.use('/maintenance', MaintanancneRoutes);
+app.use('/sales', SalesRoutes);
 app.use('/users', userRoutes);
 app.use('/auth', authRoutes);
-app.use('/api/maintenance-requests', maintenanceRequestRoutes);
 // Define a route handler for '/api' endpoint
 app.use('/api', router);
-app.use('/api/export', exportRoutes);
+app.use('/api/export/user', exportUserRoutes);
+app.use('/api/export/requests', exportmRequestRoutes);
 // Serve static files (uploaded images)
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 
 // Error handling middleware
 app.use((err, req, res, next) => {

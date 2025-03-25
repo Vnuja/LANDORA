@@ -1,0 +1,11 @@
+request ID,customerId,propertyId,issue,status
+MR001,C001,P001,Leaky faucet,Completed
+MR002,C002,P002,Broken window,In Progress
+MR003,C003,P003,No heating,In Progress
+MR004,C004,P004,Electrical issue,Completed
+MR005,C005,P005,Pest control,Pending
+MR006,C006,P006,Roof leak,In Progress
+MR007,C007,P007,Plumbing issue,Pending
+MR008,C008,P008,Broken door,Completed
+MR009,C009,P009,Mold issue,Pending
+MR010,test,test,test,Pending
