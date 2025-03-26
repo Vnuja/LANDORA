@@ -97,7 +97,8 @@ function AddUser({ onBack }) {
             onChange={(e) => setType(e.target.value)}
             label="User Type"
           >
-            <MenuItem value="customer">Customer</MenuItem>
+            <MenuItem value="buyer">Buyer</MenuItem>
+            <MenuItem value="vendor">Vendor</MenuItem>
             <MenuItem value="admin">Admin</MenuItem>
           </Select>
         </FormControl>

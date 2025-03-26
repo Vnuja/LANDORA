@@ -1,19 +1,16 @@
 // Import necessary dependencies
 import React, { useState } from 'react';
-import { Container, Paper, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, MenuItem, Select, FormControl, InputLabel, Button, Box, Grid, IconButton, Dialog, DialogTitle, DialogActions, DialogContent } from '@mui/material';
+import { Container, Paper, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, MenuItem, Select, FormControl, InputLabel, Button, Box, Grid, IconButton, Dialog, DialogTitle, DialogActions, DialogContent, Card, CardContent, FormHelperText } from '@mui/material';
 import ArchiveIcon from '@mui/icons-material/Archive';
 import UnarchiveIcon from '@mui/icons-material/Unarchive';
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import SearchIcon from '@mui/icons-material/Search';
+import { initialTransactions } from '../Database/Data';
+import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
-// Sample transaction data
-const initialTransactions = [
-    { id: 1, date: '2025-03-01', amount: 500, status: 'Completed' },
-    { id: 2, date: '2025-03-02', amount: 300, status: 'Pending' },
-    { id: 3, date: '2025-03-03', amount: 700, status: 'Failed' },
-    { id: 4, date: '2025-03-04', amount: 200, status: 'Completed' },
-];
+
 
 function FinancialTransactions() {
     const [transactions, setTransactions] = useState(initialTransactions);
@@ -23,6 +20,42 @@ function FinancialTransactions() {
     const [filterStatus, setFilterStatus] = useState('All');
     const [openDialog, setOpenDialog] = useState(false);
     const [selectedTransaction, setSelectedTransaction] = useState(null);
+    const [openAddDialog, setOpenAddDialog] = useState(false);
+    const [newTransaction, setNewTransaction] = useState({
+        id: '',
+        date: '',
+        amount: '',
+        status: ''
+    });
+    const [errors, setErrors] = useState({
+        date: false,
+        amount: false,
+        status: false,
+    });
+
+
+    const validate = () => {
+        let tempErrors = { date: false, amount: false, status: false };
+        let isValid = true;
+
+        if (!newTransaction.date) {
+            tempErrors.date = "Date is required.";
+            isValid = false;
+        }
+
+        if (!newTransaction.amount || newTransaction.amount <= 0) {
+            tempErrors.amount = "Amount must be greater than 0.";
+            isValid = false;
+        }
+
+        if (!newTransaction.status) {
+            tempErrors.status = "Please select a status.";
+            isValid = false;
+        }
+
+        setErrors(tempErrors);
+        return isValid;
+    };
 
     // Handle sorting
     const handleSort = (key) => {
@@ -53,14 +86,51 @@ function FinancialTransactions() {
         setFilter({ ...filter, date: e.target.value });
     };
 
-    // Add date filter input
+    // Handle Add Transaction Dialog Open
+    const handleOpenAddDialog = () => {
+        setNewTransaction({ id: transactions.length + 1, date: '', amount: '', status: '' }); // Reset form
+        setOpenAddDialog(true);
+    };
 
-
+    // Handle Add Transaction
+    const handleAddTransaction = () => {
+        if (validate()) {
+            setTransactions([...transactions, { ...newTransaction, amount: parseFloat(newTransaction.amount) }]);
+            setOpenAddDialog(false);
+        }
+    };
 
     const handleViewTransaction = (transaction) => {
         setSelectedTransaction(transaction);
         setOpenDialog(true);
     };
+
+
+
+
+
+
+
+    // Calculate totals for revenue, pending, and failed transactions
+    const calculateTotals = () => {
+        let revenue = 0;
+        let pending = 0;
+        let failed = 0;
+        transactions.forEach(transaction => {
+            if (transaction.status === 'Completed') {
+                revenue += transaction.amount;
+            } else if (transaction.status === 'Pending') {
+                pending += transaction.amount;
+            } else if (transaction.status === 'Failed') {
+                failed += transaction.amount;
+            }
+        });
+        return { revenue, pending, failed };
+    };
+
+    const { revenue, pending, failed } = calculateTotals();
+
+
 
     return (
         <div style={{ padding: "10px", backgroundColor: "rgb(253, 253, 227)", minHeight: "100vh" }}>
@@ -77,21 +147,18 @@ function FinancialTransactions() {
                             shrink: true,
                         }}
                     />
-                    <Button
-                        variant="contained"
-                        color="success"
-                        sx={{ px: 3, py: 1, borderRadius: 2, fontSize: "1rem", mx: 2, my: 1 }}
-                    >
+                    <Button variant="contained" color="success" onClick={handleOpenAddDialog} sx={{ mx: 2 }}>
                         Add Transaction
                     </Button>
-                      <Button
-                                          variant="contained"
-                                          color="secondary"
-                                          sx={{ px: 3, py: 1, borderRadius: 2, fontSize: "1rem", mx: 2, my: 1 }}
-                                          onClick={() => setFilterStatus('Pending')}
-                                      >
-                                          View Pending Payments
-                                      </Button>
+
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        sx={{ px: 3, py: 1, borderRadius: 2, fontSize: "1rem", mx: 2, my: 1 }}
+                        onClick={() => setFilterStatus('Pending')}
+                    >
+                        View Pending Payments
+                    </Button>
                     <Button
                         variant="contained"
                         color="primary"
@@ -167,6 +234,125 @@ function FinancialTransactions() {
                         </TableBody>
                     </Table>
                 </TableContainer>
+
+                <Grid container spacing={2} sx={{ my: 2 }}>
+                    <Grid item xs={4}>
+                        <Card>
+                            <CardContent>
+                                <Typography variant="h6" color="textSecondary">Revenue</Typography>
+                                <Typography variant="h4" color="primary">${revenue}</Typography>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                    <Grid item xs={4}>
+                        <Card>
+                            <CardContent>
+                                <Typography variant="h6" color="textSecondary">Pending</Typography>
+                                <Typography variant="h4" color="secondary">${pending}</Typography>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                    <Grid item xs={4}>
+                        <Card>
+                            <CardContent>
+                                <Typography variant="h6" color="textSecondary">Failed</Typography>
+                                <Typography variant="h4" color="error">${failed}</Typography>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                </Grid>
+
+                {/* Pie Chart */}
+                <Box sx={{ my: 4 }}>
+                    <ResponsiveContainer width="100%" height={300}>
+                        <PieChart>
+                            <Pie
+                                data={[
+                                    { name: 'Completed', value: revenue },
+                                    { name: 'Pending', value: pending },
+                                    { name: 'Failed', value: failed }
+                                ]}
+                                cx="50%"
+                                cy="50%"
+                                outerRadius={100}
+                                fill="#8884d8"
+                                label
+                            >
+                                <Cell key="cell-1" fill="#00C49F" />
+                                <Cell key="cell-2" fill="#FF8042" />
+                                <Cell key="cell-3" fill="#FF0000" />
+                            </Pie>
+                        </PieChart>
+                    </ResponsiveContainer>
+                </Box>
+
+                {/* Bar Chart */}
+                <Box sx={{ my: 4 }}>
+                    <ResponsiveContainer width="100%" height={300}>
+                        <BarChart data={[
+                            { name: 'Completed', value: revenue },
+                            { name: 'Pending', value: pending },
+                            { name: 'Failed', value: failed }
+                        ]}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="name" />
+                            <YAxis />
+                            <Tooltip />
+                            <Legend />
+                            <Bar dataKey="value" fill="#8884d8" />
+                        </BarChart>
+                    </ResponsiveContainer>
+                </Box>
+
+
+                // Update the Add Transaction Dialog to display errors
+                <Dialog open={openAddDialog} onClose={() => setOpenAddDialog(false)}>
+                    <DialogTitle>Add New Transaction</DialogTitle>
+                    <DialogContent>
+                        <TextField
+                            label="Date"
+                            type="date"
+                            variant="outlined"
+                            fullWidth
+                            value={newTransaction.date}
+                            onChange={(e) => setNewTransaction({ ...newTransaction, date: e.target.value })}
+                            InputLabelProps={{ shrink: true }}
+                            sx={{ my: 1 }}
+                            error={Boolean(errors.date)}
+                            helperText={errors.date}
+                        />
+                        <TextField
+                            label="Amount"
+                            type="number"
+                            variant="outlined"
+                            fullWidth
+                            value={newTransaction.amount}
+                            onChange={(e) => setNewTransaction({ ...newTransaction, amount: e.target.value })}
+                            sx={{ my: 1 }}
+                            error={Boolean(errors.amount)}
+                            helperText={errors.amount}
+                        />
+                        <FormControl variant="outlined" fullWidth sx={{ my: 1 }} error={Boolean(errors.status)}>
+                            <InputLabel>Status</InputLabel>
+                            <Select
+                                value={newTransaction.status}
+                                onChange={(e) => setNewTransaction({ ...newTransaction, status: e.target.value })}
+                                label="Status"
+                            >
+                                <MenuItem value="Completed">Completed</MenuItem>
+                                <MenuItem value="Pending">Pending</MenuItem>
+                                <MenuItem value="Failed">Failed</MenuItem>
+                            </Select>
+                            <FormHelperText>{errors.status}</FormHelperText>
+                        </FormControl>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={() => setOpenAddDialog(false)} color="secondary">Cancel</Button>
+                        <Button onClick={handleAddTransaction} color="primary" disabled={!newTransaction.date || !newTransaction.amount || !newTransaction.status}>
+                            Add
+                        </Button>
+                    </DialogActions>
+                </Dialog>
 
                 {/* View Transaction Dialog */}
                 <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>

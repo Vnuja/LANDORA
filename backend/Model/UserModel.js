@@ -32,7 +32,7 @@ const UserSchema = new Schema({
   type: {
     type: String,
     required: true,
-    enum: ['admin', 'customer','vendor'],  // Add more roles as needed
+    enum: ['admin', 'buyer','vendor'],  // Add more roles as needed
     default: 'customer',  // Default role is customer
   },
   gender: {
