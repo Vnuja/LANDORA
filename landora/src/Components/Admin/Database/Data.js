@@ -107,5 +107,22 @@ const buyers = [
     { buyerID: "B015", name: "Oscar Isaac", contact: "oscar.isaac@example.com", phone: "567-890-1235" }
 ];
 
-export { maintenanceData, properties, MntRequests, Contracts, SalesData, vendors, buyers };
+const initialTransactions = [
+    { id: 1, date: '2023-01-01', description: 'Down Payment', amount: 100000 },
+    { id: 2, date: '2023-02-15', description: 'Installment', amount: 20000 },
+    { id: 3, date: '2023-03-10', description: 'Installment', amount: 30000 },
+    { id: 4, date: '2023-04-05', description: 'Installment', amount: 40000 },
+    { id: 5, date: '2023-05-20', description: 'Installment', amount: 50000 },
+    { id: 6, date: '2023-06-15', description: 'Installment', amount: 60000 },
+    { id: 7, date: '2023-07-10', description: 'Installment', amount: 70000 },
+    { id: 8, date: '2023-08-01', description: 'Installment', amount: 80000 },
+    { id: 9, date: '2023-09-12', description: 'Installment', amount: 90000 },
+    { id: 10, date: '2023-10-05', description: 'Final Payment', amount: 100000 },
+    { id: 11, date: '2023-11-18', description: 'Closing Costs', amount: 20000 },
+    { id: 12, date: '2023-12-02', description: 'Miscellaneous', amount: 10000 },
+    { id: 13, date: '2024-01-15', description: 'Refund', amount: 5000 },
+    { id: 14, date: '2024-02-28', description: 'Refund', amount: 10000 }    
+];
+
+export { maintenanceData, properties, MntRequests, Contracts, SalesData, vendors, buyers, initialTransactions };
 

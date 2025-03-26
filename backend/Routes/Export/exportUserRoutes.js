@@ -4,6 +4,7 @@ const path = require("path");
 
 const router = express.Router();
 
+
 router.post("/export-csv", (req, res) => {
   const users = req.body.users; // Get users from frontend
 
@@ -29,7 +30,7 @@ router.post("/export-csv", (req, res) => {
     .join("\n");
 
   // Define file path
-  const filePath = path.join(__dirname, "../../landora/src/Components/Admin/Database", "user-details.csv");
+  const filePath = path.join(__dirname, "../../../landora/src/Components/Admin/Database/user-details.csv");
 
   // Ensure directory exists
   fs.mkdirSync(path.dirname(filePath), { recursive: true });

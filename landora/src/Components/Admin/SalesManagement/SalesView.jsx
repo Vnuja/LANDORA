@@ -216,10 +216,8 @@ function Sales() {
                                         <IconButton color="primary" size="medium" onClick={() => handleViewTransaction(sale)}>
                                             <VisibilityIcon />
                                         </IconButton>
-                                        <IconButton color="error" size="medium" onClick={() => handleDeleteTransaction(sale.id)}>
-                                            <DeleteIcon />
-                                        </IconButton>
-                                        <IconButton color="secondary" size="medium" onClick={() => handleModifyPayment(sale)}>
+                                        
+                                        <IconButton color="primary" size="medium" onClick={() => handleModifyPayment(sale)}>
                                             <EditIcon />
                                         </IconButton>
                                         {sale.status !== "Archived" && (
@@ -227,11 +225,14 @@ function Sales() {
                                                 <ArchiveIcon />
                                             </IconButton>
                                         )}
-                                        {sale.status == "Archived" && (
+                        haduwa                {sale.status == "Archived" && (
                                             <IconButton color="success" size="medium" onClick={() => handleUnarchiveTransaction(sale.id)}>
                                                 <UnarchiveIcon />
                                             </IconButton>
                                         )}
+                                        <IconButton color="primary" size="medium" onClick={() => handleDeleteTransaction(sale.id)}>
+                                            <DeleteIcon />
+                                        </IconButton>
                                     </Box>
                                 </Grid>
                             </Grid>
