@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Box, AppBar, Toolbar, Typography, Button, IconButton } from '@mui/material';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+//import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../Auth/AuthContext'; // Adjust the path as needed
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -40,16 +40,6 @@ function Navbar() {
           <Button color="inherit" sx={{ fontSize: 14 }} component={Link} to="/efpage">AI Designer</Button>
            {/* <Button color="inherit" component={Link} to="/appointment">Appointments</Button>*/}
           </Typography>
-
-          {/* Right Side Items */}
-          <IconButton
-            size="large"
-            aria-label="show cart items"
-            color="inherit"
-            component={Link} to="/cart"
-          >
-            <ShoppingCartIcon sx={{ color: colors.dark, marginTop: '18px' }}/>
-          </IconButton>
 
           {/* Profile Icon */}
           {user && (
