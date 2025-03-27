@@ -42,7 +42,7 @@ function Sales() {
     const handleDeleteTransaction = (id) => {
         setSales(sales.filter((sale) => sale.id !== id));
     };
-    
+
     const handleOpenNewTransaction = () => {
         setOpenNewTransactionDialog(true);
     };
@@ -81,16 +81,16 @@ function Sales() {
     const handleArchiveTransaction = (id) => {
         setSales(sales.map((sale) => (sale.id === id ? { ...sale, status: "Archived" } : sale)));
     };
-    
+
     const handleUnarchiveTransaction = (id) => {
         setSales(sales.map((sale) => (sale.id === id ? { ...sale, status: "Active" } : sale)));
     };
 
     const handleDownloadPDF = () => {
         const doc = new jsPDF();
-        const tableColumn = ["ID", "Name", "Location","Vendor","Buyer", "Price", "Status"];
+        const tableColumn = ["ID", "Name", "Location", "Vendor", "Buyer", "Price", "Status"];
         const tableRows = [];
-    
+
         sales.forEach(sale => {
             const saleData = [
                 sale.id,
@@ -104,7 +104,7 @@ function Sales() {
             ];
             tableRows.push(saleData);
         });
-    
+
         doc.autoTable(tableColumn, tableRows, { startY: 20 });
         doc.text("Sales Transactions", 14, 15);
         doc.save("sales_transactions.pdf");
@@ -116,7 +116,7 @@ function Sales() {
                 <Box textAlign="left" my={4}>
                     <Button
                         variant="contained"
-                        color="success"
+                        color="primary"
                         sx={{ px: 3, py: 1, borderRadius: 2, fontSize: "1rem", mx: 2, my: 1 }}
                         onClick={handleOpenNewTransaction}
                     >
@@ -124,7 +124,7 @@ function Sales() {
                     </Button>
                     <Button
                         variant="contained"
-                        color="warning"
+                        color="primary"
                         sx={{ px: 3, py: 1, borderRadius: 2, fontSize: "1rem", mx: 2, my: 1 }}
                         onClick={() => setFilterStatus('Archived')}
                     >
@@ -140,12 +140,13 @@ function Sales() {
                     </Button>
                     <Button
                         variant="contained"
-                        sx={{ px: 3, py: 1, borderRadius: 2, fontSize: "1rem", mx: 2, my: 1, backgroundColor: "#4caf50", color: "#fff", '&:hover': { backgroundColor: "#388e3c" } }}
+                        color="primary"
+                        sx={{ px: 3, py: 1, borderRadius: 2, fontSize: "1rem", mx: 2, my: 1, color: "#fff", '&:hover': { backgroundColor: "primary" } }}
                         onClick={handleDownloadPDF}
                     >
                         Download PDF
                     </Button>
-                
+
                     <TextField
                         marginRight={2}
                         variant="outlined"
@@ -188,7 +189,7 @@ function Sales() {
                             <Grid container spacing={2} alignItems="center">
                                 {/* Sale Details */}
                                 <Grid item xs={12} sm={8}>
-                                    
+
                                     <ListItemText
                                         primary={
                                             <Typography variant="h6" fontWeight="bold" color="info">
@@ -199,7 +200,7 @@ function Sales() {
                                             <>
                                                 <Typography
                                                     variant="body2"
-                                                    color={sale.status === "Active" ? "success.main" :sale.status === "Completed" ? "info.main" : sale.status === "Archived" ? "warning.main" : sale.status === "Pending" ? "error.main" : "textSecondary"}
+                                                    color={sale.status === "Active" ? "success.main" : sale.status === "Completed" ? "info.main" : sale.status === "Archived" ? "warning.main" : sale.status === "Pending" ? "error.main" : "textSecondary"}
 
                                                     fontWeight="bold"
                                                 >
@@ -216,7 +217,7 @@ function Sales() {
                                         <IconButton color="primary" size="medium" onClick={() => handleViewTransaction(sale)}>
                                             <VisibilityIcon />
                                         </IconButton>
-                                        
+
                                         <IconButton color="primary" size="medium" onClick={() => handleModifyPayment(sale)}>
                                             <EditIcon />
                                         </IconButton>
@@ -225,7 +226,7 @@ function Sales() {
                                                 <ArchiveIcon />
                                             </IconButton>
                                         )}
-                        haduwa                {sale.status == "Archived" && (
+                                        {sale.status == "Archived" && (
                                             <IconButton color="success" size="medium" onClick={() => handleUnarchiveTransaction(sale.id)}>
                                                 <UnarchiveIcon />
                                             </IconButton>
