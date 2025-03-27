@@ -10,13 +10,13 @@ export default class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      houseCount: 130,
-      buildingCount: 78,
-      employeeCount: 16,
-      inventoryCount: 8, //
-      supplierCount: 210, //  
-      orderCount: 118, //
-      SalesCount: 90, //
+      houseCount: 0,
+      buildingCount: 0,
+      employeeCount: 0,
+      maintainanceCount: 0, //
+      supplierCount: 0, //  
+      orderCount: 0, //
+      SalesCount: 0, //
       userCount: 0, // 
     };
   }
@@ -26,7 +26,7 @@ export default class Dashboard extends Component {
     this.fetchbuildingCount(); // Fetch the real building count
     this.fetchUserCount(); // Fetch the real user count
     this.fetchEmployeeCount(); // Fetch the real employee count
-    this.fetchInventoryCount(); // Fetch the real inventory count
+    this.fetchmaintainanceCount(); // Fetch the real inventory count
     this.fetchSupplierCount(); // Fetch the fake supplier count
     this.fetchOrderCount(); // Fetch the fake order count
     this.fetchSalesCount(); // Fetch the fake Sales count
@@ -37,7 +37,7 @@ export default class Dashboard extends Component {
       this.fetchbuildingCount(); // Refresh building count
       this.fetchUserCount(); // Refresh user count
       this.fetchEmployeeCount(); // Refresh employee count
-      this.fetchInventoryCount(); // Refresh inventory count
+      this.fetchmaintainanceCount(); // Refresh inventory count
       this.fetchSupplierCount(); // Refresh supplier count
       this.fetchOrderCount(); // Refresh order count
       this.fetchSalesCount(); // Refresh Sales count
@@ -89,10 +89,10 @@ export default class Dashboard extends Component {
   };
 
   // Fetch the inventory count from the server
-  fetchInventoryCount = async () => {
+  fetchmaintainanceCount = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/inventory'); // Ensure this points to your inventory endpoint
-      this.setState({ inventoryCount: response.data.length }); // Set the inventory count based on the retrieved data
+      const response = await axios.get('http://localhost:4000/maintenance'); // Ensure this points to your inventory endpoint
+      this.setState({ maintainanceCount: response.data.length }); // Set the inventory count based on the retrieved data
     } catch (error) {
       console.error("Error fetching inventory count:", error);
     }
@@ -136,7 +136,7 @@ export default class Dashboard extends Component {
       houseCount,
       buildingCount,
       employeeCount,
-      inventoryCount,
+      maintainanceCount,
       supplierCount,
       orderCount,
       SalesCount,
@@ -510,7 +510,7 @@ export default class Dashboard extends Component {
                     marginTop: '0.5rem',
                   }}
                 >
-                  {inventoryCount}
+                  {maintainanceCount}
                 </Typography>
                 <Typography
                   variant="body2"

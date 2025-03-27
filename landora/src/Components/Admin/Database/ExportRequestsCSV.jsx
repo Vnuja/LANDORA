@@ -1,13 +1,13 @@
 import React from "react";
 import {Button,} from '@mui/material';
 
-const ExportUserCSV = ({ users }) => {
-  const handleCSV = async () => {
+const ExportRequestCSV = ({ requests }) => {
+  const handleRequestCSV = async () => {
     try {
-      const response = await fetch("http://localhost:4000/api/export/user/export-csv", {
+      const response = await fetch("http://localhost:4000/api/export/requests/export-csv", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ users }),
+        body: JSON.stringify({ requests }),
       });
 
       const data = await response.json();
@@ -20,11 +20,11 @@ const ExportUserCSV = ({ users }) => {
   return <Button
   variant="contained"
   color="secondary"
-  onClick={handleCSV}
+  onClick={handleRequestCSV}
   sx={{ borderRadius: 2, marginLeft: 'auto' }}
 >
   Refresh Server
 </Button>;
 };
 
-export default ExportUserCSV;
+export default ExportRequestCSV;

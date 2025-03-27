@@ -5,12 +5,11 @@ const generateToken = require('../utils/generateToken');
 const saltRounds = 10;
 
 // Generate user ID with leading zeros
-const generateUserId = async (type) => {
-    const lastUser = await User.findOne({ type }).sort({ userId: -1 }).limit(1);
+const generateUserId = async () => {
+    const lastUser = await User.findOne().sort({ userId: -1 }).limit(1);
     const lastId = lastUser ? parseInt(lastUser.userId.slice(1), 10) : 0;
     const newId = (lastId + 1).toString().padStart(3, '0');
-    const prefix = type === 'admin' ? 'A' : type === 'vendor' ? 'V' : 'B';
-    return `${prefix}${newId}`;
+    return `C${newId}`;
 };
 
 // Login user

@@ -32,7 +32,7 @@ import Sales from './Components/Admin/SalesManagement/SalesView';
 
 //Maintenance Components
 import MaintenanceList from './Components/Admin/MaintananceManagement/MaintananceList';
-import Requests from './Components/Admin/MaintananceManagement/Requests';
+import Requests from './Components/Admin/MaintananceManagement/Request';
 import VendorManagement from './Components/Admin/MaintananceManagement/Vendor';
 import Cost from './Components/Admin/MaintananceManagement/Cost';
 import Schedules from './Components/Admin/MaintananceManagement/Schedules';

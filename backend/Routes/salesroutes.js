@@ -1,20 +1,14 @@
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
-import MaintananceDashboard from './MaintananceDashboard'; // Import the dashboard component
-import FinancialTransactions from './FinancialTransactions'; // Import the financial transactions component
-import SalesManagement from './SalesManagement'; // Import the sales management component
+const express = require('express');
+const router = express.Router();
+const SalesController = require('../controllers/SalesController'); // Ensure folder name is correct
 
-function SalesRoutes() {
-  return (
-    <Routes>
-      <Route path="/sales-management" element={<SalesManagement />} />
-      <Route path="/sales-management/financial-transactions" element={<FinancialTransactions />} />
-      <Route path="/sales-management/contracts-and-agreements" element={<ContractsAndAgreements />} />
-      <Route path="/sales-management/payments-and-receipts" element={<PaymentsAndReceipts />} />
-      <Route path="/sales-management/transaction-status" element={<TransactionStatus />} />
-      {/* Define other routes related to sales management as needed */}
-    </Routes>
-  );
-}
+console.log(SalesController); // Debugging: Check if it's properly imported
 
-export default SalesRoutes;
+// Routes
+router.post('/', SalesController.createSale);
+router.get('/', SalesController.getAllSales);
+router.get('/:id', SalesController.getSaleById); // Fixed function name to match SalesController.js
+router.put('/:id', SalesController.updateSale);
+router.delete('/:id', SalesController.deleteSale);
+
+module.exports = router;

@@ -54,15 +54,15 @@ const Contracts = [
 ];
 
 const SalesData = [
-    { id: 1,  propertyID:1 , name: "Sale 1",  buyerID:"B001", VendorID:"V001", location: "Location 1",  price: "$1000",  status: "Active" },
-    { id: 2,  propertyID:2 , name: "Sale 2",  buyerID:"B002", VendorID:"V002", location: "Location 2",  price: "$2000",  status: "Archived" },
-    { id: 3,  propertyID:3 , name: "Sale 3",  buyerID:"B003", VendorID:"V003", location: "Location 3",  price: "$3000",  status: "Completed" },
-    { id: 4,  propertyID:4 , name: "Sale 4",  buyerID:"B004", VendorID:"V004", location: "Location 4",  price: "$4000",  status: "Active" },
-    { id: 5,  propertyID:5 , name: "Sale 5",  buyerID:"B005", VendorID:"V005", location: "Location 5",  price: "$5000",  status: "Archived" },
-    { id: 6,  propertyID:6 , name: "Sale 6",  buyerID:"B006", VendorID:"V006", location: "Location 6",  price: "$6000",  status: "Completed" },
-    { id: 7,  propertyID:7 , name: "Sale 7",  buyerID:"B007", VendorID:"V007", location: "Location 7",  price: "$7000",  status: "Active" },
-    { id: 8,  propertyID:8 , name: "Sale 8",  buyerID:"B008", VendorID:"V008", location: "Location 8",  price: "$8000",  status: "Archived" },
-    { id: 9,  propertyID:9 , name: "Sale 9",  buyerID:"B009", VendorID:"V009", location: "Location 9",  price: "$9000",  status: "Completed" },
+    { id: 1, propertyID:1 ,name: "Sale 1", buyerID:"B001", VendorID:"V001", location: "Location 1", price: "$1000", status: "Active" },
+    { id: 2, propertyID:2 ,name: "Sale 2", buyerID:"B002", VendorID:"V002", location: "Location 2", price: "$2000", status: "Archived" },
+    { id: 3, propertyID:3 ,name: "Sale 3", buyerID:"B003", VendorID:"V003", location: "Location 3", price: "$3000", status: "Completed" },
+    { id: 4, propertyID:4 ,name: "Sale 4", buyerID:"B004", VendorID:"V004", location: "Location 4", price: "$4000", status: "Active" },
+    { id: 5, propertyID:5 ,name: "Sale 5", buyerID:"B005", VendorID:"V005", location: "Location 5", price: "$5000", status: "Archived" },
+    { id: 6, propertyID:6 ,name: "Sale 6", buyerID:"B006", VendorID:"V006", location: "Location 6", price: "$6000", status: "Completed" },
+    { id: 7, propertyID:7 ,name: "Sale 7", buyerID:"B007", VendorID:"V007", location: "Location 7", price: "$7000", status: "Active" },
+    { id: 8, propertyID:8 ,name: "Sale 8", buyerID:"B008", VendorID:"V008", location: "Location 8", price: "$8000", status: "Archived" },
+    { id: 9, propertyID:9 ,name: "Sale 9", buyerID:"B009", VendorID:"V009", location: "Location 9", price: "$9000", status: "Completed" },
     { id: 10, propertyID:10 ,name: "Sale 10", buyerID:"B010", VendorID:"V010", location: "Location 10", price: "$10000", status: "Active" },
     { id: 11, propertyID:11 ,name: "Sale 11", buyerID:"B011", VendorID:"V011", location: "Location 11", price: "$11000", status: "Archived" },
     { id: 12, propertyID:12 ,name: "Sale 12", buyerID:"B012", VendorID:"V012", location: "Location 12", price: "$12000", status: "Completed" },
@@ -89,7 +89,6 @@ const vendorPropertyCount = vendors.map(vendor => {
     const propertyCount = properties.filter(property => property.VendorID === vendor.VendorID).length;
     return { ...vendor, propertyCount };
 });
-
 const buyers = [
     { buyerID: "B001", name: "Alice Johnson", contact: "alice.johnson@example.com", phone: "123-456-7890" },
     { buyerID: "B002", name: "Bob Smith", contact: "bob.smith@example.com", phone: "234-567-8901" },
@@ -109,11 +108,21 @@ const buyers = [
 ];
 
 const initialTransactions = [
-    { id: 1, date: '2025-03-01', amount: 500, status: 'Completed' },
-    { id: 2, date: '2025-03-02', amount: 300, status: 'Pending' },
-    { id: 3, date: '2025-03-03', amount: 700, status: 'Failed' },
-    { id: 4, date: '2025-03-04', amount: 200, status: 'Completed' },
+    { id: 1, date: '2023-01-01', description: 'Down Payment', amount: 100000 },
+    { id: 2, date: '2023-02-15', description: 'Installment', amount: 20000 },
+    { id: 3, date: '2023-03-10', description: 'Installment', amount: 30000 },
+    { id: 4, date: '2023-04-05', description: 'Installment', amount: 40000 },
+    { id: 5, date: '2023-05-20', description: 'Installment', amount: 50000 },
+    { id: 6, date: '2023-06-15', description: 'Installment', amount: 60000 },
+    { id: 7, date: '2023-07-10', description: 'Installment', amount: 70000 },
+    { id: 8, date: '2023-08-01', description: 'Installment', amount: 80000 },
+    { id: 9, date: '2023-09-12', description: 'Installment', amount: 90000 },
+    { id: 10, date: '2023-10-05', description: 'Final Payment', amount: 100000 },
+    { id: 11, date: '2023-11-18', description: 'Closing Costs', amount: 20000 },
+    { id: 12, date: '2023-12-02', description: 'Miscellaneous', amount: 10000 },
+    { id: 13, date: '2024-01-15', description: 'Refund', amount: 5000 },
+    { id: 14, date: '2024-02-28', description: 'Refund', amount: 10000 }    
 ];
 
-export { maintenanceData, properties, MntRequests, Contracts, SalesData, vendors, buyers,initialTransactions, vendorPropertyCount };
+export { maintenanceData, properties, MntRequests, Contracts, SalesData, vendors, buyers, initialTransactions };
 

@@ -6,6 +6,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import SearchIcon from '@mui/icons-material/Search';
 import DownloadIcon from '@mui/icons-material/Download';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 
 import { Contracts } from '../Database/Data';
 import jsPDF from 'jspdf';
@@ -28,6 +30,9 @@ const ContractsAndAgreements = () => {
   const [filterStatus, setFilterStatus] = useState('All');
   const [selectedContract, setSelectedContract] = useState(null);
   const [openViewDialog, setOpenViewDialog] = useState(false);
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [contractToDelete, setContractToDelete] = useState(null);
+
 
   // Validation function
   const validate = () => {
@@ -64,6 +69,12 @@ const ContractsAndAgreements = () => {
       setErrors({ date: '', title: '', status: '' }); // Clear errors
     }
   };
+
+  const handleDeleteContract = () => {
+    setContracts(contracts.filter((contract) => contract.id !== contractToDelete.id));
+    setOpenDeleteDialog(false);
+  };
+
 
   // Handle filtering
   const filteredContracts = contracts.filter((contract) => {
@@ -152,8 +163,8 @@ const ContractsAndAgreements = () => {
                             contract.status === 'Pending'
                               ? 'warning.main'
                               : contract.status === 'Completed'
-                              ? 'success.main'
-                              : 'textSecondary'
+                                ? 'success.main'
+                                : 'textSecondary'
                           }
                           fontWeight="bold"
                         >
@@ -168,28 +179,36 @@ const ContractsAndAgreements = () => {
                     <IconButton color="primary" size="medium" onClick={() => setSelectedContract(contract)}>
                       <VisibilityIcon />
                     </IconButton>
-                    <IconButton color="secondary" size="medium">
+                    <IconButton color="primary" size="medium">
                       <EditIcon />
                     </IconButton>
-                    <IconButton color="success" size="medium" onClick={() => handleDownloadPDF(contract)}>
+                    <IconButton color="rgb(0, 0, 0)" size="medium" onClick={() => handleDownloadPDF(contract)}>
                       <DownloadIcon />
                     </IconButton>
-                    {contract.status !== 'Archived' && (
-                      <IconButton color="warning" size="medium">
-                        <ArchiveIcon />
-                      </IconButton>
-                    )}
-                    {contract.status === 'Archived' && (
-                      <IconButton color="success" size="medium">
-                        <UnarchiveIcon />
-                      </IconButton>
-                    )}
+                    <IconButton color="error" onClick={() => { setContractToDelete(contract); setOpenDeleteDialog(true); }}>
+                    <DeleteIcon />
+                  </IconButton>
                   </Box>
                 </Grid>
               </Grid>
             </Paper>
           ))}
         </MuiList>
+
+        <Dialog open={openDeleteDialog} onClose={() => setOpenDeleteDialog(false)}>
+          <DialogTitle>Confirm Delete</DialogTitle>
+          <DialogContent>
+            Are you sure you want to delete this contract?
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setOpenDeleteDialog(false)} color="secondary">
+              Cancel
+            </Button>
+            <Button onClick={handleDeleteContract} color="error">
+              Delete
+            </Button>
+          </DialogActions>
+        </Dialog>
 
         {/* Add New Contract Dialog */}
         <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
@@ -249,8 +268,8 @@ const ContractsAndAgreements = () => {
                     selectedContract.status === 'Pending'
                       ? 'warning.main'
                       : selectedContract.status === 'Completed'
-                      ? 'success.main'
-                      : 'textSecondary'
+                        ? 'success.main'
+                        : 'textSecondary'
                   }
                   fontWeight="bold"
                 >
