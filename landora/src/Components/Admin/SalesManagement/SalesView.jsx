@@ -7,7 +7,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { MenuItem } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import { SalesData } from '../Database/Data';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 
@@ -22,6 +21,8 @@ function Sales() {
 
     const [searchQuery, setSearchQuery] = useState('');
     const [filterStatus, setFilterStatus] = useState('All');
+
+    
 
 
     const filteredSales = sales.filter((sale) =>

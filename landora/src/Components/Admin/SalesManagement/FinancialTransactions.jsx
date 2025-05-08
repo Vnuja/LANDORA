@@ -167,17 +167,7 @@ function FinancialTransactions() {
                     >
                         View All
                     </Button>
-                    <TextField
-                        marginRight={2}
-                        variant="outlined"
-                        placeholder="Search Transaction..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        InputProps={{
-                            startAdornment: <SearchIcon color="action" sx={{ mr: 1 }} />
-                        }}
-                        sx={{ mx: 2, my: 1 }}
-                    />
+              
                     <TextField
                         select
                         variant="outlined"
@@ -200,7 +190,7 @@ function FinancialTransactions() {
                                 <TableCell onClick={() => handleSort('date')} style={{ cursor: 'pointer' }}>Date</TableCell>
                                 <TableCell onClick={() => handleSort('amount')} style={{ cursor: 'pointer' }}>Amount ($)</TableCell>
                                 <TableCell>Status</TableCell>
-                                <TableCell>Actions</TableCell>
+                               
                             </TableRow>
                         </TableHead>
                         <TableBody>

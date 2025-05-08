@@ -1,4 +1,4 @@
-const Sale = require('../Model/SaleModel');
+const Sale = require('../Model/SalesModel');
 
 // Generate sale ID with leading zeros
 const generateSaleId = async () => {
