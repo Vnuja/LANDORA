@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { createContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
 // Create the context

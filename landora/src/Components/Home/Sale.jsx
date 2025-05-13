@@ -26,8 +26,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import PrintIcon from '@mui/icons-material/Print';
 import axios from 'axios';
+import Navbar from '../Navbar/Navbar'; // Ensure the path is correct
 
-const PropertyDetails = () => {
+const Sale = () => {
     const [properties, setProperties] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedProperty, setSelectedProperty] = useState(null);
@@ -43,7 +44,7 @@ const PropertyDetails = () => {
 
     const fetchProperties = async () => {
         try {
-            const response = await axios.get('http://localhost:4000/properties');
+            const response = await axios.get('https://xjnwl62k-4000.asse.devtunnels.ms/properties');
             setProperties(response.data);
         } catch (error) {
             console.error('Error fetching properties:', error);
@@ -128,10 +129,11 @@ const PropertyDetails = () => {
     );
 
     return (
+        <div style={{
+    }}>
+        <Navbar />
         <Container>
-            <Typography variant="h4" component="h1" gutterBottom>
-                Property Management
-            </Typography>
+            
             <TextField
                 label="Search by Property Name"
                 variant="outlined"
@@ -140,24 +142,7 @@ const PropertyDetails = () => {
                 fullWidth
                 margin="normal"
             />
-            <Button
-                variant="contained"
-                color="primary"
-                startIcon={<AddIcon />}
-                onClick={handleAddProperty}
-                style={{ marginBottom: '20px' }}
-            >
-                Add Property
-            </Button>
-            <Button
-                variant="contained"
-                color="secondary"
-                startIcon={<PrintIcon />}
-                onClick={handlePrint}
-                style={{ marginLeft: '10px', marginBottom: '20px' }}
-            >
-                Print
-            </Button>
+            
             <List>
                 {filteredProperties.map((property) => (
                     <Paper key={property._id} elevation={3} sx={{ margin: '10px 0', padding: '10px' }}>
@@ -199,15 +184,10 @@ const PropertyDetails = () => {
                                 <IconButton color="primary" onClick={() => { setOpenViewDialog(true); setSelectedProperty(property); }}>
                                     <VisibilityIcon />
                                 </IconButton>
-                                <IconButton color="primary" onClick={() => handleEditProperty(property)}>
-                                    <EditIcon />
-                                </IconButton>
                                 <IconButton onClick={() => handlePrint(property)}>
                                     <PrintIcon color="success" />
                                 </IconButton>
-                                <IconButton color="error" onClick={() => handleDeleteProperty(property._id)}>
-                                    <DeleteIcon />
-                                </IconButton>
+                                
                             </Box>
                         </ListItem>
                     </Paper>
@@ -323,7 +303,8 @@ const PropertyDetails = () => {
                 message={snackbarMessage}
             />
         </Container>
+        </div>
     );
 };
 
-export default PropertyDetails;
+export default Sale;

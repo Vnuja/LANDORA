@@ -1,371 +1,317 @@
-import React, { useState } from 'react';
-import { Button, Container, Typography, Grid, Box, Dialog, DialogTitle, DialogActions, DialogContent, TextField, Paper, List as MuiList, ListItem, ListItemText, IconButton } from '@mui/material';
-import ArchiveIcon from '@mui/icons-material/Archive';
-import UnarchiveIcon from '@mui/icons-material/Unarchive';
-import EditIcon from '@mui/icons-material/Edit';
+import React, { useEffect, useState } from 'react';
+import { Typography, TextField, Paper, ListItem, ListItemText, FormControl, Select, MenuItem, Card, CardContent, Dialog, DialogTitle, DialogContent, DialogActions, InputLabel, Button, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import PrintIcon from '@mui/icons-material/Print';
+import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import { MenuItem } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
-import jsPDF from 'jspdf';
-import 'jspdf-autotable';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { CircularProgress, Box } from '@mui/material';
 
-
-function Sales() {
-    const [sales, setSales] = useState(SalesData);
-    const [openDialog, setOpenDialog] = useState(false);
-    const [openModifyDialog, setOpenModifyDialog] = useState(false);
-    const [openNewTransactionDialog, setOpenNewTransactionDialog] = useState(false);
+const Sales = () => {
+    const [filterStatus, setFilterStatus] = useState("All");
+    const [searchQuery, setSearchQuery] = useState("");
+    const [sales, setSales] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [editDialog, setEditDialog] = useState({ open: false, id: null, status: "" });
     const [selectedSale, setSelectedSale] = useState(null);
+    const [openViewDialog, setOpenViewDialog] = useState(false);
+    const [deleteDialog, setDeleteDialog] = useState({ open: false, id: null });
+    const [openAddDialog, setOpenAddDialog] = useState(false);
 
+    const [newSale, setNewSale] = useState({ customerId: "", saleID: "", name: "", VendorID: "", price: "", status: "Pending" });
 
-    const [searchQuery, setSearchQuery] = useState('');
-    const [filterStatus, setFilterStatus] = useState('All');
+    useEffect(() => {
+        const fetchSales = async () => {
+            try {
+                const response = await fetch('http://localhost:4000/sales');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                setSales(data);
+            } catch (error) {
+                setError(error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchSales();
+    }, []);
 
-    
+    const handleDeleteSale = async (id) => {
+        try {
+            await fetch(`http://localhost:4000/sales/${id}`, { method: 'DELETE' });
+            setSales(sales.filter(sale => sale._id !== id));
+        } catch (error) {
+            console.error("Error deleting sale:", error);
+        }
+    };
 
+    const handleEditStatus = (id) => {
+        const sale = sales.find(sale => sale._id === id);
+        setEditDialog({ open: true, id, status: sale.status });
+    };
 
-    const filteredSales = sales.filter((sale) =>
-        sale.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
-        (filterStatus === "All" || sale.status === filterStatus)
+    const handleSaveStatus = async () => {
+        try {
+            const response = await fetch(`http://localhost:4000/sales/${editDialog.id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ status: editDialog.status }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to update status');
+            }
+
+            const updatedSale = await response.json();
+            setSales(sales.map(sale => sale._id === editDialog.id ? updatedSale.sale : sale));
+            setEditDialog({ open: false, id: null, status: "" });
+        } catch (error) {
+            console.error('Error updating status:', error);
+        }
+    };
+
+    const handleViewSale = (sale) => {
+        setSelectedSale(sale);
+        setOpenViewDialog(true);
+    };
+
+    const filteredSales = sales.filter(sale =>
+        (filterStatus === "All" || sale.status === filterStatus) &&
+        sale.name?.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
+    const handleAddSale = async () => {
+        try {
+            const response = await fetch('http://localhost:4000/sales', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(newSale),
+            });
 
-    // State for new transaction form
-    const [newTransaction, setNewTransaction] = useState({
-        name: "",
-        location: "",
-        price: "",
-        status: "Active",
-    });
+            if (!response.ok) throw new Error('Failed to create sale');
 
-
-    const handleDeleteTransaction = (id) => {
-        setSales(sales.filter((sale) => sale.id !== id));
-    };
-
-    const handleOpenNewTransaction = () => {
-        setOpenNewTransactionDialog(true);
-    };
-
-    const handleCloseNewTransaction = () => {
-        setOpenNewTransactionDialog(false);
-        setNewTransaction({ name: "", location: "", price: "", status: "Active" });
-    };
-
-    const handleSaveNewTransaction = () => {
-        if (!newTransaction.name || !newTransaction.location || !newTransaction.price) {
-            alert("Please fill in all fields!");
-            return;
+            const createdSale = await response.json();
+            setSales([...sales, createdSale.sale]);
+            setOpenAddDialog(false);
+            setNewSale({ customerId: "", saleID: "", name: "", VendorID: "", price: "", status: "Pending" });
+        } catch (error) {
+            console.error('Error creating sale:', error);
         }
-
-        const newSale = {
-            id: sales.length + 1,
-            ...newTransaction,
-            price: `$${newTransaction.price}`,
-        };
-
-        setSales([...sales, newSale]);
-        handleCloseNewTransaction();
     };
 
-    const handleViewTransaction = (sale) => {
-        setSelectedSale(sale);
-        setOpenDialog(true);
-    };
+    const handlePrintReceipt = (sale) => {
+    const receiptContent = `
+        -----------------------------------------------------------------------
+        Landora Sale Receipt
+        ------------------------------------------------------------------------
+        Sale ID: ${sale.SaleId}
+        Name: ${sale.name}
+        Status: ${sale.status}
+        Price: $${sale.price}
+        Customer ID: ${sale.customerId}
+        Vendor ID: ${sale.VendorID}
+        ------------------------------------------------------------------------
+        Thank you for your purchase!
+        Visit Again Landora!
+        ------------------------------------------------------------------------
+        Receipt generated on: ${new Date().toLocaleString()}
+        Receipt ID: LR${sale._id}
+        ------------------------------------------------------------------------
+        Landora Team @Amasha Nethmi
+        ------------------------------------------------------------------------
+        This is a computer-generated receipt and does not require a signature.
+        ------------------------------------------------------------------------
 
-    const handleModifyPayment = (sale) => {
-        setSelectedSale(sale);
-        setOpenModifyDialog(true);
-    };
+    `;
 
-    const handleArchiveTransaction = (id) => {
-        setSales(sales.map((sale) => (sale.id === id ? { ...sale, status: "Archived" } : sale)));
-    };
+    const newWindow = window.open('', '_blank');
+    newWindow.document.write(`<pre>${receiptContent}</pre>`);
+    newWindow.document.close();
+    newWindow.print();
+};
+                            
 
-    const handleUnarchiveTransaction = (id) => {
-        setSales(sales.map((sale) => (sale.id === id ? { ...sale, status: "Active" } : sale)));
-    };
+    if (loading) {
+        return <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}><CircularProgress /></Box>;
+    }
 
-    const handleDownloadPDF = () => {
-        const doc = new jsPDF();
-        const tableColumn = ["ID", "Name", "Location", "Vendor", "Buyer", "Price", "Status"];
-        const tableRows = [];
-
-        sales.forEach(sale => {
-            const saleData = [
-                sale.id,
-                sale.name,
-                sale.location,
-                sale.VendorID,
-                sale.buyerID,
-                sale.price,
-                sale.status
-
-            ];
-            tableRows.push(saleData);
-        });
-
-        doc.autoTable(tableColumn, tableRows, { startY: 20 });
-        doc.text("Sales Transactions", 14, 15);
-        doc.save("sales_transactions.pdf");
-    };
+    if (error) {
+        return <Typography variant="h6" color="error" align="center">Error: {error.message}</Typography>;
+    }
 
     return (
         <div style={{ padding: "10px", backgroundColor: "rgb(253, 253, 227)", minHeight: "100vh" }}>
-            <Container>
-                <Box textAlign="left" my={4}>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        sx={{ px: 3, py: 1, borderRadius: 2, fontSize: "1rem", mx: 2, my: 1 }}
-                        onClick={handleOpenNewTransaction}
-                    >
-                        Add Transaction
-                    </Button>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        sx={{ px: 3, py: 1, borderRadius: 2, fontSize: "1rem", mx: 2, my: 1 }}
-                        onClick={() => setFilterStatus('Archived')}
-                    >
-                        View Archive
-                    </Button>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        sx={{ px: 3, py: 1, borderRadius: 2, fontSize: "1rem", mx: 2, my: 1 }}
-                        onClick={() => setFilterStatus('All')}
-                    >
-                        View All
-                    </Button>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        sx={{ px: 3, py: 1, borderRadius: 2, fontSize: "1rem", mx: 2, my: 1, color: "#fff", '&:hover': { backgroundColor: "primary" } }}
-                        onClick={handleDownloadPDF}
-                    >
-                        Download PDF
-                    </Button>
-
-                    <TextField
-                        marginRight={2}
-                        variant="outlined"
-                        placeholder="Search Sale..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        InputProps={{
-                            startAdornment: <SearchIcon color="action" sx={{ mr: 1 }} />
-                        }}
-                        sx={{ mx: 2, my: 1 }}
-                    />
-                    <TextField
-                        select
-                        variant="outlined"
-                        value={filterStatus}
-                        onChange={(e) => setFilterStatus(e.target.value)}
-                        sx={{ mx: 2, my: 1 }}
-                    >
+            {/* Add Search and Filter */}
+            <div style={{ display: "flex", gap: "8px", marginBottom: "16px", justifyContent: "center" }}>
+                <TextField sx={{ flexGrow: 1 }} label="Search by Name" variant="outlined" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} style={{ width: "250px" }} />
+                <FormControl variant="outlined" style={{ minWidth: "150px" }}>
+                    <InputLabel>Status</InputLabel>
+                    <Select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)} label="Status">
                         <MenuItem value="All">All</MenuItem>
-                        <MenuItem value="Active">Active</MenuItem>
+                        <MenuItem value="Pending">Pending</MenuItem>
                         <MenuItem value="Completed">Completed</MenuItem>
                         <MenuItem value="Archived">Archived</MenuItem>
-                        <MenuItem value="Pending">Pending</MenuItem>
-                    </TextField>
-                </Box>
-                <MuiList sx={{ width: "100%", maxWidth: 800, margin: "auto" }}>
-                    {filteredSales.map((sale) => (
-                        <Paper
-                            key={sale.id}
-                            elevation={4}
-                            sx={{
-                                margin: "12px 0",
-                                padding: 2,
-                                borderRadius: 3,
-                                boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-                                transition: "transform 0.2s ease-in-out",
-                                "&:hover": { transform: "scale(1.02)" }
-                            }}
-                        >
-                            <Grid container spacing={2} alignItems="center">
-                                {/* Sale Details */}
-                                <Grid item xs={12} sm={8}>
+                        <MenuItem value="Cancelled">Cancelled</MenuItem>
+                    </Select>
+                </FormControl>
+                <Button variant="contained" color="primary" startIcon={<AddCircleOutlineIcon />} onClick={() => setOpenAddDialog(true)}>
+                    Add Sale
+                </Button>
+            </div>
 
-                                    <ListItemText
-                                        primary={
-                                            <Typography variant="h6" fontWeight="bold" color="info">
-                                                {sale.name}
+            {/* Display Sales */}
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(500px, 1fr))", gap: "8px", padding: "16px" }}>
+                {filteredSales.map((sale) => (
+
+                    <Paper key={sale.id} elevation={3} style={{ margin: '10px 0', padding: '10px' }}>
+                        <ListItem >
+                            <ListItemText
+                                primary={<Typography variant="h6">{sale.title}</Typography>}
+                                secondary={
+                                    <>
+                                        <Typography variant="h6" style={{ fontWeight: "bold", color: "#0d47a1" }}>{sale.SaleId}</Typography>
+                                        <Typography variant="body1" style={{ marginTop: "8px" }}><strong>Name:</strong> {sale.name}</Typography>
+                                        <Typography variant="body2" style={{ fontWeight: "bold", color: sale.status === "Pending" ? "#d32f2f" : sale.status === "Completed" ? "#388e3c" : "#ffb300" }}>Status: {sale.status}</Typography>
+                                    </>
+                                }
+                            />
+                            <IconButton onClick={() => handleViewSale(sale)}>
+                                <VisibilityIcon color="" />
+                            </IconButton>
+                            <IconButton onClick={() => handleEditStatus(sale._id)}>
+                                <EditIcon color="primary" />
+                            </IconButton>
+                            <IconButton onClick={() => setDeleteDialog({ open: true, id: sale._id })}>
+                                <DeleteIcon color="error" />
+                            </IconButton>
+                            <IconButton onClick={() => handlePrintReceipt(sale)}>
+                                <PrintIcon color="success" />
+                            </IconButton>
+                        </ListItem>
+                    </Paper>
+                ))}
+            </div>
+
+            {/* Edit Status Dialog */}
+                        <Dialog open={editDialog.open} onClose={() => setEditDialog({ ...editDialog, open: false })}>
+                            <DialogTitle>Update Sale</DialogTitle>
+                            <DialogContent>
+                                <FormControl variant="outlined" style={{ minWidth: "200px", marginBottom: "16px" }}>
+                                    <InputLabel>Status</InputLabel>
+                                    <Select
+                                        value={editDialog.status}
+                                        onChange={(e) => setEditDialog({ ...editDialog, status: e.target.value })}
+                                        label="Status"
+                                    >
+                                        <MenuItem value="Pending">Pending</MenuItem>
+                                        <MenuItem value="Completed">Completed</MenuItem>
+                                        <MenuItem value="Archived">Archived</MenuItem>
+                                        <MenuItem value="Cancelled">Cancelled</MenuItem>
+                                    </Select>
+                                </FormControl>
+                                <TextField
+                                    fullWidth
+                                    label="Name"
+                                    margin="dense"
+                                    value={editDialog.name || ""}
+                                    onChange={(e) => setEditDialog({ ...editDialog, name: e.target.value })}
+                                />
+                                <TextField
+                                    fullWidth
+                                    label="Price"
+                                    margin="dense"
+                                    type="number"
+                                    value={editDialog.price || ""}
+                                    onChange={(e) => setEditDialog({ ...editDialog, price: e.target.value })}
+                                />
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={() => setEditDialog({ ...editDialog, open: false })}>Cancel</Button>
+                                <Button onClick={handleSaveStatus} color="primary">Save</Button>
+                            </DialogActions>
+                        </Dialog>
+
+                        <Dialog open={openViewDialog} onClose={() => setOpenViewDialog(false)}>
+                            <DialogTitle style={{ backgroundColor: "#0d47a1", color: "white" }}>Sale Details</DialogTitle>
+                            <DialogContent style={{ padding: "20px", backgroundColor: "#f5f5f5" }}>
+                                {selectedSale && (
+                                    <Card style={{ padding: "16px", borderRadius: "8px", boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)" }}>
+                                        <CardContent>
+                                            <Typography variant="h6" style={{ fontWeight: "bold", marginBottom: "12px", color: "#0d47a1" }}>
+                                                <strong>Sale ID:</strong> {selectedSale.SaleId}
                                             </Typography>
-                                        }
-                                        secondary={
-                                            <>
-                                                <Typography
-                                                    variant="body2"
-                                                    color={sale.status === "Active" ? "success.main" : sale.status === "Completed" ? "info.main" : sale.status === "Archived" ? "warning.main" : sale.status === "Pending" ? "error.main" : "textSecondary"}
+                                            <Typography variant="body1" style={{ marginBottom: "8px" }}>
+                                                <strong>Name:</strong> {selectedSale.name}
+                                            </Typography>
+                                            <Typography variant="body1" style={{ marginBottom: "8px" }}>
+                                                <strong>Status:</strong>{" "}
+                                                <span style={{ fontWeight: "bold", color: selectedSale.status === "Pending" ? "#d32f2f" : selectedSale.status === "Completed" ? "#388e3c" : "#ffb300" }}>
+                                                    {selectedSale.status}
+                                                </span>
+                                            </Typography>
+                                            <Typography variant="body1" style={{ marginBottom: "8px" }}>
+                                                <strong>Price:</strong> ${selectedSale.price}
+                                            </Typography>
+                                            <Typography variant="body1" style={{ marginBottom: "8px" }}>
+                                                <strong>Customer ID:</strong> {selectedSale.customerId}
+                                            </Typography>
+                                            <Typography variant="body1" style={{ marginBottom: "8px" }}>
+                                                <strong>sale ID:</strong> {selectedSale.saleID}
+                                            </Typography>
+                                            <Typography variant="body1" style={{ marginBottom: "8px" }}>
+                                                <strong>Vendor ID:</strong> {selectedSale.VendorID}
+                                            </Typography>
+                                        </CardContent>
+                                    </Card>
+                                )}
+                            </DialogContent>
+                            <DialogActions style={{ backgroundColor: "#f5f5f5" }}>
+                                <Button onClick={() => setOpenViewDialog(false)} style={{ color: "#0d47a1", fontWeight: "bold" }}>
+                                    Close
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
 
-                                                    fontWeight="bold"
-                                                >
-                                                    🔹 Status: {sale.status}
-                                                </Typography>
-                                            </>
-                                        }
-                                    />
-                                </Grid>
+                        {/* Add Sale Dialog */}
+            <Dialog open={openAddDialog} onClose={() => setOpenAddDialog(false)}>
+                <DialogTitle>Add Sale</DialogTitle>
+                <DialogContent>
+                    <TextField fullWidth label="Customer ID" margin="dense" value={newSale.customerId} onChange={(e) => setNewSale({ ...newSale, customerId: e.target.value })} />
+                    <TextField fullWidth label="sale ID" margin="dense" value={newSale.saleID} onChange={(e) => setNewSale({ ...newSale, saleID: e.target.value })} />
+                    <TextField fullWidth label="Name" margin="dense" value={newSale.name} onChange={(e) => setNewSale({ ...newSale, name: e.target.value })} />
+                    <TextField fullWidth label="Vendor ID" margin="dense" value={newSale.VendorID} onChange={(e) => setNewSale({ ...newSale, VendorID: e.target.value })} />
+                    <TextField fullWidth label="Price" margin="dense" type="number" value={newSale.price} onChange={(e) => setNewSale({ ...newSale, price: e.target.value })} />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => setOpenAddDialog(false)}>Cancel</Button>
+                    <Button onClick={handleAddSale} color="primary">Add</Button>
+                </DialogActions>
+            </Dialog>
 
-                                {/* Action Buttons */}
-                                <Grid item xs={12} sm={4}>
-                                    <Box display="flex" justifyContent={{ xs: "center", sm: "flex-end" }} gap={1} flexWrap="wrap">
-                                        <IconButton color="primary" size="medium" onClick={() => handleViewTransaction(sale)}>
-                                            <VisibilityIcon />
-                                        </IconButton>
-
-                                        <IconButton color="primary" size="medium" onClick={() => handleModifyPayment(sale)}>
-                                            <EditIcon />
-                                        </IconButton>
-                                        {sale.status !== "Archived" && (
-                                            <IconButton color="warning" size="medium" onClick={() => handleArchiveTransaction(sale.id)}>
-                                                <ArchiveIcon />
-                                            </IconButton>
-                                        )}
-                                        {sale.status == "Archived" && (
-                                            <IconButton color="success" size="medium" onClick={() => handleUnarchiveTransaction(sale.id)}>
-                                                <UnarchiveIcon />
-                                            </IconButton>
-                                        )}
-                                        <IconButton color="primary" size="medium" onClick={() => handleDeleteTransaction(sale.id)}>
-                                            <DeleteIcon />
-                                        </IconButton>
-                                    </Box>
-                                </Grid>
-                            </Grid>
-                        </Paper>
-                    ))}
-                </MuiList>
-
-                {/* New Transaction Dialog */}
-                <Dialog open={openNewTransactionDialog} onClose={handleCloseNewTransaction}>
-                    <DialogTitle>New Transaction</DialogTitle>
-                    <DialogContent>
-                        <TextField
-                            fullWidth
-                            label="Name"
-                            value={newTransaction.name}
-                            onChange={(e) => setNewTransaction({ ...newTransaction, name: e.target.value })}
-                            margin="dense"
-                            variant="outlined"
-                        />
-                        <TextField
-                            fullWidth
-                            label="Location"
-                            value={newTransaction.location}
-                            onChange={(e) => setNewTransaction({ ...newTransaction, location: e.target.value })}
-                            margin="dense"
-                            variant="outlined"
-                        />
-                        <TextField
-                            fullWidth
-                            label="Price"
-                            type="number"
-                            value={newTransaction.price}
-                            onChange={(e) => setNewTransaction({ ...newTransaction, price: e.target.value })}
-                            margin="dense"
-                            variant="outlined"
-                        />
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={handleCloseNewTransaction} color="secondary">
-                            Cancel
-                        </Button>
-                        <Button onClick={handleSaveNewTransaction} color="primary">
-                            Save
-                        </Button>
-                    </DialogActions>
-                </Dialog>
-
-                {/* View Transaction Dialog */}
-                <Dialog open={openDialog} onClose={() => setOpenDialog(false)} >
-                    <DialogTitle>Transaction Details</DialogTitle>
-                    <DialogContent>
-                        {selectedSale && (
-                            <>
-                                <Typography variant="body2" color="textSecondary" fontWeight="bold">📍 Location: {selectedSale.location}</Typography>
-                                <Typography variant="body2" color="textSecondary" fontWeight="bold">💲 Price: {selectedSale.price}</Typography>
-                                <Typography
-                                    variant="body2"
-                                    color={selectedSale.status === "Active" ? "success.main" : "textSecondary"}
-                                    fontWeight="bold"
-                                >
-                                    🔹 Status: {selectedSale.status}
-                                </Typography>
-                                <Typography variant="body2" color="textSecondary" fontWeight="bold"> 🔹Property: {selectedSale.propertyID}</Typography>
-                                <Typography variant="body2" color="textSecondary" fontWeight="bold"> 🔹Buyer: {selectedSale.buyerID}</Typography>
-                                <Typography variant="body2" color="textSecondary" fontWeight="bold"> 🔹Vendor: {selectedSale.VendorID}</Typography>
-
-                            </>
-                        )}
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={() => setOpenDialog(false)} color="primary">
-                            Close
-                        </Button>
-                    </DialogActions>
-                </Dialog>
-
-                {/* Modify Payment Dialog */}
-                <Dialog open={openModifyDialog} onClose={() => setOpenModifyDialog(false)}>
-                    <DialogTitle>Modify Transaction Details</DialogTitle>
-                    <DialogContent>
-                        <TextField
-                            fullWidth
-                            label="Name"
-                            value={selectedSale?.name || ''}
-                            onChange={(e) => setSelectedSale({ ...selectedSale, name: e.target.value })}
-                            margin="dense"
-                            variant="outlined"
-                        />
-                        <TextField
-                            fullWidth
-                            label="Location"
-                            value={selectedSale?.location || ''}
-                            onChange={(e) => setSelectedSale({ ...selectedSale, location: e.target.value })}
-                            margin="dense"
-                            variant="outlined"
-                        />
-                        <TextField
-                            fullWidth
-                            label="Price"
-                            value={selectedSale?.price || ''}
-                            onChange={(e) => setSelectedSale({ ...selectedSale, price: e.target.value })}
-                            margin="dense"
-                            variant="outlined"
-                        />
-                        <TextField
-                            fullWidth
-                            label="Status"
-                            value={selectedSale?.status || ''}
-                            onChange={(e) => setSelectedSale({ ...selectedSale, status: e.target.value })}
-                            margin="dense"
-                            variant="outlined"
-                        />
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={() => setOpenModifyDialog(false)} color="secondary">
-                            Cancel
-                        </Button>
-                        <Button
-                            color="primary"
-                            onClick={() => {
-                                setSales(sales.map((sale) => (sale.id === selectedSale.id ? selectedSale : sale)));
-                                setOpenModifyDialog(false);
-                            }}
-                        >
-                            Save
-                        </Button>
-                    </DialogActions>
-                </Dialog>
-            </Container>
+            {/* Delete Confirmation Dialog */}
+            <Dialog open={deleteDialog.open} onClose={() => setDeleteDialog({ open: false, id: null })}>
+                <DialogTitle>Confirm Delete</DialogTitle>
+                <DialogContent>
+                    <Typography>Are you sure you want to delete this sale?</Typography>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => setDeleteDialog({ open: false, id: null })}>Cancel</Button>
+                    <Button
+                        onClick={() => {
+                            handleDeleteSale(deleteDialog.id);
+                            setDeleteDialog({ open: false, id: null });
+                        }}
+                        color="error"
+                    >
+                        Delete
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </div>
     );
-}
+};
 
 export default Sales;

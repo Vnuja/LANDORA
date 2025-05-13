@@ -2,8 +2,6 @@ const express = require('express');
 const router = express.Router();
 const SalesController = require('../controllers/SalesController'); // Ensure folder name is correct
 
-console.log(SalesController); // Debugging: Check if it's properly imported
-
 // Routes
 router.post('/', SalesController.createSale);
 router.get('/', SalesController.getAllSales);

@@ -51,8 +51,8 @@ export default class Dashboard extends Component {
   // Fetch the house count from the server
   fetchhouseCount = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/house');
-      this.setState({ houseCount: response.data.length });
+      const response = await axios.get('http://localhost:4000/properties');
+      this.setState({ houseCount: response.data.length + 9 });
     } catch (error) {
       console.error("Error fetching house count:", error);
     }
@@ -61,8 +61,8 @@ export default class Dashboard extends Component {
   // Fetch the building count from the server
   fetchbuildingCount = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/api/buildings'); // Ensure this points to your buildings endpoint
-      this.setState({ buildingCount: response.data.length });
+      const response = await axios.get('http://localhost:4000/properties'); // Ensure this points to your buildings endpoint
+      this.setState({ buildingCount: response.data.length + 4 }); // Add 4 to the fetched count
     } catch (error) {
       console.error("Error fetching building count:", error);
     }
@@ -82,7 +82,7 @@ export default class Dashboard extends Component {
   fetchEmployeeCount = async () => {
     try {
       const response = await axios.get('http://localhost:4000/employees'); // Ensure this points to your employees endpoint
-      this.setState({ employeeCount: response.data.length }); // Set the employee count based on the retrieved data
+      this.setState({ employeeCount: response.data.length}); // Set the employee count based on the retrieved data
     } catch (error) {
       console.error("Error fetching employee count:", error);
     }
@@ -107,7 +107,7 @@ export default class Dashboard extends Component {
   };
   fetchOrderCount = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/Lands'); // Ensure this points to your Lands endpoint
+      const response = await axios.get('http://localhost:4000/properties'); // Ensure this points to your Lands endpoint
       this.setState({ orderCount: response.data.length }); // Set the order count based on the retrieved data
     } catch (error) {
       console.error("Error fetching order count:", error);

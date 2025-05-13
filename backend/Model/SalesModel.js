@@ -5,32 +5,32 @@ const Schema = mongoose.Schema;
 const SaleSchema = new Schema({
     SaleId: {
         type: String,
-        required: true,
+        required: false,
         unique: true
     },
     customerId: {
         type: String,
-        required: true
+        required: false
     },
     propertyID: {
         type: String,
-        required: true
+        required: false
     },
     name: {
         type: String,
-        required: true
+        required: false
     },
     VendorID: {
         type: String,
-        required: true
+        required: false
     },
     price: {
         type: Number,
-        required: true
+        required: false
     },
     status: {
         type: String,
-        required: true
+        required: false
     }
 });
 

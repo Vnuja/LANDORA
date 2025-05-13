@@ -16,10 +16,6 @@ const sidebarBackground = `
 `;
 const menuItems = [
   { text: 'Main Dashboard', icon: faTachometerAlt, path: '/admindashboard/dashboard' },
-  { text: 'Property List', icon: faUsers, path: '/ property-management/list' },
-  { text: 'Menu Item 1', icon: faBuilding, path: '/ property-management/1' },
-  { text: 'Menu Item 2', icon: faSackDollar, path: '/ property-management/2' },
-  { text: 'Menu Item 3', icon: faHammer, path: '/ property-management/3' },
 ];
 
 function PropertyList() {
@@ -50,35 +46,6 @@ function PropertyList() {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <Drawer
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          '& .MuiDrawer-paper': {
-            width: drawerWidth,
-            boxSizing: 'border-box',
-            backgroundImage: sidebarBackground, // Apply background with overlay
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
-            color: ' #333', // Darker text for better readability
-            paddingTop: '20px'
-          },
-        }}
-        variant="permanent"
-        anchor="left"
-      >
-        <List>
-          {menuItems.map((item, index) => (
-            <ListItem key={index} onClick={() => handleMenuClick(item.path)}>
-              <ListItemIcon>
-                <FontAwesomeIcon icon={item.icon} style={{ color: ' #ff932f' }} /> {/* Orange icons */}
-              </ListItemIcon>
-              <ListItemText primary={item.text} sx={{ color: 'black' }} />
-            </ListItem>
-          ))}
-        </List>
-      </Drawer>
       <Box
               component="main"
               sx={{
@@ -100,6 +67,16 @@ function PropertyList() {
                   height: '80px'
                 }}
               >
+                <List>
+          {menuItems.map((item, index) => (
+            <ListItem key={index} onClick={() => handleMenuClick(item.path)}>
+              <ListItemIcon>
+                <FontAwesomeIcon icon={item.icon} style={{ color: ' #ff932f' }} /> {/* Orange icons */}
+              </ListItemIcon>
+              <ListItemText primary={item.text} sx={{ color: 'black' }} />
+            </ListItem>
+          ))}
+        </List>
                 <Typography variant="h5">{currentTab}</Typography>
       
                 <Button

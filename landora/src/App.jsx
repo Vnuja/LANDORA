@@ -11,6 +11,7 @@ import Register from './Components/Login/Register';
 import UserProfile from './Components/pages/UserProfile';
 import PrivacyPolicy from './Components/pages/PrivacyPolicy';
 import TermsOfUse from './Components/pages/TermsOfUse';
+import Sale from './Components/Home/Sale';
 
 // Admin Components
 import AdminDashboard from './Components/Admin/AdminDashboard';
@@ -59,6 +60,7 @@ function App() {
           <Route path='/signup' element={<Register />} />
           <Route path='/userprofile' element={<UserProfile />} />
           <Route path='/efpage' element={<EFpage />} />
+          <Route path='/sale' element={<Sale />} />
 
           {/* Authentication Routes */}
           <Route path="/login" element={<Login />} />

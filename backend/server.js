@@ -22,11 +22,13 @@ const userRoutes = require('./Routes/UserRoutes');
 const authRoutes = require('./Routes/AuthRoutes');
 const router = require('./router');
 const MaintanancneRoutes = require('./Routes/mRequestRoutes');
-const SalesRoutes = require('./Routes/salesroutes');
+const SalesRoutes = require('./Routes/SalesRoutes');
+const PropertyRoutes = require('./Routes/PropertyRoutes');
 
 // Route middleware
 app.use('/maintenance', MaintanancneRoutes);
 app.use('/sales', SalesRoutes);
+app.use('/properties', PropertyRoutes);
 app.use('/users', userRoutes);
 app.use('/auth', authRoutes);
 // Define a route handler for '/api' endpoint
