@@ -6,7 +6,6 @@ import { AuthContext } from '../Auth/AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTachometerAlt, faUsers, faSackDollar, faHammer, faSignOutAlt, faBuilding } from '@fortawesome/free-solid-svg-icons';
 import EFpage from '../ExtraFeature/EFpage';
-
 const drawerWidth = 210;
 
 // Background image for sidebar
@@ -15,7 +14,7 @@ const sidebarBackground = 'url(https://wallpapers.com/images/hd/blank-white-vert
 const menuItems = [
   { text: 'Dashboard', icon: faTachometerAlt, path: '/admindashboard/dashboard' },
   { text: 'User Management', icon: faUsers, path: '/admindashboard/user-management' },
-  { text: 'Property Management', icon: faBuilding, path: '/property-management/list' },
+  { text: 'Property Management', icon: faBuilding, path: '/admindashboard/list' },
   { text: 'Sales Management', icon: faSackDollar, path: '/sales-management/SalesList' },
   { text: 'Maintenance Management', icon: faHammer, path: '/maintanance-management/Requests' },
 ];

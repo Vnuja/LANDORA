@@ -1,0 +1,11 @@
+Sale ID,CustomerId,PropertyID,Name,VendorID,Price,Status
+S001,002,P001,Amasha Nethmi,V001,85000000,Pending
+S002,003,P002,Nimal Perera,V002,45000000,Completed
+S003,004,P003,Kamal Silva,V003,120000000,Pending
+S004,005,P005,Sunil Fernando,V004,75000000,Cancelled
+S005,006,P006,Ruwanthi Jayasinghe,V005,65000000,Pending
+S006,007,P007,Saman Kumara,V006,90000000,Completed
+S007,008,P008,Chathura Wijesinghe,V007,50000000,Pending
+S008,009,P009,Nirosha Perera,V008,80000000,Completed
+S009,010,P010,Tharindu Lakmal,V009,100000000,Pending
+S010,011,P011,Dilini Rathnayake,V010,70000000,Cancelled

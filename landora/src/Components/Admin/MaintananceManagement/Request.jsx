@@ -14,6 +14,7 @@ const Requests = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [editDialog, setEditDialog] = useState({ open: false, id: null, status: "" });
+    const [deleteDialog, setDeleteDialog] = useState({ open: false, id: null });
     const [selectedRequest, setSelectedRequest] = useState(null);
     const [openViewDialog, setOpenViewDialog] = useState(false);
     const [openAddDialog, setOpenAddDialog] = useState(false);
@@ -131,31 +132,47 @@ const Requests = () => {
             </div>
 
             {/* Display Requests */}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))", gap: "8px", padding: "16px" }}>
-                {filteredRequests.map((req) => (
-                    <Card key={req._id} style={{ padding: "12px", borderRadius: "8px", boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.1)" }}>
-                        <CardContent>
-                            <Typography variant="h6" style={{ fontWeight: "bold", color: "#0d47a1" }}>{req.mRequestId}</Typography>
-                            <Typography variant="body1" style={{ marginTop: "8px" }}><strong>Issue:</strong> {req.issue}</Typography>
-                            <Typography variant="body2" style={{ fontWeight: "bold", color: req.status === "Pending" ? "#d32f2f" : req.status === "In Progress" ? "#ffb300" : "#388e3c" }}>Status: {req.status}</Typography>
-                        </CardContent>
+                        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))", gap: "8px", padding: "16px" }}>
+                            {filteredRequests.map((req) => (
+                                <Card key={req._id} style={{ padding: "12px", borderRadius: "8px", boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.1)" }}>
+                                    <CardContent>
+                                        <Typography variant="h6" style={{ fontWeight: "bold", color: "#0d47a1" }}>{req.mRequestId}</Typography>
+                                        <Typography variant="body1" style={{ marginTop: "8px" }}><strong>Property:</strong> {req.propertyId}</Typography>
+                                        <Typography variant="body1" style={{ marginTop: "8px" }}><strong>Issue:</strong> {req.issue}</Typography>
+                                        <Typography variant="body2" style={{ fontWeight: "bold", color: req.status === "Pending" ? "#d32f2f" : req.status === "In Progress" ? "#ffb300" : "#388e3c" }}>Status: {req.status}</Typography>
+                                    </CardContent>
 
-                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <IconButton onClick={() => handleViewRequest(req)}>
-                                <VisibilityIcon color="primary" />
-                            </IconButton>
-                            <IconButton onClick={() => handleEditStatus(req._id)}>
-                                <EditIcon color="primary" />
-                            </IconButton>
-                            <IconButton onClick={() => handleDeleteRequest(req._id)}>
-                                <DeleteIcon color="error" />
-                            </IconButton>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                        <IconButton onClick={() => handleViewRequest(req)}>
+                                            <VisibilityIcon color="primary" />
+                                        </IconButton>
+                                        <IconButton onClick={() => handleEditStatus(req._id)}>
+                                            <EditIcon color="primary" />
+                                        </IconButton>
+                                        <IconButton onClick={() => setDeleteDialog({ open: true, id: req._id })}>
+                                            <DeleteIcon color="error" />
+                                        </IconButton>
+                                    </div>
+                                </Card>
+                            ))}
                         </div>
-                    </Card>
-                ))}
-            </div>
 
-            {/* Edit Status Dialog */}
+                        {/* Delete Confirmation Dialog */}
+                        <Dialog open={deleteDialog.open} onClose={() => setDeleteDialog({ open: false, id: null })}>
+                            <DialogTitle>Confirm Delete</DialogTitle>
+                            <DialogContent>
+                                <Typography>Are you sure you want to delete this request?</Typography>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={() => setDeleteDialog({ open: false, id: null })}>Cancel</Button>
+                                <Button onClick={() => {
+                                    handleDeleteRequest(deleteDialog.id);
+                                    setDeleteDialog({ open: false, id: null });
+                                }} color="error">Delete</Button>
+                            </DialogActions>
+                        </Dialog>
+
+                        {/* Edit Status Dialog */}
             <Dialog open={editDialog.open} onClose={() => setEditDialog({ ...editDialog, open: false })}>
                 <DialogTitle>Update Status</DialogTitle>
                 <DialogContent>

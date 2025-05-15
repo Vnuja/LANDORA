@@ -34,7 +34,7 @@ function Navbar() {
           <Button color="inherit" sx={{ fontSize: 17 }} component={Link} to="/" >LANDORA</Button>
           <Button color="inherit" sx={{ fontSize: 14 }} component={Link} to="/" ></Button>
           <Button color="inherit" sx={{ fontSize: 14 }} component={Link} to="/sale">For Sales</Button>
-          <Button color="inherit" sx={{ fontSize: 14 }} component={Link} to="/rent">Rental</Button>
+          {/* <Button color="inherit" sx={{ fontSize: 14 }} component={Link} to="/rent">Rental</Button> */}
           <Button color="inherit" sx={{ fontSize: 14 }} component={Link} to="/About">About Us</Button>
           <Button color="inherit" sx={{ fontSize: 14 }} component={Link} to="/Contact">Contact Us</Button>
           <Button color="inherit" sx={{ fontSize: 14 }} component={Link} to="/efpage">AI Designer</Button>

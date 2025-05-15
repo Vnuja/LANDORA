@@ -44,7 +44,7 @@ const Sale = () => {
 
     const fetchProperties = async () => {
         try {
-            const response = await axios.get('https://xjnwl62k-4000.asse.devtunnels.ms/properties');
+            const response = await axios.get('http://localhost:4000/properties');
             setProperties(response.data);
         } catch (error) {
             console.error('Error fetching properties:', error);
@@ -130,179 +130,210 @@ const Sale = () => {
 
     return (
         <div style={{
-    }}>
-        <Navbar />
-        <Container>
-            
-            <TextField
-                label="Search by Property Name"
-                variant="outlined"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                fullWidth
-                margin="normal"
-            />
-            
-            <List>
-                {filteredProperties.map((property) => (
-                    <Paper key={property._id} elevation={3} sx={{ margin: '10px 0', padding: '10px' }}>
-                        <ListItem alignItems="flex-start">
-                            <ListItemText
-                                primary={
-                                    <>
-                                        <Typography variant="h6">{property.name}</Typography>
-                                        <CardMedia
-                                            component="img"
-                                            style={{ width: '100px', height: '100px', objectFit: 'cover', marginTop: '10px', borderRadius: '8px' }}
-                                            image={property.images?.[0] || 'default-image-path'}
-                                            alt={property.name}
-                                        />
-                                    </>
-                                }
-                                secondary={
-                                    <>
-                                        <Typography variant="body2">Size: {property.size} perches</Typography>
-                                        <Typography variant="body2">Address: {property.address}</Typography>
-                                        <Typography variant="body2" color="green" mt={0.5}>
-                                            Rs {(Number(property.price) || 0).toLocaleString()} per perch
-                                        </Typography>
+        }}>
+            <Navbar />
+            <Container>
 
-                                        <Typography variant="body2">Status: {property.status}</Typography>
-                                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 1 }}>
-                                            <Chip label="MEMBER" size="small" />
-                                            <Chip
-                                                icon={<VerifiedIcon sx={{ fontSize: 16 }} />}
-                                                label="VERIFIED SELLER"
-                                                size="small"
-                                                sx={{ bgcolor: 'lightblue', color: '#000' }}
+                <TextField
+                    label="Search by Property Name"
+                    variant="outlined"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    fullWidth
+                    margin="normal"
+                />
+
+                <List>
+                    {filteredProperties.map((property) => (
+                        <Paper key={property._id} elevation={3} sx={{ margin: '10px 0', padding: '10px' }}>
+                            <ListItem alignItems="flex-start">
+                                <ListItemText
+                                    primary={
+                                        <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2 }}>
+                                            {/* Image on the left */}
+                                            <CardMedia
+                                                component="img"
+                                                style={{
+                                                    width: '100px',
+                                                    height: '100px',
+                                                    objectFit: 'cover',
+                                                    borderRadius: '8px',
+                                                }}
+                                                image={property.images?.[0] || 'default-image-path'}
+                                                alt={property.name}
                                             />
+
+                                            {/* Text content on the right */}
+                                            <Box>
+                                                <Typography variant="h6">{property.name}</Typography>
+                                                <Typography variant="body2">Size: {property.size} perches</Typography>
+                                                <Typography variant="body2">Address: {property.address}</Typography>
+                                                <Typography variant="body2" color="green" mt={0.5}>
+                                                    Rs {(Number(property.price) || 0).toLocaleString()} per perch
+                                                </Typography>
+                                                <Typography variant="body2">Status: {property.status}</Typography>
+                                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 1 }}>
+                                                    <Chip label="MEMBER" size="small" />
+                                                    <Chip
+                                                        icon={<VerifiedIcon sx={{ fontSize: 16 }} />}
+                                                        label="VERIFIED SELLER"
+                                                        size="small"
+                                                        sx={{ bgcolor: 'lightblue', color: '#000' }}
+                                                    />
+                                                </Box>
+                                            </Box>
                                         </Box>
-                                    </>
-                                }
-                            />
-                            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                                <IconButton color="primary" onClick={() => { setOpenViewDialog(true); setSelectedProperty(property); }}>
-                                    <VisibilityIcon />
-                                </IconButton>
-                                <IconButton onClick={() => handlePrint(property)}>
-                                    <PrintIcon color="success" />
-                                </IconButton>
-                                
+                                    }
+                                />
+
+                                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                                    <IconButton color="primary" onClick={() => { setOpenViewDialog(true); setSelectedProperty(property); }}>
+                                        <VisibilityIcon />
+                                    </IconButton>
+                                    <IconButton onClick={() => handlePrint(property)}>
+                                        <PrintIcon color="success" />
+                                    </IconButton>
+
+                                </Box>
+                            </ListItem>
+                        </Paper>
+                    ))}
+                </List>
+
+                <Dialog open={openViewDialog} onClose={() => setOpenViewDialog(false)} maxWidth="sm" fullWidth>
+                    <DialogTitle sx={{ bgcolor: '#1976d2', color: '#fff' }}>
+                        {editMode ? '🏡 Property Details' : '🏡 Property Details'}
+                    </DialogTitle>
+
+                    <DialogContent dividers sx={{ bgcolor: '#f9f9f9' }}>
+                        {selectedProperty && (
+                            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                                {/* Property Name */}
+                                <Typography variant="h6" fontWeight="bold" color="primary">
+                                    🏘️ {selectedProperty.name}
+                                </Typography>
+
+                                {/* Image */}
+                                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                                    <CardMedia
+                                        component="img"
+                                        sx={{
+                                            width: '100%',
+                                            maxWidth: 400,
+                                            height: 250,
+                                            objectFit: 'cover',
+                                            borderRadius: 2,
+                                            border: '2px solid #ccc',
+                                        }}
+                                        image={selectedProperty.images?.[0] || 'default-image-path'}
+                                        alt={selectedProperty.name}
+                                    />
+                                </Box>
+
+                                {/* Details Grid */}
+                                <Box sx={{ display: 'grid', gap: 2 }}>
+                                    <Typography variant="subtitle1">
+                                        📏 <strong>Size:</strong> {selectedProperty.size} perches
+                                    </Typography>
+                                    <Typography variant="subtitle1" sx={{ color: 'green' }}>
+                                        💰 <strong>Price:</strong> Rs {Number(selectedProperty.price).toLocaleString()}
+                                    </Typography>
+                                    <Typography variant="subtitle1">
+                                        📍 <strong>Address:</strong> {selectedProperty.address}
+                                    </Typography>
+                                    <Typography variant="subtitle1">
+                                        📦 <strong>Status:</strong>{' '}
+                                        <span style={{ color: selectedProperty.status === 'Available' ? 'green' : 'red' }}>
+                                            {selectedProperty.status}
+                                        </span>
+                                    </Typography>
+                                </Box>
                             </Box>
-                        </ListItem>
-                    </Paper>
-                ))}
-            </List>
+                        )}
+                    </DialogContent>
 
-            <Dialog open={openViewDialog} onClose={() => setOpenViewDialog(false)}>
-                <DialogTitle>{editMode ? 'Property Details' : 'Add Property'}</DialogTitle>
-                <DialogContent>
-                    {selectedProperty && (
-                        <>
-                            <Typography variant="subtitle1" gutterBottom>
-                                Name:{selectedProperty.name}
-                            </Typography>
-                            <CardMedia
-                                component="img"
-                                style={{ width: '100px', height: '100px', objectFit: 'cover', marginTop: '10px', borderRadius: '8px' }}
-                                image={selectedProperty.images?.[0] || 'default-image-path'}
-                                alt={selectedProperty.name}
-                            />
-                            <Typography variant="subtitle1" gutterBottom>
-                                Size:{selectedProperty.size}
-                            </Typography>
+                    <DialogActions sx={{ bgcolor: '#f1f1f1' }}>
+                        <Button
+                            onClick={() => setOpenViewDialog(false)}
+                            color="primary"
+                            variant="contained"
+                            startIcon={<span>❌</span>}
+                        >
+                            Close
+                        </Button>
+                    </DialogActions>
+                </Dialog>
 
-                            <Typography variant="subtitle1" gutterBottom>
-                                Address:{selectedProperty.address}
-                            </Typography>
 
-                            <Typography variant="subtitle1" gutterBottom>
-                                Price:{selectedProperty.price}
-                            </Typography>
+                {/* Add/Edit Property Dialog */}
+                <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
+                    <DialogTitle>{editMode ? 'Edit Property' : 'Add Property'}</DialogTitle>
+                    <DialogContent>
+                        {selectedProperty && (
+                            <>
+                                <TextField
+                                    label="Name"
+                                    value={selectedProperty.name}
+                                    onChange={(e) => setSelectedProperty({ ...selectedProperty, name: e.target.value })}
+                                    fullWidth
+                                    margin="normal"
+                                />
+                                <TextField
+                                    label="Images (comma separated)"
+                                    value={selectedProperty.images}
+                                    onChange={(e) => setSelectedProperty({ ...selectedProperty, images: e.target.value })}
+                                    fullWidth
+                                    margin="normal"
+                                />
+                                <TextField
+                                    label="Size"
+                                    value={selectedProperty.size}
+                                    onChange={(e) => setSelectedProperty({ ...selectedProperty, size: e.target.value })}
+                                    fullWidth
+                                    margin="normal"
+                                />
+                                <TextField
+                                    label="Address"
+                                    value={selectedProperty.address}
+                                    onChange={(e) => setSelectedProperty({ ...selectedProperty, address: e.target.value })}
+                                    fullWidth
+                                    margin="normal"
+                                />
+                                <TextField
+                                    label="Price"
+                                    value={selectedProperty.price}
+                                    onChange={(e) => setSelectedProperty({ ...selectedProperty, price: e.target.value })}
+                                    fullWidth
+                                    margin="normal"
+                                />
+                                <TextField
+                                    label="Status"
+                                    value={selectedProperty.status}
+                                    onChange={(e) => setSelectedProperty({ ...selectedProperty, status: e.target.value })}
+                                    fullWidth
+                                    margin="normal"
+                                />
+                            </>
+                        )}
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={() => setOpenDialog(false)} color="secondary">
+                            Cancel
+                        </Button>
+                        <Button onClick={handleSaveProperty} color="primary">
+                            Save
+                        </Button>
+                    </DialogActions>
+                </Dialog>
 
-                            <Typography variant="subtitle1" gutterBottom>
-                                Status:{selectedProperty.status}
-                            </Typography>
-
-                        </>
-                    )}
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={() => setOpenViewDialog(false)} color="secondary">
-                        Close
-                    </Button>
-                </DialogActions>
-            </Dialog>
-
-            {/* Add/Edit Property Dialog */}
-            <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
-                <DialogTitle>{editMode ? 'Edit Property' : 'Add Property'}</DialogTitle>
-                <DialogContent>
-                    {selectedProperty && (
-                        <>
-                            <TextField
-                                label="Name"
-                                value={selectedProperty.name}
-                                onChange={(e) => setSelectedProperty({ ...selectedProperty, name: e.target.value })}
-                                fullWidth
-                                margin="normal"
-                            />
-                            <TextField
-                                label="Images (comma separated)"
-                                value={selectedProperty.images}
-                                onChange={(e) => setSelectedProperty({ ...selectedProperty, images: e.target.value })}
-                                fullWidth
-                                margin="normal"
-                            />
-                            <TextField
-                                label="Size"
-                                value={selectedProperty.size}
-                                onChange={(e) => setSelectedProperty({ ...selectedProperty, size: e.target.value })}
-                                fullWidth
-                                margin="normal"
-                            />
-                            <TextField
-                                label="Address"
-                                value={selectedProperty.address}
-                                onChange={(e) => setSelectedProperty({ ...selectedProperty, address: e.target.value })}
-                                fullWidth
-                                margin="normal"
-                            />
-                            <TextField
-                                label="Price"
-                                value={selectedProperty.price}
-                                onChange={(e) => setSelectedProperty({ ...selectedProperty, price: e.target.value })}
-                                fullWidth
-                                margin="normal"
-                            />
-                            <TextField
-                                label="Status"
-                                value={selectedProperty.status}
-                                onChange={(e) => setSelectedProperty({ ...selectedProperty, status: e.target.value })}
-                                fullWidth
-                                margin="normal"
-                            />
-                        </>
-                    )}
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={() => setOpenDialog(false)} color="secondary">
-                        Cancel
-                    </Button>
-                    <Button onClick={handleSaveProperty} color="primary">
-                        Save
-                    </Button>
-                </DialogActions>
-            </Dialog>
-
-            {/* Snackbar for notifications */}
-            <Snackbar
-                open={snackbarOpen}
-                autoHideDuration={3000}
-                onClose={() => setSnackbarOpen(false)}
-                message={snackbarMessage}
-            />
-        </Container>
+                {/* Snackbar for notifications */}
+                <Snackbar
+                    open={snackbarOpen}
+                    autoHideDuration={3000}
+                    onClose={() => setSnackbarOpen(false)}
+                    message={snackbarMessage}
+                />
+            </Container>
         </div>
     );
 };

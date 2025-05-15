@@ -90,7 +90,6 @@ function App() {
           </Route>
 
           <Route path="/property-management" element={<PropertyList />} >
-            <Route path="list" element={<PropertyDetails />} />
             <Route path="Vendor" element={<VendorManagement />} />
             <Route path="Costs" element={<Cost />} />
             <Route path="Schedules" element={<Schedules />} />
@@ -100,6 +99,8 @@ function App() {
           {/* Admin Dashboard Routes */}
           <Route path="/admindashboard" element={<AdminDashboard />}>
             <Route path="dashboard" element={<Dashboard />} />
+            <Route path="list" element={<PropertyDetails />} />
+
             {/* User Management */}
 
             <Route path="user-management" element={<UserDetails />} />

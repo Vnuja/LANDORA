@@ -8,6 +8,9 @@ const path = require('path');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 const exportUserRoutes = require("./Routes/Export/exportUserRoutes");
 const exportmRequestRoutes = require("./Routes/Export/exportmRequestRoutes");
+const exportSaleRoutes = require("./Routes/Export/exportSaleRoutes");
+const exportPropertyRoutes = require("./Routes/Export/exportPropertyRoutes");
+
 
 const app = express();
 
@@ -25,6 +28,7 @@ const MaintanancneRoutes = require('./Routes/mRequestRoutes');
 const SalesRoutes = require('./Routes/SalesRoutes');
 const PropertyRoutes = require('./Routes/PropertyRoutes');
 
+
 // Route middleware
 app.use('/maintenance', MaintanancneRoutes);
 app.use('/sales', SalesRoutes);
@@ -35,6 +39,9 @@ app.use('/auth', authRoutes);
 app.use('/api', router);
 app.use('/api/export/user', exportUserRoutes);
 app.use('/api/export/requests', exportmRequestRoutes);
+app.use('/api/export/sale', exportSaleRoutes);
+app.use('/api/export/property', exportPropertyRoutes);
+
 // Serve static files (uploaded images)
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 

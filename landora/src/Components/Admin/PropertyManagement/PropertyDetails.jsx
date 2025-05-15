@@ -26,6 +26,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import PrintIcon from '@mui/icons-material/Print';
 import axios from 'axios';
+import ExportpropertyCSV from '../Database/ExportPropertyCSV';
 
 const PropertyDetails = () => {
     const [properties, setProperties] = useState([]);
@@ -52,7 +53,7 @@ const PropertyDetails = () => {
 
     const handleAddProperty = () => {
         setSelectedProperty({
-            PropertyId: '',
+            propertyID: '',
             name: '',
             size: '',
             address: '',
@@ -70,10 +71,10 @@ const PropertyDetails = () => {
         setOpenDialog(true);
     };
 
-    const handleDeleteProperty = async (propertyId) => {
+    const handleDeleteProperty = async (propertyID) => {
         if (window.confirm('Are you sure you want to delete this property?')) {
             try {
-                await axios.delete(`http://localhost:4000/properties/${propertyId}`);
+                await axios.delete(`http://localhost:4000/properties/${propertyID}`);
                 setSnackbarMessage('Property deleted successfully!');
                 setSnackbarOpen(true);
                 fetchProperties();
@@ -119,7 +120,7 @@ const PropertyDetails = () => {
             </html>
         `;
         printWindow.document.open();
-        printWindow.document.body.innerHTML = content;
+        printWindow.document.write(content);
         printWindow.document.close();
     };
 
@@ -129,9 +130,6 @@ const PropertyDetails = () => {
 
     return (
         <Container>
-            <Typography variant="h4" component="h1" gutterBottom>
-                Property Management
-            </Typography>
             <TextField
                 label="Search by Property Name"
                 variant="outlined"
@@ -148,16 +146,8 @@ const PropertyDetails = () => {
                 style={{ marginBottom: '20px' }}
             >
                 Add Property
-            </Button>
-            <Button
-                variant="contained"
-                color="secondary"
-                startIcon={<PrintIcon />}
-                onClick={handlePrint}
-                style={{ marginLeft: '10px', marginBottom: '20px' }}
-            >
-                Print
-            </Button>
+            </Button>        <ExportpropertyCSV properties={properties} />
+
             <List>
                 {filteredProperties.map((property) => (
                     <Paper key={property._id} elevation={3} sx={{ margin: '10px 0', padding: '10px' }}>
@@ -165,7 +155,8 @@ const PropertyDetails = () => {
                             <ListItemText
                                 primary={
                                     <>
-                                        <Typography variant="h6">{property.name}</Typography>
+                                        <Typography variant="h6">{property.name}</Typography> <Typography variant="h6">{property.propertyID}</Typography>
+
                                         <CardMedia
                                             component="img"
                                             style={{ width: '100px', height: '100px', objectFit: 'cover', marginTop: '10px', borderRadius: '8px' }}

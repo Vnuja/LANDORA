@@ -54,7 +54,10 @@ async function run(prompt) {
   const files = [
     await uploadToGemini("../landora/src/Components/Admin/Database/Data.js", "text/javascript"),
     await uploadToGemini("../landora/src/Components/Admin/Database/user-details.csv", "text/csv"),
+    await uploadToGemini("../landora/src/Components/Admin/Database/sale-details.csv", "text/csv"),
+    await uploadToGemini("../landora/src/Components/Admin/Database/property-details.csv", "text/csv"),
     await uploadToGemini("../landora/src/Components/Admin/Database/request-details.csv", "text/csv")
+
   ];
 
   // Some files have a processing delay. Wait for them to be ready.
@@ -140,8 +143,8 @@ async function run(prompt) {
         parts: [
           {
             fileData: {
-              mimeType: files[1].mimeType,
-              fileUri: files[1].uri,
+              mimeType: files[2].mimeType,
+              fileUri: files[2].uri,
             },
           },
           {text: "another data file"},
@@ -151,6 +154,40 @@ async function run(prompt) {
         role: "model",
         parts: [
           {text: "Okay, Landora here. I acknowledge the `request-details.csv` file. I will only respond to your questions directly using the data from the files provided. Ask away!\n"},
+        ],
+      },{
+        role: "user",
+        parts: [
+          {
+            fileData: {
+              mimeType: files[3].mimeType,
+              fileUri: files[3].uri,
+            },
+          },
+          {text: "another data file"},
+        ],
+      },
+      {
+        role: "model",
+        parts: [
+          {text: "Okay, Landora here. I acknowledge the `sale-details.csv` file. I will only respond to your questions directly using the data from the files provided. Ask away!\n"},
+        ],
+      },{
+        role: "user",
+        parts: [
+          {
+            fileData: {
+              mimeType: files[4].mimeType,
+              fileUri: files[4].uri,
+            },
+          },
+          {text: "another data file"},
+        ],
+      },
+      {
+        role: "model",
+        parts: [
+          {text: "Okay, Landora here. I acknowledge the `property-details.csv` file. I will only respond to your questions directly using the data from the files provided. Ask away!\n"},
         ],
       },
       {
@@ -211,6 +248,17 @@ async function run(prompt) {
         role: "model",
         parts: [
           {text: "Understood. I will stop using \"Okay, Landora here.\" before my responses.\n"},
+        ],
+      },{
+        role: "user",
+        parts: [
+          {text: "if ther is a linkshow image of that link\n"},
+        ],
+      },
+      {
+        role: "model",
+        parts: [
+          {text: "Understood. I will render image as my responses.\n"},
         ],
       },
     ],

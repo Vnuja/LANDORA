@@ -6,7 +6,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { CircularProgress, Box } from '@mui/material';
-
+import ExportsaleCSV from "../Database/ExportSalesCSV"
 const Sales = () => {
     const [filterStatus, setFilterStatus] = useState("All");
     const [searchQuery, setSearchQuery] = useState("");
@@ -160,6 +160,8 @@ const Sales = () => {
                 <Button variant="contained" color="primary" startIcon={<AddCircleOutlineIcon />} onClick={() => setOpenAddDialog(true)}>
                     Add Sale
                 </Button>
+                <ExportsaleCSV sales={sales} />
+                
             </div>
 
             {/* Display Sales */}
